@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64mm"
+   height="64mm"
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="NoesisGUI Logo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="171.71407"
+     inkscape:cy="145.61791"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g3734"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-3.5113849,-2.4076024)">
+    <g
+       style="display:inline"
+       id="g3734"
+       transform="matrix(0.26458333,0,0,0.26458333,-450.84999,-130.49901)">
+      <g
+         style="display:inline"
+         transform="matrix(0.91554833,0,0,0.91554833,386.45315,-165.70353)"
+         inkscape:label="Logo"
+         id="layer3">
+        <path
+           inkscape:export-ydpi="218.2"
+           inkscape:export-xdpi="218.2"
+           inkscape:export-filename="D:\Proyectos\Noesis\Design\Logo\Version 3\NoesisGUI Logo 2.png"
+           style="fill:#2aa6e2"
+           inkscape:connector-curvature="0"
+           id="path6"
+           d="m 1653.3889,773.49066 26.1439,60.49003 -56.9015,75.8688 -48.6996,-6.15151 12.303,28.70712 49.7248,5.63889 75.3565,-100.47493 -38.9598,-88.68448 -48.6999,-6.15154 -17.9416,23.58084 47.6742,7.68941 z m -161.9902,79.45723 38.9597,-52.80062 93.8108,11.79044 18.9672,44.59856 18.9673,-24.6061 -19.9926,-45.62383 -124.5683,-15.37881 -57.4143,77.91932 19.4797,45.62383 29.2199,3.5884 z m 149.6872,100.47491 -65.1036,-7.17679 -36.9093,-87.14661 h -0.5126 l 29.7324,-38.95967 -31.2701,-4.101 -29.2198,39.98492 48.6996,115.3411 96.8864,11.2778 29.2197,-39.47229 -11.2779,-27.68186 z"
+           class="st0" />
+      </g>
+    </g>
+  </g>
+  <style
+     id="style4"
+     type="text/css">.st0{fill:#2AA6E2;} .st1{fill:#FFFFFF;}</style>
+</svg>
