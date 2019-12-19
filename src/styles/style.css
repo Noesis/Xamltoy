@@ -21,24 +21,23 @@ a {
 }
 .emscripten {
   padding-right: 0;
-  flex-shrink: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
 }
 /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
 canvas.emscripten {
+  display: flex;
   border: 0px none;
 }
 .emscripten_border{
-  flex-basis: 50%;
-  flex-grow: 1;
-  flex-shrink: 0;
+  flex-grow: 0;
   overflow: hidden;
   width: 100%;
   height: 100%;
 }
 .emscripten{
+    display: flex;
   width: 100%;
   height: 100%;
 }
@@ -117,17 +116,14 @@ canvas.emscripten {
 }
 .editorBox{
   min-width: 20%;
+  max-width: 80%;
   width: 50%;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   box-sizing: border-box;
   position: relative;
-  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-.resizable{
-  min-height: 20%;
 }
 .runButton{
   position: absolute;
@@ -152,6 +148,10 @@ canvas.emscripten {
 .codemirrorContainer{
   flex-grow: 1;
 }
+#xamlEditorContainer{
+  max-height: calc(100% - 30px);
+  height: 60%;
+}
 .CodeMirror{
   height: 100%;
   font-size: 14px;
@@ -172,14 +172,11 @@ canvas.emscripten {
 .CodeMirror-scrollbar-filler {
   background-color: #F3F3F3;
 }
-.dataContextEditor{
-  height: calc(100% - 30px);
-}
-.dataContextContainer{
+#dataContextContainer{
   box-sizing: border-box;
-  flex-basis: 40%;
   flex-shrink: 1;
-  flex-grow: 1;
+  flex-grow: 0;
+  height: 40%;
   background-color: #DBDBDB;
   overflow: hidden;
 }
@@ -199,12 +196,12 @@ canvas.emscripten {
 }
 .editorSkeleton{
   display: flex;
-  height: calc(100% - 48px - 32px)
+  height: calc(100% - 48px - 32px);
 }
 .verticalSplitter{
   flex: 0 0 auto;
   height: 100%;
-  width: 1px;
+  max-width: 1px;
   background: #BFBFBF;
   cursor: col-resize;
   z-index: 10;
@@ -287,6 +284,9 @@ footer span{
   }
   .editorSkeleton{
     flex-direction: column-reverse;
+  }
+  .editorBox{
+    width: 100%;
   }
   .verticalSplitter{
     display: none;

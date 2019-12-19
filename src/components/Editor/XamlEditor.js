@@ -13,7 +13,7 @@ class XamlEditor extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <div id="xamlEditorContainer">
         <button 
           title="Run with ctrl/cmd + s or Alt + Enter" 
           type="button" 
@@ -23,7 +23,7 @@ class XamlEditor extends React.PureComponent {
         >
           <img src="images/play.png" alt="RUN"></img>RUN
         </button>
-        <CodeMirror className="CodeMirror resizable"
+        <CodeMirror className="CodeMirror"
           ref={this.CodeMirrorRef}
           value={this.props.value}
           onBeforeChange={this.onChange.bind(this)}
@@ -33,7 +33,7 @@ class XamlEditor extends React.PureComponent {
             lineNumbers: true
           }}
         />
-      </React.Fragment>
+      </div>
     )
   }
 
@@ -43,30 +43,6 @@ class XamlEditor extends React.PureComponent {
 
   runButtonPressed() {
     this.props.runCode()
-  }
-
-  componentDidMount() {
-    let _privateError = console.error;
-    console.error = function () {
-      _privateError.apply(console, arguments);
-      var args = Array.prototype.slice.call(arguments);
-      for (let i = 0; i < args.length; i++) {
-        let node = document.createElement("div");
-        if (args[i].includes("[NOESIS/")) {
-          let text = args[i];
-          //let lineNumber = text.substring(text.lastIndexOf("(") + 1, text.lastIndexOf(")"));
-          let error = document.createTextNode(text);
-          let image = document.createElement("img");
-          image.src = "images/cross.png";
-          node.appendChild(image);
-          node.appendChild(error);
-          node.classList.add('error');
-          document.getElementById("errorLog").appendChild(node);
-          console.log(this.CodeMirrorRef)
-          this.CodeMirrorRef.markText({ line: 2, ch: 26 }, { className: "errorLine" })
-        }
-      }
-    }
   }
 
 }

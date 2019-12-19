@@ -6,7 +6,7 @@ import Preview from './Preview';
 export default function EditorWindow(props) {
     return (
         <div className="editorSkeleton">
-            <div className="editorBox">
+            <div className="editorBox" id="editorBoxLeft">
                 <div className="splitter horizontalSplitter" id="topSplitter"></div>
                 <XamlEditor
                     value={props.xaml} 
@@ -22,7 +22,7 @@ export default function EditorWindow(props) {
                 />
             </div>
             <div className="splitter verticalSplitter" id="verticalSplitter"></div>
-            <div className="editorBox">
+            <div className="editorBox" id="editorBoxRight">
                 < Preview />
                 <div className="errorLog" id="errorLog"></div>
             </div>

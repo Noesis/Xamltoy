@@ -9,36 +9,30 @@ ReactDOM.render(<Router />, document.getElementById('root'));
 let verticalHandler = document.getElementById('verticalSplitter');
 let horizontalHandler = document.getElementById('dataContextSplitter');
 let topHandler = document.getElementById('topHandler');
-let selected = ""
 
 let horizontalDragging, verticalDragging = false;
 
 document.addEventListener('mousedown', function (e) {
     if (e.target === verticalHandler) {
         verticalDragging = true;
-        selected = e.target;
     } else if (e.target === horizontalHandler || e.target === topHandler) {
         horizontalDragging = true;
-        selected = e.target;
     }
 });
 
 document.addEventListener('mousemove', function (e) {
-    let wrapper, box, pointerRelativePos;
+    e.preventDefault();
     if (verticalDragging){
-        wrapper = selected.closest('.editorSkeleton');
-        box = wrapper.querySelector('.editorBox');
-        pointerRelativePos = e.clientX;
-        console.log(pointerRelativePos)
-        box.style.width = (Math.max(0, pointerRelativePos - 8)) + 'px';
+        document.getElementById('editorBoxLeft').style.width = e.clientX + 'px';
+        let rightWidth = (Math.max(30, window.screen.width - e.clientX)) + 'px';
+        document.getElementById('editorBoxRight').style.width = rightWidth;
     } else if (horizontalDragging){
-        wrapper = selected.closest('.editorBox');
-        box = wrapper.querySelector('.dataContextContainer');
-        pointerRelativePos = (window.innerHeight-e.clientY);
-        console.log(pointerRelativePos)
-        box.style.flexBasis = (Math.max(30, pointerRelativePos)) + 'px';
+        document.getElementById('dataContextContainer').style.flexBasis = ''
+        document.getElementById('xamlEditorContainer').style.height = (e.clientY) + 'px';
+        let bottomHeight = (Math.min((window.screen.height -100), window.screen.height - e.clientY)) + 'px';
+        document.getElementById('dataContextContainer').style.height = bottomHeight;
     }else{
-        return false;
+        return false; 
     }
 });
 
@@ -46,5 +40,28 @@ document.addEventListener('mouseup', function (e) {
     verticalDragging = false;
     horizontalDragging = false;
 });
+
+let _privateError = console.error;
+console.error = function () {
+    console.log(document.getElementById("CodeMirror"))
+    _privateError.apply(console, arguments);
+    var args = Array.prototype.slice.call(arguments);
+    for (let i = 0; i < args.length; i++) {
+        let node = document.createElement("div");
+        if (args[i].includes("[NOESIS/")) {
+            let text = args[i];
+            let lineNumber = text.substring(text.lastIndexOf("(") + 1, text.lastIndexOf(")"));
+            console.log("error on line:" + lineNumber)
+            let error = document.createTextNode(text);
+            let image = document.createElement("img");
+            image.src = "images/cross.png";
+            node.appendChild(image);
+            node.appendChild(error);
+            node.classList.add('error');
+            document.getElementById("errorLog").appendChild(node);
+            this.state.CodeMirrorRef.current.markText({ line: 2, ch: 26 }, { className: "errorLine" })
+        }
+    }
+}
 
 serviceWorker.unregister();

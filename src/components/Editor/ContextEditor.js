@@ -16,12 +16,12 @@ class ContextEditor extends React.Component {
 
   render() {
     return (
-      <div className="dataContextContainer" id="dataContextContainer">
+      <div id="dataContextContainer">
         <div className="dataContextTitleBar" onClick={this.collapseArrowPressed}>
           <p>DataContext</p>
           <img src='images/arrow.png' id="dataContextArrow" alt="open"></img>
         </div>
-        <CodeMirror className="CodeMirror dataContextEditor resizable"
+        <CodeMirror className="CodeMirror" 
           value={this.props.value}
           onBeforeChange={this.onChange.bind(this)}
           options={{
@@ -41,9 +41,11 @@ class ContextEditor extends React.Component {
   collapseArrowPressed = () => {
     let collapsed = this.state.dataContextCollapsed;
     if (collapsed) {
-      document.getElementById('dataContextContainer').style.flexBasis = '40%'
+      document.getElementById('dataContextContainer').style.flexBasis = '50%'
+      document.getElementById('xamlEditorContainer').style.height = '50%'
       document.getElementById('dataContextArrow').style.transform = ''
     } else {
+      document.getElementById('xamlEditorContainer').style.height = '100%'
       document.getElementById('dataContextContainer').style.flexBasis = '30px'
       document.getElementById('dataContextArrow').style.transform = 'rotate(180deg)'
     }
