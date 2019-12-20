@@ -4,9 +4,7 @@ class Preview extends React.Component {
 
   render() {
     return (
-      <div className="emscripten_border">
-        <canvas className="emscripten" id="canvas" tabIndex="-1"></canvas>
-      </div>
+        <canvas id="canvas" tabIndex="-1"></canvas>
     )
   }
 

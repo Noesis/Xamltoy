@@ -24,12 +24,13 @@ document.addEventListener('mousemove', function (e) {
     e.preventDefault();
     if (verticalDragging){
         document.getElementById('editorBoxLeft').style.width = e.clientX + 'px';
-        let rightWidth = (Math.max(30, window.screen.width - e.clientX)) + 'px';
-        document.getElementById('editorBoxRight').style.width = rightWidth;
+        let rightWidth = (Math.max(30, window.innerWidth - e.clientX)) ;
+        document.getElementById('editorBoxRight').style.width = rightWidth + 'px';
+        global.dispatchEvent(new Event('resize'));
     } else if (horizontalDragging){
         document.getElementById('dataContextContainer').style.flexBasis = ''
         document.getElementById('xamlEditorContainer').style.height = (e.clientY) + 'px';
-        let bottomHeight = (Math.min((window.screen.height -100), window.screen.height - e.clientY)) + 'px';
+        let bottomHeight = Math.max( 30, (Math.min((window.innerHeight), window.innerHeight - e.clientY)) ) + 'px';
         document.getElementById('dataContextContainer').style.height = bottomHeight;
     }else{
         return false; 
