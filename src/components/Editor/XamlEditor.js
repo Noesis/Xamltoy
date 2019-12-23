@@ -30,7 +30,7 @@ class XamlEditor extends React.PureComponent {
           options={{
             mode: 'xml',
             autoCloseTags: true,
-            lineNumbers: true
+            lineNumbers: true,
           }}
         />
       </div>

@@ -52,7 +52,6 @@ console.error = function () {
         if (args[i].includes("[NOESIS/")) {
             let text = args[i];
             let lineNumber = text.substring(text.lastIndexOf("(") + 1, text.lastIndexOf(")"));
-            console.log("error on line:" + lineNumber)
             let error = document.createTextNode(text);
             let image = document.createElement("img");
             image.src = "images/cross.png";
@@ -60,7 +59,9 @@ console.error = function () {
             node.appendChild(error);
             node.classList.add('error');
             document.getElementById("errorLog").appendChild(node);
-            this.state.CodeMirrorRef.current.markText({ line: 2, ch: 26 }, { className: "errorLine" })
+            let errorLine = document.getElementsByClassName('CodeMirror-line')[lineNumber-1]
+            //errorLine.style.textDecoration = 'underline red';
+            errorLine.style.backgroundColor = 'rgba(192, 48, 48, 0.3)';
         }
     }
 }
