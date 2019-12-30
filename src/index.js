@@ -29,8 +29,8 @@ document.addEventListener('mousemove', function (e) {
         global.dispatchEvent(new Event('resize'));
     } else if (horizontalDragging){
         document.getElementById('dataContextContainer').style.flexBasis = ''
-        document.getElementById('xamlEditorContainer').style.height = (e.clientY) + 'px';
-        let bottomHeight = Math.max( 30, (Math.min((window.innerHeight), window.innerHeight - e.clientY)) ) + 'px';
+        document.getElementById('xamlEditorContainer').style.height = (e.clientY - 48) + 'px';
+        let bottomHeight = Math.max( 30, (Math.min((window.innerHeight), window.innerHeight - e.clientY )) ) + 'px';
         document.getElementById('dataContextContainer').style.height = bottomHeight;
     }else{
         return false; 
@@ -58,9 +58,6 @@ console.error = function () {
             node.appendChild(image);
             node.appendChild(error);
             node.classList.add('error');
-            node.onclick = function(lineNumber) {
-                window.location.hash = document.getElementsByClassName('CodeMirror-line')[lineNumber - 1];
-            }
             document.getElementById("errorLog").appendChild(node);
             let errorLine = document.getElementsByClassName('CodeMirror-line')[lineNumber-1]
             //errorLine.style.textDecoration = 'underline red';
