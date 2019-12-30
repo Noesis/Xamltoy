@@ -140,7 +140,7 @@ a {
 }
 #xamlEditorContainer{
   max-height: calc(100% - 30px);
-  height: 60%;
+  height: calc(100% - 30px);
 }
 .CodeMirror{
   height: 100%;
@@ -166,7 +166,7 @@ a {
   box-sizing: border-box;
   flex-shrink: 1;
   flex-grow: 0;
-  height: 40%;
+  height: 30px;
   background-color: #DBDBDB;
   overflow: hidden;
 }
@@ -181,6 +181,7 @@ a {
   margin-right: 10px;
 }
 .dataContextTitleBar img{
+  transform: rotate(180deg);
   height: 10px;
   width: 10px;
 }

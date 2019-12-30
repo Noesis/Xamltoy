@@ -10,7 +10,7 @@ class ContextEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataContextCollapsed: false
+      dataContextCollapsed: true
     };
   }
 
@@ -43,11 +43,11 @@ class ContextEditor extends React.Component {
     if (collapsed) {
       document.getElementById('dataContextContainer').style.flexBasis = '50%'
       document.getElementById('xamlEditorContainer').style.height = '50%'
-      document.getElementById('dataContextArrow').style.transform = ''
+      document.getElementById('dataContextArrow').style.transform = 'rotate(0deg)'
     } else {
       document.getElementById('xamlEditorContainer').style.height = '100%'
       document.getElementById('dataContextContainer').style.flexBasis = '30px'
-      document.getElementById('dataContextArrow').style.transform = 'rotate(180deg)'
+      document.getElementById('dataContextArrow').style.transform = ''
     }
     this.setState((state) => {
       return { dataContextCollapsed: !state.dataContextCollapsed }

@@ -58,6 +58,9 @@ console.error = function () {
             node.appendChild(image);
             node.appendChild(error);
             node.classList.add('error');
+            node.onclick = function(lineNumber) {
+                window.location.hash = document.getElementsByClassName('CodeMirror-line')[lineNumber - 1];
+            }
             document.getElementById("errorLog").appendChild(node);
             let errorLine = document.getElementsByClassName('CodeMirror-line')[lineNumber-1]
             //errorLine.style.textDecoration = 'underline red';
