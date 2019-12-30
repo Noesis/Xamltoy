@@ -52,7 +52,7 @@ console.error = function () {
         if (args[i].includes("[NOESIS/")) {
             let text = args[i];
             let lineNumber = text.substring(text.lastIndexOf("(") + 1, text.lastIndexOf(")"));
-            let error = document.createTextNode(text);
+            let error = document.createTextNode(text.substring(text.indexOf(">") + 1));
             let image = document.createElement("img");
             image.src = "images/cross.png";
             node.appendChild(image);
