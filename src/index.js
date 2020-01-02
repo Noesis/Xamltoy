@@ -8,15 +8,15 @@ ReactDOM.render(<Router />, document.getElementById('root'));
 
 let verticalHandler = document.getElementById('verticalSplitter');
 let horizontalHandler = document.getElementById('dataContextSplitter');
-let topHandler = document.getElementById('topHandler');
 
 let horizontalDragging, verticalDragging = false;
 
 document.addEventListener('mousedown', function (e) {
     if (e.target === verticalHandler) {
         verticalDragging = true;
-    } else if (e.target === horizontalHandler || e.target === topHandler) {
-        horizontalDragging = true;
+    } else if (e.target === horizontalHandler) {
+        if (!document.getElementById('dataContextContainer').classList.contains('collapsed'))
+            horizontalDragging = true;
     }
 });
 
@@ -30,7 +30,13 @@ document.addEventListener('mousemove', function (e) {
     } else if (horizontalDragging){
         document.getElementById('dataContextContainer').style.flexBasis = ''
         document.getElementById('xamlEditorContainer').style.height = (e.clientY - 48) + 'px';
-        let bottomHeight = Math.max( 30, (Math.min((window.innerHeight), window.innerHeight - e.clientY )) ) + 'px';
+        let bottomHeight = Math.max( 30, window.innerHeight - e.clientY ) + 'px';
+        if (bottomHeight === '30px'){
+            document.getElementById('dataContextContainer').classList.add('collapsed');
+            document.getElementById('dataContextArrow').style.transform = 'rotate(180deg)'
+        }else{
+            document.getElementById('dataContextContainer').classList.remove('collapsed');
+        }
         document.getElementById('dataContextContainer').style.height = bottomHeight;
     }else{
         return false; 
@@ -44,7 +50,6 @@ document.addEventListener('mouseup', function (e) {
 
 let _privateError = console.error;
 console.error = function () {
-    console.log(document.getElementById("CodeMirror"))
     _privateError.apply(console, arguments);
     var args = Array.prototype.slice.call(arguments);
     for (let i = 0; i < args.length; i++) {

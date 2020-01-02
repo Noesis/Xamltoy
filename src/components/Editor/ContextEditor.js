@@ -7,21 +7,14 @@ require('codemirror/mode/javascript/javascript.js');
 
 class ContextEditor extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataContextCollapsed: true
-    };
-  }
-
   render() {
     return (
-      <div id="dataContextContainer">
+      <div id="dataContextContainer" className="collapsed">
         <div className="dataContextTitleBar" onClick={this.collapseArrowPressed}>
           <p>DataContext</p>
           <img src='images/arrow.png' id="dataContextArrow" alt="open"></img>
         </div>
-        <CodeMirror className="CodeMirror" 
+        <CodeMirror className="CodeMirror datacontext" 
           value={this.props.value}
           onBeforeChange={this.onChange.bind(this)}
           options={{
@@ -39,19 +32,17 @@ class ContextEditor extends React.Component {
   }
 
   collapseArrowPressed = () => {
-    let collapsed = this.state.dataContextCollapsed;
-    if (collapsed) {
+    if (document.getElementById('dataContextContainer').classList.contains('collapsed')){
+      document.getElementById('dataContextContainer').classList.remove('collapsed');
       document.getElementById('dataContextContainer').style.flexBasis = '50%'
       document.getElementById('xamlEditorContainer').style.height = '50%'
       document.getElementById('dataContextArrow').style.transform = 'rotate(0deg)'
     } else {
+      document.getElementById('dataContextContainer').classList.add('collapsed');
       document.getElementById('xamlEditorContainer').style.height = '100%'
       document.getElementById('dataContextContainer').style.flexBasis = '30px'
       document.getElementById('dataContextArrow').style.transform = ''
     }
-    this.setState((state) => {
-      return { dataContextCollapsed: !state.dataContextCollapsed }
-    });
   }
 
 }

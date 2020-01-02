@@ -162,6 +162,9 @@ a {
 .CodeMirror-scrollbar-filler {
   background-color: #F3F3F3;
 }
+.datacontext{
+   height: calc(100% - 30px);
+}
 #dataContextContainer{
   box-sizing: border-box;
   flex-shrink: 1;
@@ -212,7 +215,7 @@ a {
 .horizontalSplitter{
   flex: 0 0 auto;
   width: 100%;
-  height: 1px;
+  max-height: 1px;
   background: #BFBFBF;
   cursor: row-resize;
   z-index: 10;

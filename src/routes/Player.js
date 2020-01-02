@@ -57,7 +57,6 @@ class Player extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => { this.runCode(); }, 500);
         let hash = this.props.match.params.hash;        
         if (hash === undefined) {
             this.setState({
@@ -68,14 +67,21 @@ class Player extends React.Component {
         } else {
             this.fetchData(hash)
         }
-        document.addEventListener("keydown", this.handleKeyDown);
+        document.addEventListener("keydown", this.handleKeyDown); // Handle keyboard shortcuts
+        document.addEventListener("Noesis Ready", this.runCode);
     }
 
     runCode() {
         try {
-            document.getElementById('errorLog').innerHTML = "";
-            window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
-        } catch (err) {}
+            if (this.state.fetched){
+                document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
+                window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
+            }else{
+                setTimeout(() => { this.runCode(); }, 800);
+            }
+        } catch (err) {
+            setTimeout(() => { this.runCode(); }, 800);
+        }
     }
 
     updateData(key, value){
