@@ -27,6 +27,7 @@ a {
 }
 /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
 #canvas{
+  outline: none;
   width: 100%;
   height: 100%;
   border: 0px none;
