@@ -120,21 +120,21 @@ a {
   position: absolute;
   top: 10px;
   right: 20px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
   background-color: #2FA6E2;
   border-radius: 2px;
   border-style: none;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
-  padding: 5px 10px 5px 10px;
+  padding: 6px 12px 6px 12px;
   vertical-align: top;
   z-index: 20;
   cursor: pointer;
 }
 .runButton img{
-  height: 12px;
-  margin-right: 5px;
+  height: 10px;
+  margin-right: 8px;
 }
 .codemirrorContainer{
   flex-grow: 1;
@@ -174,7 +174,6 @@ a {
   flex-shrink: 1;
   flex-grow: 1;
   height: 30px;
-  background-color: #DBDBDB;
   overflow: hidden;
 }
 .dataContextTitleBar{
@@ -184,8 +183,14 @@ a {
   align-items: center;
   font-weight: bold;
   line-height: 1.4;
-  margin-left: 10px;
-  margin-right: 10px;
+  background-color: #DBDBDB;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+.dataContextTitleBar:hover{
+  background-color: #E6E6E6;
+  color: #333333;
 }
 .dataContextTitleBar img{
   transform: rotate(180deg);
@@ -254,7 +259,7 @@ footer span{
   width: 16px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #F3F3F3;
 }
 ::-webkit-scrollbar-thumb {
   background: #CCCCCC;
