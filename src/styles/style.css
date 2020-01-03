@@ -163,13 +163,16 @@ a {
 .CodeMirror-scrollbar-filler {
   background-color: #F3F3F3;
 }
+.CodeMirror-hscrollbar {
+  outline: none;
+}
 .datacontext{
    height: calc(100% - 30px);
 }
 #dataContextContainer{
   box-sizing: border-box;
   flex-shrink: 1;
-  flex-grow: 0;
+  flex-grow: 1;
   height: 30px;
   background-color: #DBDBDB;
   overflow: hidden;
@@ -251,7 +254,7 @@ footer span{
   width: 16px;
 }
 ::-webkit-scrollbar-track {
-  background: #F3F3F3;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #CCCCCC;
