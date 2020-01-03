@@ -3,6 +3,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/mode/xml/xml.js');
+require('codemirror/addon/edit/closetag.js');
 
 class XamlEditor extends React.PureComponent {
 
@@ -29,6 +30,7 @@ class XamlEditor extends React.PureComponent {
           onBeforeChange={this.onChange.bind(this)}
           options={{
             mode: 'xml',
+            xmlHint: true,
             autoCloseTags: true,
             lineNumbers: true,
           }}
