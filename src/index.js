@@ -23,42 +23,39 @@ document.addEventListener('mousemove', function (e) {
 document.addEventListener('mouseup', function (e) {
     verticalDragging = false;
     horizontalDragging = false;
+    document.getElementById('editorSkeleton').style.pointerEvents = 'auto'; 
+    document.getElementById('root').style.cursor = 'auto';
 });
 
-let _privateError = console.error;
-console.error = function () {
-    _privateError.apply(console, arguments);
-    var logs = Array.prototype.slice.call(arguments);
-    logs.forEach( line => {
-        if (line.includes("[NOESIS/E]")) {
-            let lineNumber = line.substring(line.lastIndexOf("(") + 1, line.lastIndexOf(")"));
-            generateErrorMessage(line);
-            hightlightLine(lineNumber - 1);
-        }
-    });
-}
-
 function handleVerticalResize(e) {
-    let rightWidth = Math.max(30, window.innerWidth - e.clientX);
-    document.getElementById('editorBoxLeft').style.width = e.clientX + 'px';
-    document.getElementById('editorBoxRight').style.width = rightWidth + 'px';
+    document.getElementById('editorSkeleton').style.pointerEvents = 'none';
+    document.getElementById('root').style.cursor = 'ew-resize';
+    let ratio = e.clientX / window.innerWidth;
+    document.getElementById('editorBoxLeft').style.flexBasis = ratio * 100 + '%';
+    document.getElementById('editorBoxRight').style.flexBasis = 100 - ratio * 100 + '%';
     global.dispatchEvent(new Event('resize'));
 }
 
 function handleHorizontalResize(e) {
-    let bottomHeight = Math.max(62, window.innerHeight - e.clientY) + 'px';
-    document.getElementById('dataContextContainer').style.height = bottomHeight;
-    document.getElementById('xamlEditorContainer').style.height = (e.clientY - 47) + 'px';
-    if (bottomHeight === '62px') {
+    document.getElementById('editorSkeleton').style.pointerEvents = 'none';
+    document.getElementById('root').style.cursor = 'ns-resize';
+    let ratio = 1-(e.clientY-47) / (window.innerHeight-80);
+    document.getElementById('xamlEditorContainer').style.height = 100 - ratio * 100 + '%';
+    document.getElementById('dataContextContainer').style.height = ratio * 100 + '%';
+    if (ratio < 0) {
+        document.getElementById('xamlEditorContainer').style.height = '100%';
         document.getElementById('dataContextContainer').classList.add('collapsed');
+        document.getElementById('dataContextSplitter').classList.remove('canScroll');
         document.getElementById('dataContextArrow').style.transform = 'rotate(180deg)';
         horizontalDragging = false;
     } else {
         document.getElementById('dataContextContainer').classList.remove('collapsed');
+        document.getElementById('dataContextSplitter').classList.add('canScroll');
     }
 }
 
 function generateErrorMessage(log) {
+    document.getElementById('root').style.userSelect = 'auto';
     let node = document.createElement("div");
     let errorMessage = document.createTextNode(log.substring(log.indexOf(">") + 1));
     let icon = document.createElement("img");
@@ -72,6 +69,19 @@ function generateErrorMessage(log) {
 function hightlightLine(lineNumber) {
     let errorLine = document.getElementsByClassName('CodeMirror-line')[lineNumber]
     errorLine.style.backgroundColor = 'rgba(192, 48, 48, 0.3)';
+}
+
+let _privateError = console.error;
+console.error = function () {
+    _privateError.apply(console, arguments);
+    var logs = Array.prototype.slice.call(arguments);
+    logs.forEach(line => {
+        if (line.includes("[NOESIS/E]")) {
+            let lineNumber = line.substring(line.lastIndexOf("(") + 1, line.lastIndexOf(")"));
+            generateErrorMessage(line);
+            hightlightLine(lineNumber - 1);
+        }
+    });
 }
 
 serviceWorker.unregister();

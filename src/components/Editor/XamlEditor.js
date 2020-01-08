@@ -33,6 +33,11 @@ class XamlEditor extends React.PureComponent {
             xmlHint: true,
             autoCloseTags: true,
             lineNumbers: true,
+            tabSize: 2,
+            extraKeys: {
+              Tab: (cm) => cm.execCommand("indentMore"),
+              "Shift-Tab": (cm) => cm.execCommand("indentLess"),
+            }
           }}
         />
       </div>

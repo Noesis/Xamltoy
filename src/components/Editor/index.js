@@ -5,7 +5,7 @@ import Preview from './Preview';
 
 export default function EditorWindow(props) {
     return (
-        <div className="editorSkeleton">
+        <div id="editorSkeleton">
             <div className="editorBox" id="editorBoxLeft">
                 <div className="splitter horizontalSplitter" id="topSplitter"></div>
                 <XamlEditor

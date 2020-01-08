@@ -20,7 +20,12 @@ class ContextEditor extends React.Component {
           options={{
             mode: 'javascript',
             autoCloseBrackets: true,
-            lineNumbers: true
+            lineNumbers: true,
+            tabSize: 2,
+            extraKeys: {
+              Tab: (cm) => cm.execCommand("indentMore"),
+              "Shift-Tab": (cm) => cm.execCommand("indentLess"),
+            }
           }}
         />
       </div>
@@ -34,13 +39,15 @@ class ContextEditor extends React.Component {
   collapseArrowPressed = () => {
     if (document.getElementById('dataContextContainer').classList.contains('collapsed')){
       document.getElementById('dataContextContainer').classList.remove('collapsed');
-      document.getElementById('dataContextContainer').style.flexBasis = '50%'
+      document.getElementById('dataContextSplitter').classList.add('canScroll');
+      document.getElementById('dataContextContainer').style.height = '50%'
       document.getElementById('xamlEditorContainer').style.height = '50%'
       document.getElementById('dataContextArrow').style.transform = 'rotate(0deg)'
     } else {
       document.getElementById('dataContextContainer').classList.add('collapsed');
+      document.getElementById('dataContextSplitter').classList.remove('canScroll');
       document.getElementById('xamlEditorContainer').style.height = '100%'
-      document.getElementById('dataContextContainer').style.flexBasis = '30px'
+      document.getElementById('dataContextContainer').style.height = '30px'
       document.getElementById('dataContextArrow').style.transform = ''
     }
   }
