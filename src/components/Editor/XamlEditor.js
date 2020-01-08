@@ -35,8 +35,14 @@ class XamlEditor extends React.PureComponent {
             lineNumbers: true,
             tabSize: 2,
             extraKeys: {
-              Tab: (cm) => cm.execCommand("indentMore"),
-              "Shift-Tab": (cm) => cm.execCommand("indentLess"),
+              Tab: (cm) => {
+                if (cm.somethingSelected()) {
+                  cm.indentSelection("add");
+                } else {
+                  cm.replaceSelection(cm.getOption("indentWithTabs") ? "\t" :
+                  Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+                }
+              }
             }
           }}
         />

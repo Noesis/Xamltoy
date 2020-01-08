@@ -21,28 +21,34 @@ document.addEventListener('mousemove', function (e) {
 });
 
 document.addEventListener('mouseup', function (e) {
+    if (horizontalDragging){
+        horizontalDragging = false;
+        checkIfDataContextCollapsed();
+    }
     verticalDragging = false;
-    horizontalDragging = false;
     document.getElementById('editorSkeleton').style.pointerEvents = 'auto'; 
     document.getElementById('root').style.cursor = 'auto';
 });
 
 function handleVerticalResize(e) {
+    let ratio = e.clientX / window.innerWidth;
     document.getElementById('editorSkeleton').style.pointerEvents = 'none';
     document.getElementById('root').style.cursor = 'ew-resize';
-    let ratio = e.clientX / window.innerWidth;
     document.getElementById('editorBoxLeft').style.flexBasis = ratio * 100 + '%';
     document.getElementById('editorBoxRight').style.flexBasis = 100 - ratio * 100 + '%';
     global.dispatchEvent(new Event('resize'));
 }
 
 function handleHorizontalResize(e) {
+    let ratio = 1 - (e.clientY - 47) / (window.innerHeight - 80);
     document.getElementById('editorSkeleton').style.pointerEvents = 'none';
     document.getElementById('root').style.cursor = 'ns-resize';
-    let ratio = 1-(e.clientY-47) / (window.innerHeight-80);
     document.getElementById('xamlEditorContainer').style.height = 100 - ratio * 100 + '%';
     document.getElementById('dataContextContainer').style.height = ratio * 100 + '%';
-    if (ratio < 0) {
+}
+
+function checkIfDataContextCollapsed(){
+    if (document.getElementById('dataContextContainer').clientHeight <= 30) {
         document.getElementById('xamlEditorContainer').style.height = '100%';
         document.getElementById('dataContextContainer').classList.add('collapsed');
         document.getElementById('dataContextSplitter').classList.remove('canScroll');
@@ -55,10 +61,10 @@ function handleHorizontalResize(e) {
 }
 
 function generateErrorMessage(log) {
-    document.getElementById('root').style.userSelect = 'auto';
     let node = document.createElement("div");
     let errorMessage = document.createTextNode(log.substring(log.indexOf(">") + 1));
     let icon = document.createElement("img");
+    document.getElementById('root').style.userSelect = 'auto';
     icon.src = "images/cross.png";
     node.appendChild(icon);
     node.appendChild(errorMessage);
