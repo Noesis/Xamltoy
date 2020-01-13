@@ -7,6 +7,19 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(<Router />, document.getElementById('root'));
 
 let horizontalDragging, verticalDragging = false;
+let leftWidth = window.innerWidth / 2;
+let rightWidth = window.innerWidth - leftWidth - 1;
+let editorWidthRatio = leftWidth/window.innerWidth;
+
+resizeEditor();
+resetCursor();
+
+window.addEventListener('resize', () => {
+    leftWidth = Math.round(window.innerWidth * editorWidthRatio);
+    rightWidth = window.innerWidth - leftWidth - 1;
+    editorWidthRatio = Math.min(0.8, leftWidth / window.innerWidth);
+    resizeEditor();
+})
 
 document.addEventListener('mousedown', function (e) {
     let dataContextCollapsed = document.getElementById('dataContextSplitter').classList.contains('collapsed');
@@ -18,33 +31,54 @@ document.addEventListener('mousemove', function (e) {
     e.preventDefault();
     if (verticalDragging) handleVerticalResize(e);    
     if (horizontalDragging) handleHorizontalResize(e);
+    resetCursor();
 });
 
 document.addEventListener('mouseup', function (e) {
-    if (horizontalDragging){
-        horizontalDragging = false;
-        checkIfDataContextCollapsed();
-    }
+    if (horizontalDragging) checkIfDataContextCollapsed();
+    horizontalDragging = false;
     verticalDragging = false;
-    document.getElementById('editorSkeleton').style.pointerEvents = 'auto'; 
-    document.getElementById('root').style.cursor = 'auto';
+    resetCursor();
 });
 
+document.addEventListener('mouseout', function (e) {
+    resetCursor();
+});
+
+function resetCursor(){
+    document.getElementById('editorSkeleton').style.pointerEvents = 'auto';
+    document.getElementById('root').style.cursor = 'auto';
+}
+
 function handleVerticalResize(e) {
-    let ratio = e.clientX / window.innerWidth;
-    document.getElementById('editorSkeleton').style.pointerEvents = 'none';
-    document.getElementById('root').style.cursor = 'ew-resize';
-    document.getElementById('editorBoxLeft').style.flexBasis = ratio * 100 + '%';
-    document.getElementById('editorBoxRight').style.flexBasis = 100 - ratio * 100 + '%';
-    global.dispatchEvent(new Event('resize'));
+    console.log(editorWidthRatio)
+    leftWidth = Math.round(e.clientX);
+    rightWidth = window.innerWidth - leftWidth - 1;
+    editorWidthRatio = Math.min(0.8,leftWidth / window.innerWidth);
+    window.dispatchEvent(new Event('resize'));
+    resizeEditor();
 }
 
 function handleHorizontalResize(e) {
-    let ratio = 1 - (e.clientY - 47) / (window.innerHeight - 80);
+    let editorWidthRatio = 1 - (e.clientY - 47) / (window.innerHeight - 80);
     document.getElementById('editorSkeleton').style.pointerEvents = 'none';
     document.getElementById('root').style.cursor = 'ns-resize';
-    document.getElementById('xamlEditorContainer').style.height = 100 - ratio * 100 + '%';
-    document.getElementById('dataContextContainer').style.height = ratio * 100 + '%';
+    document.getElementById('xamlEditorContainer').style.height = 100 - editorWidthRatio * 100 + '%';
+    document.getElementById('dataContextContainer').style.height = editorWidthRatio * 100 + '%';
+}
+
+function resizeEditor() {
+    document.getElementById('editorSkeleton').style.pointerEvents = 'none';
+    document.getElementById('root').style.cursor = 'ew-resize';
+    document.getElementById('editorBoxLeft').style.width = leftWidth + 'px';
+    document.getElementById('editorBoxRight').style.width = rightWidth + 'px';
+    resizeCanvas();
+}
+
+function resizeCanvas() {
+    let canvas = document.getElementById("canvas");
+    canvas.width = document.getElementById('editorBoxRight').clientWidth;
+    canvas.height = document.getElementById('editorBoxRight').clientHeight;
 }
 
 function checkIfDataContextCollapsed(){

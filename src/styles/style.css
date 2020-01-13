@@ -28,8 +28,6 @@ a {
 /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
 #canvas{
   outline: none;
-  width: 100%;
-  height: 100%;
   border: 0px none;
 }
 .errorLog{
@@ -106,9 +104,7 @@ a {
   text-transform: uppercase;
 }
 .editorBox{
-  min-width: 20%;
-  max-width: 80%;
-  width: 50%;
+  min-width: 300px;
   box-sizing: border-box;
   position: relative;
   display: flex;
