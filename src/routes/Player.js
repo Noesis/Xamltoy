@@ -8,8 +8,10 @@ import axios from 'axios';
 
 const server_addr = "https://api.github.com/gists/"
 const default_xaml =
-`<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Background="White">
-  <Button Width="100" Height="25">Welcome!</Button>
+`<Grid
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  
 </Grid>`
 const default_context = 
 `{
