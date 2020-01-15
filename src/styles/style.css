@@ -162,6 +162,33 @@ a {
 .CodeMirror-hscrollbar {
   outline: none;
 }
+.CodeMirror-hints {
+  padding: 2px 0;
+
+  -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.2);
+  -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.2);
+  box-shadow: 1px 1px 4px rgba(0,0,0,.2);
+  border-radius: 2px;
+  border: 1px solid #c0c0c0;
+
+  background: #e0e0e0;
+  font-size: 75%;
+  font-family: "Open Sans", sans-serif;
+}
+
+.CodeMirror-hint {
+  margin: 0;
+  padding: 1px 12px;
+  border-radius: 0;
+  white-space: pre;
+  color: #444;
+  cursor: pointer;
+}
+
+li.CodeMirror-hint-active {
+  background: #2FA6E230;
+  color: #000;
+}
 .datacontext{
    height: calc(100% - 30px);
 }
