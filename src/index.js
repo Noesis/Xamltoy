@@ -51,7 +51,6 @@ function resetCursor(){
 }
 
 function handleVerticalResize(e) {
-    console.log(editorWidthRatio)
     leftWidth = Math.round(e.clientX);
     rightWidth = window.innerWidth - leftWidth - 1;
     editorWidthRatio = Math.min(0.8,leftWidth / window.innerWidth);
