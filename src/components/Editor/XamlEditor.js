@@ -1,13 +1,15 @@
 import React from 'react';
 import { Controlled as CodeMirror } from 'react-codemirror2';
+import Schema from './codemirror/schema';
+
 const CodeMirrorLib = require('codemirror');
 
+require('./codemirror/noesis-hint');
+require('./codemirror/show-hint');
 require("codemirror/addon/hint/show-hint.css");
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/edit/closetag.js');
-require('./codemirror/noesis-hint.js');
-require('./codemirror/show-hint.js');
-require('codemirror/mode/xml/xml.js'); 
+require('codemirror/mode/xml/xml.js');
 require('codemirror/src/modes.js');
 
 class XamlEditor extends React.PureComponent {
@@ -15,53 +17,17 @@ class XamlEditor extends React.PureComponent {
   constructor(props) {
     super(props);
     this.instance = null;
-    this.tags = {
-      "!top": ["Grid"],
-      Grid: {
-        attrs: {},
-        children: ["UIElement"]
-      },
-      UIElement: {
-        attrs: {
-          Visibility: ['Collapsed', 'Hidden', 'Visible']
-        },
-        children: []
-      },
-      FrameworkElement: {
-        attrs: {
-          Width: null,
-          Height: null
-        },
-        base: "UIElement",
-        children: []
-      },
-      Shape: {
-        attrs: {
-          Fill: null,
-          Stroke: null
-        },
-        base: "FrameworkElement",
-        children: []
-      },
-      Rectangle: {
-        attrs: {},
-        base: "Shape"
-      },
-      Ellipse: {
-        attrs: {},
-        base: "Shape"
-      }
-    }
+    this.schema = Schema;
   }
 
   render() {
     return (
       <div id="xamlEditorContainer">
-        <button 
-          title="Run with ctrl/cmd + s or Alt + Enter" 
-          type="button" 
-          id="run-button" 
-          className="runButton" 
+        <button
+          title="Run with ctrl/cmd + s or Alt + Enter"
+          type="button"
+          id="run-button"
+          className="runButton"
           onClick={this.runButtonPressed.bind(this)}
         >
           <img src="images/play.png" alt="RUN"></img>RUN
@@ -76,7 +42,7 @@ class XamlEditor extends React.PureComponent {
             autoCloseTags: true,
             lineNumbers: true,
             tabSize: 2,
-            hintOptions: { schemaInfo: this.tags },
+            hintOptions: { schemaInfo: this.schema },
             extraKeys: {
               "'<'": (cm) => this.completeAfter(cm),
               "'/'": (cm) => this.completeIfAfterLt(cm),
@@ -87,7 +53,7 @@ class XamlEditor extends React.PureComponent {
                   cm.indentSelection("add");
                 } else {
                   cm.replaceSelection(cm.getOption("indentWithTabs") ? "\t" :
-                  Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+                    Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
                 }
               }
             }
@@ -99,7 +65,7 @@ class XamlEditor extends React.PureComponent {
 
   completeAfter(cm, pred) {
     let predResult;
-    if(pred)  predResult = pred();
+    if (pred) predResult = pred();
     if (!pred || predResult.hint) setTimeout(function () {
       if (!cm.state.completionActive)
         cm.showHint({
@@ -125,7 +91,7 @@ class XamlEditor extends React.PureComponent {
       if (tok.type === "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length === 1)) return false;
       var inner = CodeMirrorLib.innerMode(cm.getMode(), tok.state).state;
       let replaceWithAttrValue = inner.tagName != null && key === '=' && cm.getTokenAt(currentCursor).type !== "string";
-      if (replaceWithAttrValue){
+      if (replaceWithAttrValue) {
         cm.replaceRange('=""', { line: currentCursor.line, ch: currentCursor.ch })
         cm.setCursor({ line: currentCursor.line, ch: currentCursor.ch + 2 })
       }
@@ -142,6 +108,6 @@ class XamlEditor extends React.PureComponent {
     this.props.runCode()
   }
 
-} 
+}
 
 export default XamlEditor;

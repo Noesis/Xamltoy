@@ -136,8 +136,23 @@
   }
 
   function getChildren(tags, curTag) {
-    let childList = curTag.children;
-    if(!childList) return [];
+    let childList = [];
+    let base = curTag.base;
+    if (curTag.children) Object.keys(curTag.children).forEach(function eachKey(key) {
+      if (!childList.includes(curTag.children[key])){
+        console.log(curTag.children[key])
+        childList.push(curTag.children[key]);
+      }
+    });
+    while(base){
+      if (tags[base].children) Object.keys(tags[base].children).forEach(function eachKey(key) {
+        if (!childList.includes(tags[base].children[key])){
+          console.log(tags[base].children[key]);
+          childList.push(tags[base].children[key]);
+        }
+      });
+      base = tags[base].base;
+    }
     for (let tagName in tags){
       let currentBase = tags[tagName].base;
       while (currentBase){
