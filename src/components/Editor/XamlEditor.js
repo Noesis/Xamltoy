@@ -5,8 +5,8 @@ const CodeMirrorLib = require('codemirror');
 require("codemirror/addon/hint/show-hint.css");
 require('codemirror/lib/codemirror.css');
 require('codemirror/addon/edit/closetag.js');
-require('codemirror/addon/hint/show-hint.js');
-require('codemirror/addon/hint/noesis-hint.js');
+require('./codemirror/noesis-hint.js');
+require('./codemirror/show-hint.js');
 require('codemirror/mode/xml/xml.js'); 
 require('codemirror/src/modes.js');
 
