@@ -16,11 +16,16 @@ class XamlEditor extends React.PureComponent {
     super(props);
     this.instance = null;
     this.tags = {
-      //"!top": ["UIElement"],
+      "!top": ["Grid"],
+      Grid: {
+        attrs: {},
+        children: ["UIElement"]
+      },
       UIElement: {
         attrs: {
-          Visibility: ["Collapsed", "Hidden", "Visible"]
-        }
+          Visibility: ['Collapsed', 'Hidden', 'Visible']
+        },
+        children: []
       },
       FrameworkElement: {
         attrs: {
@@ -28,15 +33,21 @@ class XamlEditor extends React.PureComponent {
           Height: null
         },
         base: "UIElement",
+        children: []
       },
       Shape: {
         attrs: {
           Fill: null,
           Stroke: null
         },
-        base: "FrameworkElement"
+        base: "FrameworkElement",
+        children: []
       },
       Rectangle: {
+        attrs: {},
+        base: "Shape"
+      },
+      Ellipse: {
         attrs: {},
         base: "Shape"
       }
