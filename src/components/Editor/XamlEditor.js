@@ -16,42 +16,110 @@ class XamlEditor extends React.PureComponent {
     super(props);
     this.instance = null;
     this.tags = {
-      "!top": ["Grid"],
-      Grid: {
-        attrs: {},
-        children: ["UIElement"]
-      },
+      "!top": ["Grid", "StackPanel"],
+
       UIElement: {
         attrs: {
-          Visibility: ['Collapsed', 'Hidden', 'Visible']
-        },
-        children: []
+          Visibility: ["Collapsed", "Hidden", "Visible"]
+        }
       },
       FrameworkElement: {
         attrs: {
           Width: null,
-          Height: null
+          Height: null,
+          Margin: null,
+          Resources: null
         },
-        base: "UIElement",
-        children: []
+        base: "UIElement"
       },
+
+      Panel: {
+        attrs: {
+          Children: null
+        },
+        base: "FrameworkElement",
+        children: ["UIElement"]
+      },
+      Grid: {
+        base: "Panel"
+      },
+      StackPanel: {
+        base: "Panel"
+      },
+
+      Control: {
+        attrs: {
+          Background: null,
+          BorderBrush: null,
+          BorderThickness: null
+        },
+        base: "FrameworkElement"
+      },
+      ContentControl: {
+        attrs: {
+          Content: null
+        },
+        base: "Control",
+        children: ["UIElement"]
+      },
+      ButtonBase: {
+        attrs: {
+          ClickMode: null,
+          Command: null,
+          CommandParameter: null
+        },
+        base: "ContentControl"
+      },
+      Button: {
+        base: "ButtonBase"
+      },
+
       Shape: {
         attrs: {
           Fill: null,
-          Stroke: null
+          Stroke: null,
+          StrokeThickness: null
         },
-        base: "FrameworkElement",
-        children: []
+        base: "FrameworkElement"
       },
       Rectangle: {
-        attrs: {},
         base: "Shape"
       },
       Ellipse: {
-        attrs: {},
         base: "Shape"
+      },
+
+      Brush: {
+        attrs: {
+          Opacity: null
+        }
+      },
+      SolidColorBrush: {
+        attrs: {
+          Color: null
+        },
+        base: "Brush"
+      },
+      GradientBrush: {
+        attrs: {
+          GradientStops: null
+        },
+        base: "Brush",
+        children: ["GradientStop"]
+      },
+      GradientStop: {
+        attrs: {
+          Offset: null,
+          Color: null
+        }
+      },
+      LinearGradientBrush: {
+        attrs: {
+          StartPoint: null,
+          EndPoint: null
+        }
       }
-    }
+    };
   }
 
   render() {
