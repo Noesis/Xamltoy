@@ -1,7 +1,7 @@
 import React from 'react';
 import XamlEditor from './XamlEditor';
 import ContextEditor from './ContextEditor';
-import Preview from './Preview';
+import ViewPort from './ViewPort';
 
 export default function EditorWindow(props) {
     return (
@@ -23,7 +23,7 @@ export default function EditorWindow(props) {
             </div>
             <div className="splitter verticalSplitter" id="verticalSplitter"></div>
             <div className="editorBox" id="editorBoxRight">
-                < Preview />
+                < ViewPort />
                 <div className="errorLog" id="errorLog"></div>
             </div>
         </div>
