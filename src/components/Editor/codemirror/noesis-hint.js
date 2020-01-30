@@ -55,7 +55,14 @@
       var inner = context.length && context[context.length - 1]
       var curTag = inner && tags[inner]
       var childList = inner ? curTag && getChildren(tags, curTag) : tags["!top"];
+      var attributeTagMode = inner.indexOf('.') > -1;
       //Look for attributes of current tag and include them in result
+      if (attributeTagMode) {
+        let tagsForAtrr = getTagsForAttr(tags, inner);
+        for(var i = 0; i< tagsForAtrr.length; i++){
+          if (!prefix || matches(tagsForAtrr[i], prefix, matchInMiddle)) result.push("<" + tagsForAtrr[i]);
+        }
+      }
       if (inner && curTag) {
         for (var attr in getAttrs(tags, curTag)) {
           if (!prefix || matches(inner+"."+attr, prefix, matchInMiddle)) result.push("<" + inner + "." + attr);
@@ -65,6 +72,7 @@
         for (var i = 0; i < childList.length; ++i) if (!prefix || matches(childList[i], prefix, matchInMiddle))
           result.push("<" + childList[i]);
       }
+      result = result.sort();
       if (inner && (!prefix || tagType == "close" && matches(inner, prefix, matchInMiddle)))
         result.push("</" + inner + ">");
     } else {
@@ -106,7 +114,7 @@
           }
           replaceToken = true;
         }
-        for (var i = 0; i < atValues.length; ++i) if (!prefix || matches(atValues[i], prefix, matchInMiddle))
+        if(Array.isArray(atValues)) for (var i = 0; i < atValues.length; ++i) if (!prefix || matches(atValues[i], prefix, matchInMiddle))
           result.push(quote + atValues[i] + quote);
       } else { // An attribute name
         if (token.type == "attribute") {
@@ -116,12 +124,38 @@
         for (var attr in attrs) if (attrs.hasOwnProperty(attr) && (!prefix || matches(attr, prefix, matchInMiddle)))
           result.push(attr.concat('=""'));
       }
+      result = result.sort();
     }
     return {
       list: result,
       from: replaceToken ? Pos(cur.line, tagStart == null ? token.start : tagStart) : cur,
       to: replaceToken ? Pos(cur.line, token.end) : cur
     };
+  }
+
+  function getTagsForAttr(tags, inner) {
+    let tag = inner.split('.')[0];
+    let attr = inner.split('.')[1];
+    let childList = [];
+    let base = tags[tag].attrs[attr];
+    while (base) {
+      childList.push(base);
+      base = tags[base].base;
+    }
+    for (let tagName in tags) {
+      let currentBase = tags[tagName].base;
+      while (currentBase) {
+        if (childList.includes(currentBase)) {
+          if (!childList.includes(tagName)) childList.push(tagName);
+          break;
+        } else {
+          if (!currentBase) break;
+          currentBase = currentBase.base;
+        }
+      }
+    }
+    console.log(childList)
+    return childList;
   }
 
   function getAttrs(tags, curTag) {
@@ -140,14 +174,12 @@
     let base = curTag.base;
     if (curTag.children) Object.keys(curTag.children).forEach(function eachKey(key) {
       if (!childList.includes(curTag.children[key])){
-        console.log(curTag.children[key])
         childList.push(curTag.children[key]);
       }
     });
     while(base){
       if (tags[base].children) Object.keys(tags[base].children).forEach(function eachKey(key) {
         if (!childList.includes(tags[base].children[key])){
-          console.log(tags[base].children[key]);
           childList.push(tags[base].children[key]);
         }
       });

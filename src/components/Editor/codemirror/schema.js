@@ -58,7 +58,7 @@ let Schema = {
   },
   Shape: {
     attrs: {
-      Fill: null,
+      Fill: "LinearGradientBrush",
       Stroke: null,
       StrokeThickness: null
     },
@@ -100,7 +100,8 @@ let Schema = {
     attrs: {
       StartPoint: null,
       EndPoint: null
-    }
+    },
+    base: "GradientBrush"
   }
 };
 

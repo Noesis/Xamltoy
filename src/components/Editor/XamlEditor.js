@@ -16,7 +16,7 @@ class XamlEditor extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.instance = null;
+    this.CodemirrorInstance = null;
     this.schema = Schema;
   }
 
@@ -35,7 +35,7 @@ class XamlEditor extends React.PureComponent {
         <CodeMirror className="CodeMirror"
           value={this.props.value}
           onBeforeChange={this.onChange.bind(this)}
-          editorDidMount={editor => { this.instance = editor }}
+          editorDidMount={editor => { this.CodemirrorInstance = editor }}
           options={{
             mode: 'xml',
             xmlHint: true,
