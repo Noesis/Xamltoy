@@ -15,6 +15,7 @@ let Schema = {
     base: "UIElement"
   },
   Panel: {
+    type: "abstract",
     attrs: {
       Children: null
     },
@@ -45,6 +46,7 @@ let Schema = {
     children: ["UIElement"]
   },
   ButtonBase: {
+    type: "abstract",
     attrs: {
       ClickMode: null,
       Command: null,
@@ -57,6 +59,7 @@ let Schema = {
     base: "ButtonBase"
   },
   Shape: {
+    type: "abstract",
     attrs: {
       Fill: "LinearGradientBrush",
       Stroke: null,
@@ -73,6 +76,7 @@ let Schema = {
     base: "Shape"
   },
   Brush: {
+    type: "abstract",
     attrs: {
       Opacity: null
     }
@@ -84,6 +88,7 @@ let Schema = {
     base: "Brush"
   },
   GradientBrush: {
+    type: "abstract",
     attrs: {
       GradientStops: null
     },
@@ -100,6 +105,15 @@ let Schema = {
     attrs: {
       StartPoint: null,
       EndPoint: null
+    },
+    base: "GradientBrush"
+  },
+  RadialGradientBrush: {
+    attrs: {
+      Center: null,
+      GradientOrigin: null,
+      RadiusX: null,
+      RadiusY: null
     },
     base: "GradientBrush"
   }
