@@ -74,14 +74,10 @@ class Player extends React.Component {
     }
 
     runCode() {
-        try {
-            if (this.state.fetched){
-                document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
-                window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
-            }else{
-                setTimeout(() => { this.runCode(); }, 800);
-            }
-        } catch (err) {
+        if (this.state.fetched){
+            document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
+            window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
+        }else{
             setTimeout(() => { this.runCode(); }, 800);
         }
     }
