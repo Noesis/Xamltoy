@@ -59,18 +59,16 @@
       //Look for attributes of current tag and include them in result
       if (attributeTagMode) {
         let tagsForAtrr = getTagsForAttr(tags, inner);
-        for(var i = 0; i< tagsForAtrr.length; i++){
-          if (!prefix || matches(tagsForAtrr[i], prefix, matchInMiddle)) result.push("<" + tagsForAtrr[i]);
-        }
+        for(var i = 0; i< tagsForAtrr.length; i++) if (!prefix || matches(tagsForAtrr[i], prefix, matchInMiddle)) 
+          if (!tags[tagsForAtrr[i]].type || tags[tagsForAtrr[i]].type !== 'abstract') result.push("<" + tagsForAtrr[i]);
       }
       if (inner && curTag) {
-        for (var attr in getAttrs(tags, curTag)) {
-          if (!prefix || matches(inner+"."+attr, prefix, matchInMiddle)) result.push("<" + inner + "." + attr);
-        }
+        for (var attr in getAttrs(tags, curTag))  if (!prefix || matches(inner+"."+attr, prefix, matchInMiddle)) 
+          if (!tags[inner].type || tags[inner].type !== 'abstract') result.push("<" + inner + "." + attr);
       }
       if (childList && tagType != "close") {
         for (var i = 0; i < childList.length; ++i) if (!prefix || matches(childList[i], prefix, matchInMiddle))
-          result.push("<" + childList[i]);
+          if (!tags[childList[i]].type || tags[childList[i]].type !== 'abstract') result.push("<" + childList[i]);
       }
       result = result.sort();
       if (inner && (!prefix || tagType == "close" && matches(inner, prefix, matchInMiddle)))

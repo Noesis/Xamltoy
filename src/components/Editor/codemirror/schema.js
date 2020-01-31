@@ -1,5 +1,8 @@
 let Schema = {
   "!top": ["Grid", "StackPanel"],
+  "!attrs":{
+    id: null
+  },
   UIElement: {
     attrs: {
       Visibility: ["Collapsed", "Hidden", "Visible"]
