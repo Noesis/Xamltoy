@@ -47,6 +47,7 @@ class XamlEditor extends React.PureComponent {
               "'<'": (cm) => this.completeAfter(cm),
               "'/'": (cm) => this.completeIfAfterLt(cm),
               "'='": (cm) => this.completeIfInTag(cm, '='),
+              "'{'": (cm) => this.completeIfInTag(cm, '{'),
               "' '": (cm) => this.completeIfInTag(cm, ' '),
               Tab: (cm) => {
                 if (cm.somethingSelected()) {
@@ -91,9 +92,18 @@ class XamlEditor extends React.PureComponent {
       if (tok.type === "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length === 1)) return false;
       var inner = CodeMirrorLib.innerMode(cm.getMode(), tok.state).state;
       let replaceWithAttrValue = inner.tagName != null && key === '=' && cm.getTokenAt(currentCursor).type !== "string";
+      let markupExtension = inner.tagName != null && (key === '{' || key === '=') && cm.getTokenAt(currentCursor).type === "string";
       if (replaceWithAttrValue) {
         cm.replaceRange('=""', { line: currentCursor.line, ch: currentCursor.ch })
         cm.setCursor({ line: currentCursor.line, ch: currentCursor.ch + 2 })
+      }
+      if(markupExtension){
+        if (key === '{' ){
+          cm.replaceRange('{}', { line: currentCursor.line, ch: currentCursor.ch })
+          cm.setCursor({ line: currentCursor.line, ch: currentCursor.ch + 1 })
+          return { hint: inner.tagName, skipkey: true };
+        }
+        return { hint: inner.tagName, skipkey: false };
       }
       return { hint: inner.tagName, skipkey: replaceWithAttrValue };
     });

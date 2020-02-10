@@ -35,7 +35,10 @@
     var result = [], replaceToken = false, prefix;
     var tag = /\btag\b/.test(token.type) && !/>$/.test(token.string);
     var tagName = tag && /^\w/.test(token.string), tagStart;
-
+    var line = cm.getLine(cur.line);
+    var markupExtension = /{+.*/.test(token.string) && token.type === "string";
+    let markupAttr = (line.charAt(cur.ch - 2) !== ',' && line.charAt(cur.ch - 1) == ' ');
+    let markupAttrValue = line.charAt(cur.ch - 1) == '=';
     if (tagName) {
       var before = cm.getLine(cur.line).slice(Math.max(0, token.start - 2), token.start);
       var tagType = /<\/$/.test(before) ? "close" : /<$/.test(before) ? "open" : null;
@@ -45,8 +48,61 @@
     } else if (tag && token.string == "</") {
       tagType = "close";
     }
-
     var tagInfo = inner.mode.xmlCurrentTag(inner.state)
+    if (markupExtension && markupAttrValue) { //Markup attr value
+      let markupTags = getMarkupTags(tags, inner);
+      let attrStart = line.substring(0, cur.ch).lastIndexOf(' ') + 1;
+      let attrEnd = line.substring(0, cur.ch).lastIndexOf('=');
+      let currAttr = line.slice(attrStart, attrEnd);
+      for (var i = 0; i < markupTags.length; i++) 
+        for(attr in tags[markupTags[i]].attrs)
+          if (attr === currAttr){
+            return {
+              list: tags[markupTags[i]].attrs[attr] == null ? [] : tags[markupTags[i]].attrs[attr],
+              from: Pos(cur.line, attrEnd +1),
+              to: Pos(cur.line, token.end)
+            };
+          } 
+    }
+    if(markupExtension && !markupAttr){ //Markup Tag
+      let markupTags = getMarkupTags(tags, inner);
+      let prefix = token.string.replace(/.*{\s*/, '').replace(/\s/, '');
+      if(prefix.includes(',')) prefix = prefix.slice(prefix.lastIndexOf(',')+2)
+      console.log(prefix)
+      if(!prefix.includes(' ')){
+        for (var i = 0; i < markupTags.length; i++) if (!prefix || matches(markupTags[i], prefix, matchInMiddle))
+          if (!tags[markupTags[i]].type || tags[markupTags[i]].type !== 'abstract') result.push(markupTags[i]);
+        return {
+          list: result,
+          from: Pos(cur.line, cur.ch - prefix.length),
+          to: Pos(cur.line, token.end)
+        };
+      }
+    }
+    if (markupExtension && markupAttr) { //Markup attr
+      let curMarkup = token.string;
+      if(curMarkup.includes(',')){
+        let start = curMarkup.slice(cur.ch).lastIndexOf(',');
+        curMarkup = curMarkup.slice(start);
+      }
+      curMarkup = token.string.replace(/.*{\s*/, '').replace(/\s/, '').replace(',', '').replace('=', '');
+      let prefixStart = line.substring(0, cur.ch).lastIndexOf(' ')+1;
+      let prefix = line.substring(prefixStart);
+      if (line.includes(',')){
+        let prefixEnd = Math.min(line.slice(cur.ch).indexOf('}'), line.slice(cur.ch).indexOf(',')) -1;
+        prefix = line.slice(cur.ch, prefixEnd)
+      } 
+      console.log(curMarkup)
+      let attrs = getAttrs(tags, tags[curMarkup])
+      for (let attr in attrs) {
+        result.push(attr);
+      }
+      return {
+        list: result,
+        from: cur,
+        to: cur
+      }; 
+    }
     if (!tag && !tagInfo || tagType) {
       if (tagName)
         prefix = token.string;
@@ -55,7 +111,7 @@
       var inner = context.length && context[context.length - 1]
       var curTag = inner && tags[inner]
       var childList = inner ? curTag && getChildren(tags, curTag) : tags["!top"];
-      var attributeTagMode = inner.indexOf('.') > -1;
+      var attributeTagMode = inner? inner.indexOf('.') > -1 : false;
       //Look for attributes of current tag and include them in result
       if (attributeTagMode) {
         let tagsForAtrr = getTagsForAttr(tags, inner);
@@ -111,7 +167,7 @@
             if (line.length > token.end && line.charAt(token.end) == quote) token.end++; // include a closing quote
           }
           replaceToken = true;
-        }
+        }      
         if(Array.isArray(atValues)) for (var i = 0; i < atValues.length; ++i) if (!prefix || matches(atValues[i], prefix, matchInMiddle))
           result.push(quote + atValues[i] + quote);
       } else { // An attribute name
@@ -131,13 +187,22 @@
     };
   }
 
+  function getMarkupTags(tags, inner){
+    let childList = [];
+    for (let tagName in tags) {
+      if(tags[tagName].type === "markup") childList.push(tagName)
+    }
+    return childList;
+  }
+
   function getTagsForAttr(tags, inner) {
     let tag = inner.split('.')[0];
     let attr = inner.split('.')[1];
     let childList = [];
     let base = tags[tag].attrs[attr];
-    while (base) {
+    while (base && !Array.isArray(base)) {
       childList.push(base);
+      console.log(base)
       base = tags[base].base;
     }
     for (let tagName in tags) {
@@ -152,11 +217,11 @@
         }
       }
     }
-    console.log(childList)
     return childList;
   }
 
   function getAttrs(tags, curTag) {
+    if(!curTag) return;
     let attrs = curTag.attrs;
     if (curTag.base != undefined) {
       let parentAttr = getAttrs(tags, tags[curTag.base]);
