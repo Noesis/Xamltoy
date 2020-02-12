@@ -12,6 +12,7 @@ require('codemirror/addon/edit/closetag.js');
 require('codemirror/mode/xml/xml.js');
 require('codemirror/src/modes.js');
 
+
 class XamlEditor extends React.PureComponent {
 
   constructor(props) {
@@ -34,7 +35,7 @@ class XamlEditor extends React.PureComponent {
         </button>
         <CodeMirror className="CodeMirror"
           value={this.props.value}
-          onBeforeChange={this.onChange.bind(this)}
+          onBeforeChange={this.onBeforeChange.bind(this)}
           editorDidMount={editor => { this.CodemirrorInstance = editor }}
           options={{
             mode: 'xml',
@@ -109,7 +110,7 @@ class XamlEditor extends React.PureComponent {
     });
   }
 
-  onChange(editor, data, value) {
+  onBeforeChange(editor, data, value) {
     window.codemirror = editor;
     this.props.updateData('xaml', value)
   }

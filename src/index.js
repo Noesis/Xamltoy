@@ -10,6 +10,7 @@ let horizontalDragging, verticalDragging = false;
 let leftWidth = window.innerWidth / 2;
 let rightWidth = window.innerWidth - leftWidth - 1;
 let editorWidthRatio = leftWidth / window.innerWidth;
+window.errorMarks = [];
 
 if (document.getElementById('editorSkeleton')) {
 
@@ -69,7 +70,6 @@ if (document.getElementById('editorSkeleton')) {
         rightWidth = window.innerWidth - leftWidth - 1;
         editorWidthRatio = Math.min(0.8, leftWidth / window.innerWidth);
         window.dispatchEvent(new Event('resize'));
-        resizeEditor();
     }
 
     function handleHorizontalResize(e) {
@@ -78,6 +78,7 @@ if (document.getElementById('editorSkeleton')) {
         root.style.cursor = 'ns-resize';
         xamlEditorContainer.style.height = 100 - editorWidthRatio * 100 + '%';
         dataContextContainer.style.height = editorWidthRatio * 100 + '%';
+        window.dispatchEvent(new Event('resize'));
     }
 
     function resizeEditor() {
@@ -109,6 +110,7 @@ if (document.getElementById('editorSkeleton')) {
     function generateErrorMessage(log) {
         let node = document.createElement("div");
         let errorMessage = document.createTextNode(log.substring(log.indexOf(">") + 1));
+        if (!log.includes('>')) errorMessage = document.createTextNode(log.substring(log.indexOf("]") + 1));
         let icon = document.createElement("img");
         root.style.userSelect = 'auto';
         icon.src = "images/cross.png";
@@ -119,8 +121,9 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function hightlightLine(lineNumber) {
-        let errorLine = document.getElementsByClassName('CodeMirror-line')[lineNumber]
-        errorLine.style.backgroundColor = 'rgba(192, 48, 48, 0.3)';
+        if (window.codemirror) window.errorMarks.push(window.codemirror.markText({ line: lineNumber, ch: 0 }, { line: lineNumber, ch: 10000 }, {
+             className: 'highlighted'
+        }))
     }
 
     let _privateError = console.error;

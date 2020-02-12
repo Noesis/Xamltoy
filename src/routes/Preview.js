@@ -46,13 +46,10 @@ class Preview extends React.Component {
     }
 
     runCode() {
-        try {
-            if (this.state.fetched) {
-                window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
-            } else {
-                setTimeout(() => { this.runCode(); }, 800);
-            }
-        } catch (err) {
+        if (this.state.fetched) {
+            window.CodeMirror.refresh();
+            window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
+        } else {
             setTimeout(() => { this.runCode(); }, 800);
         }
     }

@@ -74,6 +74,7 @@ class Player extends React.Component {
     }
 
     runCode() {
+        this.clearAllErrors();
         if (this.state.fetched){
             document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
             window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
@@ -117,16 +118,21 @@ class Player extends React.Component {
         })
     }
 
+    clearAllErrors(){
+        window.errorMarks.forEach(mark =>  mark.clear())
+        window.errorMarks = [];
+    }
+
     handleKeyDown = (e) => {
         // ctrl/cmd + s
         if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.keyCode === 83) {
             e.preventDefault();
-            this.runCode()
+            this.runCode();
         }
         // alt + enter
         if ((window.navigator.platform.match("Mac") ? e.altKey : e.altKey) && e.keyCode === 13) {
             e.preventDefault();
-            this.runCode()
+            this.runCode();
         }
     }
 
