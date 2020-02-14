@@ -107,10 +107,12 @@ if (document.getElementById('editorSkeleton')) {
         }
     }
 
-    function generateErrorMessage(log) {
+    function generateErrorMessage(log, lineNumber) {
         let node = document.createElement("div");
-        let errorMessage = document.createTextNode(log.substring(log.indexOf(">") + 1));
-        if (!log.includes('>')) errorMessage = document.createTextNode(log.substring(log.indexOf("]") + 1));
+        let errorText = "";
+        if (lineNumber) errorText = "Line "+lineNumber+log.substring(log.indexOf(")")+1);
+        else errorText = log.substring(log.indexOf("]")+1);
+        let errorMessage = document.createTextNode(errorText);
         let icon = document.createElement("img");
         root.style.userSelect = 'auto';
         icon.src = "images/cross.png";
@@ -121,19 +123,26 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function hightlightLine(lineNumber) {
-        if (window.codemirror) window.errorMarks.push(window.codemirror.markText({ line: lineNumber, ch: 0 }, { line: lineNumber, ch: 10000 }, {
-             className: 'highlighted'
-        }))
+        if(window.codemirror) window.errorMarks.push(
+            window.codemirror.markText(
+                { line: lineNumber, ch: 0 }, 
+                { line: lineNumber, ch: 10000 },
+                {
+                    className: 'highlighted',
+                    inclusiveLeft: true,
+                    inclusiveRight: true
+                })
+            )
     }
 
     let _privateError = console.error;
     console.error = function () {
         _privateError.apply(console, arguments);
         var logs = Array.prototype.slice.call(arguments);
-        logs.forEach(line => {
-            if (line.includes("[NOESIS/E]")) {
-                let lineNumber = line.substring(line.lastIndexOf("(") + 1, line.lastIndexOf(")"));
-                generateErrorMessage(line);
+        logs.forEach(log => {
+            if (log.includes("[NOESIS/E]")) {
+                let lineNumber = log.substring(log.lastIndexOf("(") + 1, log.lastIndexOf(")"));
+                generateErrorMessage(log, lineNumber);
                 hightlightLine(lineNumber - 1);
             }
         });

@@ -74,7 +74,7 @@ class Player extends React.Component {
     }
 
     runCode() {
-        this.clearAllErrors();
+        this.clearErrors();
         if (this.state.fetched){
             document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
             window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
@@ -118,7 +118,7 @@ class Player extends React.Component {
         })
     }
 
-    clearAllErrors(){
+    clearErrors(){
         window.errorMarks.forEach(mark =>  mark.clear())
         window.errorMarks = [];
     }
