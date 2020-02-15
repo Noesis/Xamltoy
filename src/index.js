@@ -119,6 +119,17 @@ if (document.getElementById('editorSkeleton')) {
         node.appendChild(icon);
         node.appendChild(errorMessage);
         node.classList.add('error');
+        node.style.cursor= 'pointer';
+        if(lineNumber) node.onclick = () => {
+            window.codemirror.focus();
+            window.codemirror.setCursor({
+                line: lineNumber-1, 
+                ch: window.codemirror.getLine(lineNumber-1).length
+            });
+            var coord = window.codemirror.charCoords({line: lineNumber-1, ch: 0}, "local"); 
+            var middleHeight = window.codemirror.getScrollerElement().offsetHeight / 2; 
+            window.codemirror.scrollTo(coord.left, coord.top - middleHeight); 
+        }
         errorLog.appendChild(node);
     }
 
