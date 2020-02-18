@@ -32,6 +32,9 @@ class Index extends React.Component {
             <Route exact path="/:hash">
               <Player/>
             </Route>
+            <Route>
+              <Player/>
+            </Route>
           </Switch>
         </Router>
       </React.Fragment>

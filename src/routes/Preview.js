@@ -46,31 +46,57 @@ class Preview extends React.Component {
     }
 
     runCode() {
-        if (this.state.fetched) {
-            window.CodeMirror.refresh();
+        this.clearErrors();
+        if (this.state.fetched){
+            for (const [key, value] of Object.entries(this.state.resources)) {
+                window.Module.ccall('LoadResource', null, ['string','array','number'], [key, value, value.length]);
+            }
+            this.setState({resources: {}});
             window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
-        } else {
+        }else{
             setTimeout(() => { this.runCode(); }, 800);
         }
     }
 
     fetchData(hash) {
-        axios.get(server_addr + hash)
-            .then((response) => {
-                this.setState({
-                    xaml: response.data.files["Main.xaml"].content,
-                    hash: hash,
-                    fetched: true
-                })
+        axios.get(server_addr + hash,{
+            headers:{ accept: 'application/vnd.github.VERSION.base64'}   
+        })
+        .then((response) => {
+            let resources = {};
+            Object.keys(response.data.files).forEach(fileName =>{
+                if(fileName !== "Main.xaml"){
+                    let byteChars = (atob(response.data.files[fileName].content));
+                    let byteNumbers = new Array(byteChars.length);
+                    for (let i = 0; i < byteChars.length; i++) {
+                        byteNumbers[i] = byteChars.charCodeAt(i);
+                    }
+                    let byteArray = new Uint8Array(byteNumbers);
+                    resources[fileName] = byteArray;
+                } 
+            });
+            this.setState({
+                xaml: atob(response.data.files["Main.xaml"].content),
+                resources: resources,
+                hash: hash,
+                fetched: true
             })
-            .catch((err) => {
-                alert("Could not find Gist with given ID.")
-                this.setState({
-                    xaml: default_xaml,
-                    hash: hash,
-                    fetched: true
-                })
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("Could not find Gist with given ID.")
+            window.history.pushState({}, "", "./"); // removes hash from url
+            this.setState({
+                xaml: default_xaml,
+                hash: hash,
+                fetched: true
             })
+        })
+    }
+
+    clearErrors(){
+        window.errorMarks.forEach(mark =>  mark.clear())
+        window.errorMarks = [];
     }
 
 }

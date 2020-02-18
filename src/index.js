@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Router />, document.getElementById('root'));
 
-let horizontalDragging, verticalDragging = false;
+let verticalDragging = false;
 let leftWidth = window.innerWidth / 2;
 let rightWidth = window.innerWidth - leftWidth - 1;
 let editorWidthRatio = leftWidth / window.innerWidth;
@@ -15,13 +15,9 @@ window.errorMarks = [];
 if (document.getElementById('editorSkeleton')) {
 
     let root = document.getElementById('root');
-    let dataContextSplitter = document.getElementById('dataContextSplitter');
     let verticalSplitter = document.getElementById('verticalSplitter');
     let editorSkeleton = document.getElementById('editorSkeleton');
     let errorLog = document.getElementById("errorLog");
-    let xamlEditorContainer = document.getElementById('xamlEditorContainer');
-    let dataContextContainer = document.getElementById('dataContextContainer');
-    let dataContextArrow = document.getElementById('dataContextArrow');
     let editorBoxLeft = document.getElementById('editorBoxLeft');
     let editorBoxRight = document.getElementById('editorBoxRight');
     let canvas = document.getElementById("canvas");
@@ -37,21 +33,16 @@ if (document.getElementById('editorSkeleton')) {
     })
 
     document.addEventListener('mousedown', function (e) {
-        let dataContextCollapsed = dataContextSplitter.classList.contains('collapsed');
         verticalDragging = e.target === verticalSplitter;
-        horizontalDragging = e.target === dataContextSplitter && !dataContextCollapsed;
     });
 
     document.addEventListener('mousemove', function (e) {
         e.preventDefault();
         if (verticalDragging) handleVerticalResize(e);
-        if (horizontalDragging) handleHorizontalResize(e);
         resetCursor();
     });
 
     document.addEventListener('mouseup', function (e) {
-        if (horizontalDragging) checkIfDataContextCollapsed();
-        horizontalDragging = false;
         verticalDragging = false;
         resetCursor();
     });
@@ -72,15 +63,6 @@ if (document.getElementById('editorSkeleton')) {
         window.dispatchEvent(new Event('resize'));
     }
 
-    function handleHorizontalResize(e) {
-        let editorWidthRatio = 1 - (e.clientY - 47) / (window.innerHeight - 80);
-        editorSkeleton.style.pointerEvents = 'none';
-        root.style.cursor = 'ns-resize';
-        xamlEditorContainer.style.height = 100 - editorWidthRatio * 100 + '%';
-        dataContextContainer.style.height = editorWidthRatio * 100 + '%';
-        window.dispatchEvent(new Event('resize'));
-    }
-
     function resizeEditor() {
         editorSkeleton.style.pointerEvents = 'none';
         root.style.cursor = 'ew-resize';
@@ -91,20 +73,7 @@ if (document.getElementById('editorSkeleton')) {
 
     function resizeCanvas() {
         canvas.width = editorBoxRight.clientWidth;
-        canvas.height = editorBoxRight.clientHeight;
-    }
-
-    function checkIfDataContextCollapsed() {
-        if (dataContextContainer.clientHeight <= 30) {
-            xamlEditorContainer.style.height = '100%';
-            dataContextContainer.classList.add('collapsed');
-            dataContextSplitter.classList.remove('canScroll');
-            dataContextArrow.style.transform = 'rotate(180deg)';
-            horizontalDragging = false;
-        } else {
-            dataContextContainer.classList.remove('collapsed');
-            dataContextSplitter.classList.add('canScroll');
-        }
+        canvas.height = editorBoxRight.clientHeight - 32;
     }
 
     function generateErrorMessage(log, lineNumber) {
@@ -130,7 +99,6 @@ if (document.getElementById('editorSkeleton')) {
             var middleHeight = window.codemirror.getScrollerElement().offsetHeight / 2;
             window.codemirror.scrollTo(coord.left, coord.top - middleHeight);
         }
-        console.log(node)
         errorLog.appendChild(node);
     }
 

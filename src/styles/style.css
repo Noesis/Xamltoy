@@ -139,9 +139,7 @@ a {
   flex-grow: 1;
 }
 #xamlEditorContainer{
-  min-height: 20%;
-  max-height: calc(100% - 30px);
-  height: calc(100% - 30px);
+  height: calc(100% - 32px);
 }
 .CodeMirror{
   height: 100%;
@@ -168,13 +166,11 @@ a {
 }
 .CodeMirror-hints {
   padding: 2px 0;
-
   -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.2);
   -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.2);
   box-shadow: 1px 1px 4px rgba(0,0,0,.2);
   border-radius: 2px;
   border: 1px solid #c0c0c0;
-
   background: #e0e0e0;
   font-size: 75%;
   font-family: "Open Sans", sans-serif;
@@ -188,50 +184,19 @@ a {
   color: #444;
   cursor: pointer;
 }
-
 li.CodeMirror-hint-active {
   background: #2FA6E230;
   color: #000;
 }
-.datacontext{
-   height: calc(100% - 30px);
-}
-#dataContextContainer{
-  box-sizing: border-box;
-  flex-shrink: 1;
-  flex-grow: 1;
-  height: 30px;
-  overflow: hidden;
-}
-.dataContextTitleBar{
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  line-height: 1.4;
-  background-color: #DBDBDB;
-  padding-left: 10px;
-  padding-right: 10px;
-  cursor: pointer;
-}
-.dataContextTitleBar:hover{
-  background-color: #E6E6E6;
-  color: #333333;
-}
-.dataContextTitleBar img{
-  transform: rotate(180deg);
-  height: 10px;
-  width: 10px;
-}
 #editorSkeleton{
   display: flex;
-  height: calc(100% - 48px - 32px);
+  height: calc(100% - 48px);
 }
 .verticalSplitter{
   flex: 0 0 auto;
   height: 100%;
   max-width: 1px;
+  border-bottom: 32px solid #161616;
   background: #BFBFBF;
   cursor: ew-resize;
   z-index: 10;
@@ -245,27 +210,8 @@ li.CodeMirror-hint-active {
   top: 0px;
   left: -3px;
 }
-#topSplitter{
-  display: none;
-}
-#dataContextSplitter{
-  flex: 0 0 auto;
-  width: 100%;
-  max-height: 1px;
-  background: #BFBFBF;
-  z-index: 10;
-}
 .canScroll{
   cursor: ns-resize
-}
-#dataContextSplitter:after{
-  content: "";
-  display: block;
-  height: 8px;
-  width: 100%;
-  position: relative;
-  top: 0px;
-  left: -3px;
 }
 footer{
   height: 32px;
@@ -341,8 +287,5 @@ footer span{
   }
   .verticalSplitter{
     display: none;
-  }
-  #topSplitter{
-    display: inline;
   }
 }

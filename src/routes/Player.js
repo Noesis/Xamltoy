@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Editor from '../components/Editor';
 import { withRouter } from 'react-router';
 
@@ -53,7 +52,6 @@ class Player extends React.Component {
                     context={this.state.context}
                     hash={this.state.hash}
                 />
-                <Footer />
             </React.Fragment>
         );
     }

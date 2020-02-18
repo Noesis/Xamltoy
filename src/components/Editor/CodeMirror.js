@@ -13,7 +13,7 @@ require('codemirror/mode/xml/xml.js');
 require('codemirror/src/modes.js');
 
 
-class XamlEditor extends React.PureComponent {
+class CodeMirrorComponent extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -61,6 +61,10 @@ class XamlEditor extends React.PureComponent {
             }
           }}
         />
+        <footer id="leftFooter">
+          <span className="left">(C) 2013 Noesis Technologies</span>
+          <span className="right">?</span>
+        </footer>
       </div>
     )
   }
@@ -121,4 +125,4 @@ class XamlEditor extends React.PureComponent {
 
 }
 
-export default XamlEditor;
+export default CodeMirrorComponent;
