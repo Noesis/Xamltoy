@@ -110,8 +110,8 @@ if (document.getElementById('editorSkeleton')) {
     function generateErrorMessage(log, lineNumber) {
         let node = document.createElement("div");
         let errorText = "";
-        if (lineNumber) errorText = "Line "+lineNumber+log.substring(log.indexOf(")")+1);
-        else errorText = log.substring(log.indexOf("]")+1);
+        if (lineNumber) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
+        else errorText = log.substring(log.indexOf("]") + 1);
         let errorMessage = document.createTextNode(errorText);
         let icon = document.createElement("img");
         root.style.userSelect = 'auto';
@@ -119,31 +119,32 @@ if (document.getElementById('editorSkeleton')) {
         node.appendChild(icon);
         node.appendChild(errorMessage);
         node.classList.add('error');
-        node.style.cursor= 'pointer';
-        if(lineNumber) node.onclick = () => {
+        node.style.cursor = 'pointer';
+        if (lineNumber) node.onclick = () => {
             window.codemirror.focus();
             window.codemirror.setCursor({
-                line: lineNumber-1, 
-                ch: window.codemirror.getLine(lineNumber-1).length
+                line: lineNumber - 1,
+                ch: window.codemirror.getLine(lineNumber - 1).length
             });
-            var coord = window.codemirror.charCoords({line: lineNumber-1, ch: 0}, "local"); 
-            var middleHeight = window.codemirror.getScrollerElement().offsetHeight / 2; 
-            window.codemirror.scrollTo(coord.left, coord.top - middleHeight); 
+            var coord = window.codemirror.charCoords({ line: lineNumber - 1, ch: 0 }, "local");
+            var middleHeight = window.codemirror.getScrollerElement().offsetHeight / 2;
+            window.codemirror.scrollTo(coord.left, coord.top - middleHeight);
         }
+        console.log(node)
         errorLog.appendChild(node);
     }
 
     function hightlightLine(lineNumber) {
-        if(window.codemirror) window.errorMarks.push(
+        if (window.codemirror) window.errorMarks.push(
             window.codemirror.markText(
-                { line: lineNumber, ch: 0 }, 
+                { line: lineNumber, ch: 0 },
                 { line: lineNumber, ch: 10000 },
                 {
                     className: 'highlighted',
                     inclusiveLeft: true,
                     inclusiveRight: true
                 })
-            )
+        )
     }
 
     let _privateError = console.error;

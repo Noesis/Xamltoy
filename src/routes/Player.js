@@ -30,7 +30,7 @@ class Player extends React.Component {
         this.runCode = this.runCode.bind(this)
         this.state = {
             xaml: "Loading...",
-            context: "Loading...",
+            resources: {},
             fetched: false,
             hash: "",
             gistUrl: "https://gist.github.com/",
@@ -76,6 +76,10 @@ class Player extends React.Component {
     runCode() {
         this.clearErrors();
         if (this.state.fetched){
+            for (const [key, value] of Object.entries(this.state.resources)) {
+                window.Module.ccall('LoadResource', null, ['string','array','number'], [key, value, value.length]);
+            }
+            this.setState({resources: {}});
             document.getElementById('errorLog').innerHTML = ""; // Remove all previous errors
             window.Module.ccall('UpdateXaml', null, ['string'], [this.state.xaml]);
         }else{
@@ -90,15 +94,25 @@ class Player extends React.Component {
     }
 
     fetchData(hash) {
-        axios.get(server_addr + hash)
+        axios.get(server_addr + hash,{
+            headers:{ accept: 'application/vnd.github.VERSION.base64'}   
+        })
         .then((response) => {
-            let context = ""
-            try{
-                context = response.data.files["DataContext.json"].content;
-            }catch{} 
+            let resources = {};
+            Object.keys(response.data.files).forEach(fileName =>{
+                if(fileName !== "Main.xaml"){
+                    let byteChars = (atob(response.data.files[fileName].content));
+                    let byteNumbers = new Array(byteChars.length);
+                    for (let i = 0; i < byteChars.length; i++) {
+                        byteNumbers[i] = byteChars.charCodeAt(i);
+                    }
+                    let byteArray = new Uint8Array(byteNumbers);
+                    resources[fileName] = byteArray;
+                } 
+            });
             this.setState({
-                xaml: response.data.files["Main.xaml"].content,
-                context: context,
+                xaml: atob(response.data.files["Main.xaml"].content),
+                resources: resources,
                 gistUrl: "https://gist.github.com/" + response.data.owner.login + '/' + hash,
                 title: response.data.description,
                 hash: hash,
