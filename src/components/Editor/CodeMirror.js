@@ -61,10 +61,6 @@ class CodeMirrorComponent extends React.PureComponent {
             }
           }}
         />
-        <footer id="leftFooter">
-          <span className="left">(C) 2013 Noesis Technologies</span>
-          <span className="right">?</span>
-        </footer>
       </div>
     )
   }

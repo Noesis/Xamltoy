@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Editor from '../components/Editor';
+import Faq from '../components/Faq';
 import { withRouter } from 'react-router';
 
 import axios from 'axios';
@@ -52,6 +53,7 @@ class Player extends React.Component {
                     context={this.state.context}
                     hash={this.state.hash}
                 />
+                <Faq/>
             </React.Fragment>
         );
     }

@@ -12,6 +12,7 @@ export default function Preview(props) {
             }
             <canvas
                 id="canvas"
+                className="fullscreen-canvas"
                 tabIndex="-1"
                 height={window.innerHeight}
                 width={window.innerWidth}

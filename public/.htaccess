@@ -1,4 +1,6 @@
 AddType application/wasm wasm
+AddType text/css css
+AddType application/javascript js
 RewriteEngine On
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d

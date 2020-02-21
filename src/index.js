@@ -21,9 +21,45 @@ if (document.getElementById('editorSkeleton')) {
     let editorBoxLeft = document.getElementById('editorBoxLeft');
     let editorBoxRight = document.getElementById('editorBoxRight');
     let canvas = document.getElementById("canvas");
+    let resolutionMeter = document.getElementById('resolution');
+    let fpsMeter = document.getElementById('frames');
+    let brush = document.getElementById('brush');
+    let photo = document.getElementById('photo');
+    let vibrate = document.getElementById('vibrate');
+    let sampleButton = document.getElementById('samples');
+    let sampleDropdown = document.getElementById("dropdown");
+
+    sampleButton.onclick = () => {
+        sampleDropdown.classList.toggle("show");
+    }
 
     resizeEditor();
     resetCursor();
+
+    setTimeout(() => { resolutionMeter.innerHTML = canvas.width + ' x ' + canvas.height; }, 300);
+
+    brush.onclick = () => {
+        if (brush.style.filter !== 'invert(100%)') {
+            brush.style.filter = 'invert(100%)'
+            photo.style.filter = 'invert(60%)'
+        }
+        else brush.style.filter = 'invert(60%)'
+    }
+
+    photo.onclick = () => {
+        if (photo.style.filter !== 'invert(100%)') {
+            photo.style.filter = 'invert(100%)'
+            brush.style.filter = 'invert(60%)'
+        }
+        else photo.style.filter = 'invert(60%)'
+    }
+
+    vibrate.onclick = () => {
+        if (vibrate.style.filter !== 'invert(100%)') {
+            vibrate.style.filter = 'invert(100%)'
+        }
+        else vibrate.style.filter = 'invert(60%)'
+    }
 
     window.addEventListener('resize', () => {
         leftWidth = Math.round(window.innerWidth * editorWidthRatio);
@@ -72,6 +108,7 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function resizeCanvas() {
+        resolutionMeter.innerHTML = canvas.width + ' x ' + canvas.height;
         canvas.width = editorBoxRight.clientWidth;
         canvas.height = editorBoxRight.clientHeight - 32;
     }
@@ -126,6 +163,37 @@ if (document.getElementById('editorSkeleton')) {
                 hightlightLine(lineNumber - 1);
             }
         });
+    }
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("show-faq");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+        if (!event.target.matches('.dropbtn')) {
+            if (sampleDropdown.classList.contains('show')) {
+                sampleDropdown.classList.remove('show');
+            }
+        }
     }
 }
 
