@@ -24,9 +24,9 @@ export default function EditorWindow(props) {
                     <span id="frames" className="left">60.0 fps</span>
                     <span id="resolution" className="left">800 x 600</span>
                     <span className="center">
-                        <img id='brush' src='images/brush.svg' alt="brush" ></img>
-                        <img id='photo' src='images/photo.svg' alt="photo" ></img>
-                        <img id='vibrate' src='images/vibrate.svg' alt="vibrate" ></img>
+                        <img id='brush' src='images/brush.svg' alt="Option 1" ></img>
+                        <img id='photo' src='images/photo.svg' alt="Option 2" ></img>
+                        <img id='vibrate' src='images/vibrate.svg' alt="Option 3" ></img>
                     </span>
                     <span className="right">Based on NoesisGUI 3.0</span>
                 </footer>

@@ -15,7 +15,7 @@ export default function Navbar(props) {
           <a href={props.gistUrl}>
             <div className='title'>
               <p>{props.title}</p>
-              <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png'></img>
+              <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png' alt="See source code"></img>
             </div>
           </a>
         }

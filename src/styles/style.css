@@ -210,6 +210,9 @@ li.CodeMirror-hint-active {
   cursor: ew-resize;
   z-index: 10;
 }
+#resolution{
+  margin: 0;
+}
 .verticalSplitter:after{
   content: "";
   display: block;
@@ -274,6 +277,11 @@ footer span{
   display: flex;
   white-space: nowrap;
   align-items: center;
+}
+.title p{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 20vw;
 }
 .title-link{
   margin: 25px;
@@ -389,13 +397,41 @@ footer span{
 .show {
   display: block;
 }
+
 @media screen and (max-width: 600px) {
+
+  #editorSkeleton{
+    flex-direction: column-reverse;
+  }
+  .editorBox{
+    height: 50%;
+    width: 100%!important;
+    max-width: 100%;
+  }
+  .verticalSplitter{
+    display: none;
+  }
   .logo{
     width: 22px;
   }
   .navbar p{
     font-size: 15px;
     line-height: 35px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .navbar-right{
+    display: none;
+  }
+  #rightFooter .center{
+    position: relative;
+    float: right;
+    transform: none;
+    top: 0;
+    left: 0;
+  }
+  #rightFooter .right{
+    display: none!important;
   }
   .navbar-right {
     float: none;
@@ -409,44 +445,8 @@ footer span{
     top: auto;
     left: auto;
   }
-  .title p{
-    text-overflow: ellipsis;
-    max-width: 300px;
-  }
   .title-link{
     width: 15px;
     height: 15px;
-  }
-  #editorSkeleton{
-    flex-direction: column-reverse;
-  }
-  .editorBox{
-    height: 50%;
-    width: 100%!important;
-    max-width: 100%;
-  }
-  .verticalSplitter{
-    display: none;
-  }
-  #rightFooter .center{
-    position: relative;
-    float: right;
-    transform: none;
-    top: 0;
-    left: 0;
-  }
-  #rightFooter .right{
-    display: none;
-  }
-}
-@media screen and (max-width: 800px) and (min-width: 600px) {
-  .navbar-right{
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1000px) and (min-width: 600px) {
-  #rightFooter .center{
-    display: none;
   }
 }

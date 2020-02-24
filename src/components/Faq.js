@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Faq(props) {
   return (
-    <div id="myModal" className="modal">
+    <div id="modal" className="modal">
       <div className="modal-content">
         <span className="close">&times;</span>
         <h2>Help</h2>
