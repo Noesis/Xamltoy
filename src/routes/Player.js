@@ -109,9 +109,9 @@ class Player extends React.Component {
                     let byteArray = new Uint8Array(byteNumbers);
                     resources[fileName] = byteArray;
                 } 
-            });
+            });            
             this.setState({
-                xaml: atob(response.data.files["Main.xaml"].content),
+                xaml: decodeURIComponent(escape(window.atob( response.data.files["Main.xaml"].content ))),
                 resources: resources,
                 gistUrl: "https://gist.github.com/" + response.data.owner.login + '/' + hash,
                 title: response.data.description,

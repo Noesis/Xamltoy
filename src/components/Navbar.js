@@ -27,7 +27,11 @@ export default function Navbar(props) {
         <div className="dropdown">
           <button className="dropbtn" id="samples">SAMPLES</button>
           <div className="dropdown-content" id="dropdown">
-            <a href="https://www.noesisengine.com/xamltoy/52f51ce1cb797c06099c532700cdaa6e">Buttons</a>
+            <a href="https://www.noesisengine.com/xamltoy/2e4fb7d5143b4505992b33fec34d0592">Hello World</a>
+            <a href="https://www.noesisengine.com/xamltoy/7899ac1bd7ba837db023409bc0f43c3f">Buttons</a>
+            <a href="https://www.noesisengine.com/xamltoy/44229263f9a6c22624d1f7e993f34bf4">Login</a>
+            <a href="https://www.noesisengine.com/xamltoy/61c071a0b3a34ff82dfb0e2b96e30f94">Quest Log</a>
+            <a href="https://www.noesisengine.com/xamltoy/29a81720a5a5daa66725429966240a60">Localization</a>
           </div>
         </div>
       </div>

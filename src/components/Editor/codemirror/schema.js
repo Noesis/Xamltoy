@@ -66,22 +66,81 @@ let Schema = {
     },
     base: "UIElement"
   },
-  Decorator: {
-    attrs: {
-      Child: "UIElement"
-    },
-    base: "FrameworkElement",
-    children: ["UIElement"]
-  },
-  Border: {
+  TextBlock: {
     attrs: {
       Background: "Brush",
-      BorderBrush: "Brush",
-      BorderThickness: null,
-      CornerRadius: null,
-      Padding: null
+      FontFamily: null,
+      FontSize: null,
+      FontStretch: ["UltraCondensed", "ExtraCondensed", "Condensed", "SemiCondensed", "Normal", "Medium", "SemiExpanded", "Expanded", "ExtraExpanded", "UltraExpanded"],
+      FontStyle: ["Normal", "Oblique", "Italic"],
+      FontWeight: ["Thin", "ExtraLight", "UltraLight", "Light", "SemiLight", "Normal", "Regular", "Medium", "DemiBold", "SemiBold", "Bold", "ExtraBold", "UltraBold", "Black", "Heavy", "ExtraBlack", "UltraBlack"],
+      Foreground: "Brush",
+      Inlines: "Inline",
+      LineHeight: null,
+      LineStackingStrategy: ["BlockLineHeight","MaxHeight"],
+      Padding: null,
+      Stroke: "Brush",
+      StrokeThickness: null,
+      TextAlignment: ["Left", "Center", "Right", "Stretch"],
+      TextDecorations: ["None", "Overline", "Baseline", "Underline", "Strikethrough"],
+      Text: null,
+      TextTrimming: ["None", "CharacterEllipsis", "WordEllipsis"],
+      TextWrapping: ["NoWrap", "Wrap", "WrapWithOverflow"]
     },
-    base: "Decorator"
+    base: "FrameworkElement",
+    children: ["Inline"]
+  },
+  TextElement: {
+    attrs: {
+      Background: "Brush",
+      FontFamily: null,
+      FontSize: null,
+      FontStretch: ["UltraCondensed", "ExtraCondensed", "Condensed", "SemiCondensed", "Normal", "Medium", "SemiExpanded", "Expanded", "ExtraExpanded", "UltraExpanded"],
+      FontStyle: ["Normal", "Oblique", "Italic"],
+      FontWeight: ["Thin", "ExtraLight", "UltraLight", "Light", "SemiLight", "Normal", "Regular", "Medium", "DemiBold", "SemiBold", "Bold", "ExtraBold", "UltraBold", "Black", "Heavy", "ExtraBlack", "UltraBlack"],
+      Foreground: "Brush",
+      Stroke: "Brush",
+      StrokeThickness: null
+    },
+    base: "FrameworkElement"
+  },
+  Inline: {
+    base: "TextElement"
+  },
+  LineBreak: {
+    base: "Inline"
+  },
+  Run: {
+    attrs: {
+      Text: null
+    },
+    base: "Inline"
+  },
+  Span: {
+    attrs: {
+      Inlines: "Inline",
+    },
+    base: "Inline",
+    children: ["Inline"]
+  },
+  Bold: {
+    base: "Span"
+  },
+  Italic: {
+    base: "Span"
+  },
+  Underline: {
+    base: "Span"
+  },
+  Hyperlink: {
+    attrs: {
+      Command: null,
+      CommandParameter: null,
+      CommandTarget: "UIElement",
+      NavigateUri: null,
+      TargetName: null
+    },
+    base: "Span"
   },
   Panel: {
     type: "abstract",
@@ -124,6 +183,64 @@ let Schema = {
     attrs: {},
     base: "Panel"
   },
+  Decorator: {
+    attrs: {
+      Child: "UIElement"
+    },
+    base: "FrameworkElement",
+    children: ["UIElement"]
+  },
+  Border: {
+    attrs: {
+      Background: "Brush",
+      BorderBrush: "Brush",
+      BorderThickness: null,
+      CornerRadius: null,
+      Padding: null
+    },
+    base: "Decorator"
+  },
+  Viewbox:  {
+    attrs: {
+      Child: "UIElement",
+      Stretch: ["None", "Fill", "Uniform", "UniformToFill"],
+      StretchDirection: ["UpOnly", "DownOnly", "Both"]
+    },
+    base: "FrameworkElement"
+  },
+  Popup: {
+    attrs: {
+      AllowsTransparency: ["True", "False"],
+      Child: "UIElement",
+      HasDropShadow: ["True", "False"],
+      HorizontalOffset: null,
+      IsOpen: ["True", "False"],
+      Placement: ["Absolute", "Relative", "Bottom", "Center", "Right", "AbsolutePoint", "RelativePoint", "Mouse", "MousePoint", "Left", "Top", "Custom"],
+      PlacementRectangle: null,
+      PlacementTarget: "UIElement",
+      PopupAnimation: ["None", "Fade", "Slide", "Scroll"],
+      StaysOpen: ["True", "False"],
+      VerticalOffset: null
+    }
+  },
+  Image: {
+    attrs: {
+      Source: "ImageSource",
+      Stretch: ["None", "Fill", "Uniform", "UniformToFill"],
+      StretchDirection: ["UpOnly", "DownOnly", "Both"]
+    },
+    base: "FrameworkElement"
+  },
+  ContentPresenter: {
+    attrs: {
+      Content: "UIElement",
+      ContentSource: null,
+      ContentTemplate: "DataTemplate",
+      ContentTemplateSelector: null
+    },
+    base: "FrameworkElement",
+    children: ["UIElement"]
+  },
   Control: {
     attrs: {
       Background: "Brush",
@@ -146,7 +263,9 @@ let Schema = {
   },
   ContentControl: {
     attrs: {
-      Content: "UIElement"
+      Content: "UIElement",
+      ContentTemplate: "DataTemplate",
+      ContentTemplateSelector: null
     },
     base: "Control",
     children: ["UIElement"]
@@ -156,7 +275,9 @@ let Schema = {
     base: "ContentControl",
   },
   Page: {
-    attrs: {},
+    attrs: {
+      Title: null
+    },
     base: "UserControl"
   },
   ButtonBase: {

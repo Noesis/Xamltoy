@@ -75,6 +75,7 @@ class Preview extends React.Component {
                     resources[fileName] = byteArray;
                 } 
             });
+            console.log(atob(response.data.files["Main.xaml"].content))
             this.setState({
                 xaml: atob(response.data.files["Main.xaml"].content),
                 resources: resources,

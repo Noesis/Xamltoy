@@ -21,7 +21,6 @@ if (document.getElementById('editorSkeleton')) {
     let editorBoxLeft = document.getElementById('editorBoxLeft');
     let editorBoxRight = document.getElementById('editorBoxRight');
     let canvas = document.getElementById("canvas");
-    let resolutionMeter = document.getElementById('resolution');
     let brush = document.getElementById('brush');
     let photo = document.getElementById('photo');
     let vibrate = document.getElementById('vibrate');
@@ -39,26 +38,26 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     brush.onclick = () => {
-        if (brush.style.filter !== 'invert(100%)') {
-            brush.style.filter = 'invert(100%)'
-            photo.style.filter = 'invert(60%)'
+        if (!brush.classList.contains('button-active')) {
+            brush.classList.add('button-active');
+            photo.classList.remove('button-active');
         }
-        else brush.style.filter = 'invert(60%)'
+        else brush.classList.remove('button-active');
     }
 
     photo.onclick = () => {
-        if (photo.style.filter !== 'invert(100%)') {
-            photo.style.filter = 'invert(100%)'
-            brush.style.filter = 'invert(60%)'
+        if (!photo.classList.contains('button-active')) {
+            photo.classList.add('button-active');
+            brush.classList.remove('button-active');
         }
-        else photo.style.filter = 'invert(60%)'
+        else photo.classList.remove('button-active');
     }
 
     vibrate.onclick = () => {
-        if (vibrate.style.filter !== 'invert(100%)') {
-            vibrate.style.filter = 'invert(100%)'
+        if (!vibrate.classList.contains('button-active')) {
+            vibrate.classList.add('button-active');
         }
-        else vibrate.style.filter = 'invert(60%)'
+        else vibrate.classList.remove('button-active');
     }
 
     window.addEventListener('resize', () => {
@@ -117,7 +116,6 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function resizeCanvas() {
-        resolutionMeter.innerHTML = canvas.width + ' x ' + canvas.height;
         canvas.width = editorBoxRight.clientWidth;
         canvas.height = editorBoxRight.clientHeight - 32;
     }
