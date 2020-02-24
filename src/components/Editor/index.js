@@ -26,7 +26,7 @@ export default function EditorWindow(props) {
                     <span className="center">
                         <img id='brush' src='images/brush.svg' alt="brush" ></img>
                         <img id='photo' src='images/photo.svg' alt="photo" ></img>
-                        <img id='vibrate' src='images/vibrate.svg' alt="vibrate" ></img>
+                        <img id='vibrate' src='images/vibrate.svg' alt="vibrate" class="hide" ></img>
                     </span>
                     <span className="right">Based on NoesisGUI 3.0</span>
                 </footer>
