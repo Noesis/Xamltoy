@@ -21,8 +21,8 @@ export default function EditorWindow(props) {
                 <canvas id="canvas" tabIndex="-1"></canvas>
                 <div className="errorLog" id="errorLog"></div>
                 <footer id="rightFooter">
-                    <span id="frames" className="left">60.0 fps</span>
-                    <span id="resolution" className="left">800 x 600</span>
+                    <span id="frames" className="left"></span>
+                    <span id="resolution" className="left"></span>
                     <span className="center">
                         <img id='brush' src='images/brush.svg' alt="brush" ></img>
                         <img id='photo' src='images/photo.svg' alt="photo" ></img>
