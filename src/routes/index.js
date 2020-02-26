@@ -4,8 +4,9 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Player from './Player'
-import Preview from './Preview'
+import Player from './Player';
+import RenderPreview from './RenderPreview';
+import CodePreview from './CodePreview';
 
 class Index extends React.Component {
 
@@ -18,16 +19,28 @@ class Index extends React.Component {
               <Player />
             </Route>
             <Route exact path="/preview">
-              <Preview showLink={false}/>
+              <RenderPreview showLink={false}/>
             </Route>
             <Route exact path="/preview-link">
-              <Preview showLink={true}/>
+              <RenderPreview showLink={true}/>
             </Route>
             <Route exact path="/preview/:hash">
-              <Preview showLink={false}/>
+              <RenderPreview showLink={false}/>
             </Route>
             <Route exact path="/preview-link/:hash">
-              <Preview showLink={true}/>
+              <RenderPreview showLink={true}/>
+            </Route>
+            <Route exact path="/code">
+              <CodePreview showLink={false}/>
+            </Route>
+            <Route exact path="/code/:hash">
+              <CodePreview showLink={false}/>
+            </Route>
+            <Route exact path="/code-link">
+              <CodePreview showLink={true}/>
+            </Route>
+            <Route exact path="/code-link/:hash">
+              <CodePreview showLink={true}/>
             </Route>
             <Route exact path="/:hash">
               <Player/>

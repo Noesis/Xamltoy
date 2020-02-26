@@ -52,6 +52,7 @@ h3{
   background-color: #acacacdc;
 }
 .error{
+  user-select: none;
   font-size: small;
   line-height: 2;
   margin: 10px;
@@ -228,6 +229,7 @@ li.CodeMirror-hint-active {
   cursor: ns-resize
 }
 footer{
+  user-select: none;
   position: relative;
   height: 32px;
   background-color: #161616;
@@ -273,6 +275,7 @@ footer span{
   width: 70px;
   height: 70px;
   line-height: 70px;
+  z-index: 100;
   text-align: center;
   background-color: #252525;
 }

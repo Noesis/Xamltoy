@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
-import PreviewComponent from '../components/Preview';
 
 const server_addr = "https://api.github.com/gists/"
 const default_xaml =
@@ -25,10 +24,22 @@ class Preview extends React.Component {
 
     render() {
         return (
-            <PreviewComponent 
-                showLink={this.props.showLink}
-                hash={this.state.hash}
-            />
+            <React.Fragment>
+            {this.props.showLink &&
+                <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash}>
+                    <div className="link">
+                        <img src='../images/link.png' alt="Edit on xamltoy"></img>
+                    </div>
+                </a>
+            }
+            <canvas
+                id="canvas"
+                className="fullscreen-canvas"
+                tabIndex="-1"
+                height={window.innerHeight}
+                width={window.innerWidth}
+            ></canvas>
+        </React.Fragment>
         )
     }
 
@@ -75,9 +86,8 @@ class Preview extends React.Component {
                     resources[fileName] = byteArray;
                 } 
             });
-            console.log(atob(response.data.files["Main.xaml"].content))
             this.setState({
-                xaml: atob(response.data.files["Main.xaml"].content),
+                xaml: decodeURIComponent(escape(window.atob( response.data.files["Main.xaml"].content ))),
                 resources: resources,
                 hash: hash,
                 fetched: true

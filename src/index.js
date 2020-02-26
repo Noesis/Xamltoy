@@ -12,6 +12,26 @@ let rightWidth = window.innerWidth - leftWidth - 1;
 let editorWidthRatio = leftWidth / window.innerWidth;
 window.errorMarks = [];
 
+if(document.getElementById('canvas')) {
+    const script = document.createElement("script");
+    script.src = process.env.PUBLIC_URL + "/assets/Gui.XamlToy.js";
+    document.body.appendChild(script);
+    window.Module = {
+        canvas: (function () {
+            let canvas = document.getElementById('canvas');
+            canvas.addEventListener("webglcontextlost", 
+            function (e) { 
+                alert('WebGL context lost. You will need to reload the page.'); 
+                e.preventDefault(); 
+            }, false);
+            return canvas;
+        })(),
+        postRun: (function () {
+            document.dispatchEvent(new CustomEvent("Noesis Ready"));
+        })
+    }
+}
+
 if (document.getElementById('editorSkeleton')) {
 
     let root = document.getElementById('root');
@@ -103,14 +123,14 @@ if (document.getElementById('editorSkeleton')) {
         root.style.cursor = 'ew-resize';
         editorBoxLeft.style.width = leftWidth + 'px';
         editorBoxRight.style.width = rightWidth + 'px';
-        if(rightWidth < 450){
+        if (rightWidth < 450) {
             document.querySelector('#rightFooter .right').style.display = 'none';
             document.querySelector('#rightFooter .center').style.cssText = 'position: relative;float: right;transform: none;top: 0;left: 0;';
-        }else{
-            if(window.screen.width > 1000){
+        } else {
+            if (window.screen.width > 1000) {
                 document.querySelector('#rightFooter .right').style.display = 'flex';
                 document.querySelector('#rightFooter .center').style.cssText = '';
-            } 
+            }
         }
         resizeCanvas();
     }
@@ -123,7 +143,7 @@ if (document.getElementById('editorSkeleton')) {
     function generateErrorMessage(log, lineNumber) {
         let node = document.createElement("div");
         let errorText = "";
-        if (lineNumber) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
+        if (lineNumber && window.codemirror.getLine(lineNumber)) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
         else errorText = log.substring(log.indexOf("]") + 1);
         let errorMessage = document.createTextNode(errorText);
         let icon = document.createElement("img");
@@ -147,16 +167,20 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function hightlightLine(lineNumber) {
-        if (window.codemirror) window.errorMarks.push(
-            window.codemirror.markText(
-                { line: lineNumber, ch: 0 },
-                { line: lineNumber, ch: 10000 },
-                {
-                    className: 'highlighted',
-                    inclusiveLeft: true,
-                    inclusiveRight: true
-                })
-        )
+        try {
+            if (window.codemirror.getLine(lineNumber)) {
+                window.errorMarks.push(
+                    window.codemirror.markText(
+                        { line: lineNumber, ch: 0 },
+                        { line: lineNumber, ch: 10000 },
+                        {
+                            className: 'highlighted',
+                            inclusiveLeft: true,
+                            inclusiveRight: true
+                        })
+                )
+            }
+        } catch (err) { console.err(err) }
     }
 
     let _privateError = console.error;
@@ -165,7 +189,7 @@ if (document.getElementById('editorSkeleton')) {
         var logs = Array.prototype.slice.call(arguments);
         logs.forEach(log => {
             if (log.includes("[NOESIS/E]")) {
-                let lineNumber = log.substring(log.lastIndexOf("(") + 1, log.lastIndexOf(")"));
+                let lineNumber = log.substring(log.indexOf(">(") + 2, log.indexOf(")"));
                 generateErrorMessage(log, lineNumber);
                 hightlightLine(lineNumber - 1);
             }

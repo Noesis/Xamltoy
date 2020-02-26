@@ -18,20 +18,7 @@
 <body>
   <div id="root"></div>
 </body>
-
-<script async type="text/javascript" src="%PUBLIC_URL%/assets/Gui.XamlToy.js"></script>
 <script async type="text/javascript">
-  var event = new CustomEvent("Noesis Ready");
-  var Module = {
-    canvas: (function () {
-      let canvas = document.getElementById('canvas');
-      canvas.addEventListener("webglcontextlost", function (e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
-      return canvas;
-    })(),
-    postRun: (function () {
-      document.dispatchEvent(event);
-    })
-  }
   let updateFrameCounter = (fps) => {
     if(document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
   }
