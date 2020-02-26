@@ -73,7 +73,7 @@ h3{
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
-.navbar a {
+.navbar a{
   float: left;
   color: #fff;
   text-align: center;
@@ -391,6 +391,9 @@ footer span{
   outline: none;
   background-color: inherit;
   margin: 0;
+}
+.dropdown .dropbtn:after{
+  content: '\25be';
 }
 .dropdown-content {
   display: none;
