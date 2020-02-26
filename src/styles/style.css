@@ -142,7 +142,7 @@ h3{
 }
 .runButton img{
   height: 10px;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 .codemirrorContainer{
   flex-grow: 1;
@@ -213,7 +213,7 @@ li.CodeMirror-hint-active {
   cursor: ew-resize;
   z-index: 10;
 }
-#resolution{
+#frames{
   margin: 0;
 }
 .verticalSplitter:after{
