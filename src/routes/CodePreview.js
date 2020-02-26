@@ -32,7 +32,7 @@ class CodePreview extends React.Component {
             <React.Fragment>
                 {this.props.showLink &&
                     <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash}>
-                        <div className="link">
+                        <div className="link linkCode">
                             <img src='../images/link.png' alt="Edit on xamltoy"></img>
                         </div>
                     </a>

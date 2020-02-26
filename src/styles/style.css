@@ -279,6 +279,9 @@ footer span{
   text-align: center;
   background-color: #25252530;
 }
+.linkCode{
+  right: 20px;
+}
 .link:hover{
   background-color: #25252560;
 }
