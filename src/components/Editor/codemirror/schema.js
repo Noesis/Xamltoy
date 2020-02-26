@@ -105,9 +105,11 @@ let Schema = {
     base: "FrameworkElement"
   },
   Inline: {
+    attrs: {},
     base: "TextElement"
   },
   LineBreak: {
+    attrs: {},
     base: "Inline"
   },
   Run: {
@@ -124,12 +126,15 @@ let Schema = {
     children: ["Inline"]
   },
   Bold: {
+    attrs: {},
     base: "Span"
   },
   Italic: {
+    attrs: {},
     base: "Span"
   },
   Underline: {
+    attrs: {},
     base: "Span"
   },
   Hyperlink: {
@@ -189,6 +194,13 @@ let Schema = {
     },
     base: "FrameworkElement",
     children: ["UIElement"]
+  },
+  BulletDecorator: {
+    attrs: {
+      Background: "Brush",
+      Bullet: "UIElement"
+    },
+    base: "Decorator"
   },
   Border: {
     attrs: {
@@ -285,13 +297,70 @@ let Schema = {
     attrs: {
       ClickMode: null,
       Command: null,
-      CommandParameter: null
+      CommandParameter: null,
+      CommandTarget: "UIElement"
     },
     base: "ContentControl"
   },
   Button: {
     attrs: {},
     base: "ButtonBase"
+  },
+  ToggleButton: {
+    attrs: {
+      IsChecked: ["True", "False", "{x:Null}"],
+      IsThreeState: ["True", "False"]
+    },
+    base: "ButtonBase"
+  },
+  CheckBox: {
+    attrs: {},
+    base: "ToggleButton"
+  },
+  RadioButton: {
+    attrs: {
+      GroupName: null
+    },
+    base: "ToggleButton"
+  },
+  TextBoxBase: {
+    type: "abstract",
+    attrs: {
+      AcceptsReturn: ["True", "False"],
+      AcceptsTab: ["True", "False"],
+      CaretBrush: "Brush",
+      HorizontalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"],
+      IsReadOnly: ["True", "False"],
+      SelectionBrush: "Brush",
+      SelectionOpacity: null,
+      VerticalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"]
+    },
+    base: "Control"
+  },
+  TextBox: {
+    attrs: {
+      CaretIndex: null,
+      MaxLength: null,
+      MaxLines: null,
+      SelectedText: null,
+      SelectionLength: null,
+      SelectionStart: null,
+      TextAlignment: ["Left", "Right", "Center", "Justify"],
+      Text: null,
+      TextWrapping: ["NoWrap", "Wrap", "WrapWithOverflow"]
+    },
+    base: "TextBoxBase"
+  },
+  PasswordBox: {
+    attrs: {
+      CaretBrush: "Brush",
+      MaxLength: null,
+      PasswordChar: null,
+      Password: null,
+      SelectionBrush: "Brush",
+      SelectionOpacity: null
+    },
+    base: "Control"
   },
   Shape: {
     type: "abstract",
@@ -406,7 +475,22 @@ let Schema = {
     },
     base: "TileBrush"
   },
+  ImageSource: {
+    type: "abstract",
+    attrs: {}
+  },
+  BitmapSource: {
+    attrs: {},
+    base: "ImageSource"
+  },
+  BitmapImage: {
+    attrs: {
+      UriSource: null
+    },
+    base: "BitmapSource"
+  },
   Transform: {
+    type: "abstract",
     attrs: {}
   },
   TransformGroup: {
@@ -601,8 +685,8 @@ let Schema = {
   TriggerBase: {
     type: "abstract",
     attrs: {
-      EnterActions: null,
-      ExitActions: null
+      EnterActions: "TriggerAction",
+      ExitActions: "TriggerAction"
     }
   },
   Trigger: {
@@ -642,9 +726,40 @@ let Schema = {
   },
   EventTrigger: {
     attrs: {
-      Actions: null
+      Actions: "TriggerAction"
     },
     base: "TriggerBase"
+  },
+  TriggerAction: {
+    type: "abstract",
+    attrs: {}
+  },
+  BeginStoryboard: {
+    attrs: {
+      HandoffBehavior: ["SnapshotAndReplace", "Compose"],
+      Name: null,
+      Storyboard: "Storyboard"
+    },
+    base: "TriggerAction"
+  },
+  ControllableStoryboardAction: {
+    type: "abstract",
+    attrs: {
+      BeginStoryboardName: null
+    },
+    base: "TriggerAction"
+  },
+  PauseStoryboard: {
+    attrs: {},
+    base: "ControllableStoryboardAction"
+  },
+  ResumeStoryboard: {
+    attrs: {},
+    base: "ControllableStoryboardAction"
+  },
+  StopStoryboard: {
+    attrs: {},
+    base: "ControllableStoryboardAction"
   },
   Setter: {
     attrs: {
