@@ -12,10 +12,10 @@ export default function Navbar(props) {
 
       <div className="navbar-centered">
         {props.title.length > 0 &&
-          <a href={props.gistUrl}>
+          <a href={props.gistUrl} title="View on Gist">
             <div className='title'>
               <p>{props.title}</p>
-              <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png' alt="See source code"></img>
+              <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png' alt="View on Gist"></img>
             </div>
           </a>
         }
