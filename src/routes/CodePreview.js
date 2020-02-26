@@ -31,7 +31,7 @@ class CodePreview extends React.Component {
         return (
             <React.Fragment>
                 {this.props.showLink &&
-                    <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash}>
+                    <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash} title="Edit on xamltoy">
                         <div className="link linkCode">
                             <img src='../images/link.png' alt="Edit on xamltoy"></img>
                         </div>
@@ -43,7 +43,6 @@ class CodePreview extends React.Component {
                     editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
                     options={{
                         mode: 'xml',
-                        xmlHint: true,
                         lineNumbers: true,
                         tabSize: 2,
                     }}

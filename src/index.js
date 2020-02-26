@@ -4,6 +4,8 @@ import Router from './routes';
 import './styles/style.css';
 import * as serviceWorker from './serviceWorker';
 
+serviceWorker.register();
+
 ReactDOM.render(<Router />, document.getElementById('root'));
 
 let verticalDragging = false;
@@ -41,14 +43,15 @@ if (document.getElementById('editorSkeleton')) {
     let editorBoxLeft = document.getElementById('editorBoxLeft');
     let editorBoxRight = document.getElementById('editorBoxRight');
     let canvas = document.getElementById("canvas");
-    let brush = document.getElementById('brush');
-    let photo = document.getElementById('photo');
-    let vibrate = document.getElementById('vibrate');
     let sampleButton = document.getElementById('samples');
     let sampleDropdown = document.getElementById("dropdown");
     var modal = document.getElementById("modal");
     var faqButton = document.getElementById("show-faq");
     var closeButton = document.getElementsByClassName("close")[0];
+
+    let batchesButton = document.getElementById('brush');
+    let overdrawButton = document.getElementById('photo');
+    let ppaButton = document.getElementById('vibrate');
 
     resizeEditor();
     resetCursor();
@@ -57,27 +60,33 @@ if (document.getElementById('editorSkeleton')) {
         sampleDropdown.classList.toggle("show");
     }
 
-    brush.onclick = () => {
-        if (!brush.classList.contains('button-active')) {
-            brush.classList.add('button-active');
-            photo.classList.remove('button-active');
-        }
-        else brush.classList.remove('button-active');
+    batchesButton.onclick = () => {
+        if (!batchesButton.classList.contains('button-active')) {
+            batchesButton.classList.add('button-active');
+            overdrawButton.classList.remove('button-active');
+        }else{
+            batchesButton.classList.remove('button-active');
+        } 
+        updateViewFlags();
     }
 
-    photo.onclick = () => {
-        if (!photo.classList.contains('button-active')) {
-            photo.classList.add('button-active');
-            brush.classList.remove('button-active');
-        }
-        else photo.classList.remove('button-active');
+    overdrawButton.onclick = () => {
+        if (!overdrawButton.classList.contains('button-active')) {
+            overdrawButton.classList.add('button-active');
+            batchesButton.classList.remove('button-active');
+        }else{
+            overdrawButton.classList.remove('button-active');
+        } 
+        updateViewFlags();
     }
 
-    vibrate.onclick = () => {
-        if (!vibrate.classList.contains('button-active')) {
-            vibrate.classList.add('button-active');
-        }
-        else vibrate.classList.remove('button-active');
+    ppaButton.onclick = () => {
+        if (!ppaButton.classList.contains('button-active')) {
+            ppaButton.classList.add('button-active');
+        }else{
+            ppaButton.classList.remove('button-active');
+        } 
+        updateViewFlags();
     }
 
     window.addEventListener('resize', () => {
@@ -105,6 +114,10 @@ if (document.getElementById('editorSkeleton')) {
     document.addEventListener('mouseout', function (e) {
         resetCursor();
     });
+
+    function updateViewFlags(){
+        
+    }
 
     function resetCursor() {
         editorSkeleton.style.pointerEvents = 'auto';
@@ -216,4 +229,3 @@ if (document.getElementById('editorSkeleton')) {
     }
 }
 
-serviceWorker.unregister();

@@ -2,7 +2,7 @@
   "name": "xamltoy",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.noesisengine.com/xamltoy",
+  "homepage": "https://www.noesisengine.com/xamltoy/",
   "dependencies": {
     "axios": "^0.19.1",
     "codemirror": "^5.50.2",
