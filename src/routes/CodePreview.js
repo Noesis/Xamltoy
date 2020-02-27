@@ -38,23 +38,23 @@ class CodePreview extends React.Component {
                         <img src='../images/play-blue.png' alt="Edit on xamltoy"></img>
                     </a>
                 </div>
-                <CodeMirror className="CodeMirror"
-                    value={this.state.xaml}
-                    onBeforeChange={editor => { window.codemirror = editor }}
-                    editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
-                    options={{
-                        mode: 'xml',
-                        lineNumbers: false,
-                        tabSize: 2,
-                    }}
-                />
+                <div className="codePreviewCode">
+                  <CodeMirror className="CodeMirror"
+                      value={this.state.xaml}
+                      onBeforeChange={editor => { window.codemirror = editor }}
+                      editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
+                      options={{
+                          mode: 'xml',
+                          lineNumbers: false,
+                          tabSize: 2,
+                      }}
+                  />
+                </div>
             </React.Fragment>
         )
     }
 
     componentDidMount() {
-        document.getElementById('root').style.border = '1px solid gray';
-        document.querySelector('.CodeMirror').style.backgroundColor = 'white!important';
         let hash = this.props.match.params.hash;
         if (!hash) {
             this.setState({
