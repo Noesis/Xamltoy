@@ -156,38 +156,37 @@ h3{
 .codePreviewNavbar{
   z-index: 200;
   width: 100%;
-  height: 32px;
-  background-color: #d9d9d9;
-  border: 1px solid #bfbfbf;
+  height: 38px;
+  background-color: #e4e4e4;
   display: flex;
   justify-content: space-between;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
 }
 .codePreviewNavbar p{
   align-items: center;
-  line-height: 30px;
-  margin-left: 10px;
+  line-height: 38px;
+  margin-left: 15px;
   color: #384349;
 }
 .codePreviewNavbar a p{
   color: #1c91cc;
-  font-size: 16px;
   margin-right: 4px;
 }
-.codePreviewNavbar a {
+.codePreviewNavbar a{
   align-items: center;
   display: flex;
 }
 .codePreviewNavbar img{
   height: 12px;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 .codePreviewCode{
-  height: calc(100% - 32px);
-  border: 1px solid #bfbfbf;
-  border-top-width: 0;
+  height: calc(100% - 38px);
+}
+.codePreviewCode .react-codemirror2.CodeMirror {
+  padding-left: 12px;
 }
 .CodeMirror{
   height: 100%;
