@@ -176,6 +176,10 @@ h3{
   font-size: 16px;
   margin-right: 4px;
 }
+.codePreviewNavbar a {
+  align-items: center;
+  display: flex;
+}
 .codePreviewNavbar img{
   height: 12px;
   margin-right: 10px;
@@ -352,9 +356,6 @@ footer span{
 /* ScrollBars */
 ::-webkit-scrollbar {
   width: 16px;
-}
-::-webkit-scrollbar-track {
-  background: #F3F3F3;
 }
 ::-webkit-scrollbar-thumb {
   background: #CCCCCC;
