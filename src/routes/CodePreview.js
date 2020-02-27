@@ -22,6 +22,7 @@ class CodePreview extends React.Component {
         this.CodemirrorInstance = null;
         this.state = {
             xaml: "Loading...",
+            title: "",
             fetched: false,
             hash: "",
         }
@@ -30,20 +31,20 @@ class CodePreview extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.props.showLink &&
+                <div className="codePreviewNavbar">
+                    <p>{this.state.title}</p>
                     <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash} title="Edit on xamltoy">
-                        <div className="link linkCode">
-                            <img src='../images/link.png' alt="Edit on xamltoy"></img>
-                        </div>
+                        <p>RUN</p>
+                        <img src='../images/play-blue.png' alt="Edit on xamltoy"></img>
                     </a>
-                }
+                </div>
                 <CodeMirror className="CodeMirror"
                     value={this.state.xaml}
                     onBeforeChange={editor => { window.codemirror = editor }}
                     editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
                     options={{
                         mode: 'xml',
-                        lineNumbers: true,
+                        lineNumbers: false,
                         tabSize: 2,
                     }}
                 />
@@ -52,6 +53,8 @@ class CodePreview extends React.Component {
     }
 
     componentDidMount() {
+        document.getElementById('root').style.border = '1px solid gray';
+        document.querySelector('.CodeMirror').style.backgroundColor = 'white!important';
         let hash = this.props.match.params.hash;
         if (!hash) {
             this.setState({
@@ -73,6 +76,7 @@ class CodePreview extends React.Component {
                 this.setState({
                     xaml: response.data.files["Main.xaml"].content,
                     hash: hash,
+                    title: response.data.description,
                     fetched: true
                 })
             })

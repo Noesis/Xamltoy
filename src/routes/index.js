@@ -36,12 +36,6 @@ class Index extends React.Component {
             <Route exact path="/code/:hash">
               <CodePreview showLink={false}/>
             </Route>
-            <Route exact path="/code-link">
-              <CodePreview showLink={true}/>
-            </Route>
-            <Route exact path="/code-link/:hash">
-              <CodePreview showLink={true}/>
-            </Route>
             <Route exact path="/:hash">
               <Player/>
             </Route>
