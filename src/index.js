@@ -49,9 +49,9 @@ if (document.getElementById('editorSkeleton')) {
     var faqButton = document.getElementById("show-faq");
     var closeButton = document.getElementsByClassName("close")[0];
 
-    let batchesButton = document.getElementById('brush');
-    let overdrawButton = document.getElementById('photo');
-    let ppaButton = document.getElementById('vibrate');
+    let batchesButton = document.getElementById('batches');
+    let overdrawButton = document.getElementById('overdraw');
+    let ppaaButton = document.getElementById('ppaa');
 
     resizeEditor();
     resetCursor();
@@ -80,11 +80,11 @@ if (document.getElementById('editorSkeleton')) {
         updateViewFlags();
     }
 
-    ppaButton.onclick = () => {
-        if (!ppaButton.classList.contains('button-active')) {
-            ppaButton.classList.add('button-active');
+    ppaaButton.onclick = () => {
+        if (!ppaaButton.classList.contains('button-active')) {
+            ppaaButton.classList.add('button-active');
         }else{
-            ppaButton.classList.remove('button-active');
+            ppaaButton.classList.remove('button-active');
         } 
         updateViewFlags();
     }
@@ -116,7 +116,11 @@ if (document.getElementById('editorSkeleton')) {
     });
 
     function updateViewFlags(){
-        
+        let flags = 0 |
+            (batchesButton.classList.contains('button-active') ? 2 : 0) |
+            (overdrawButton.classList.contains('button-active') ? 4 : 0) |
+            (ppaaButton.classList.contains('button-active') ? 16 : 0);
+        window.Module.ccall('SetViewFlags', null, ['number'], [flags]);
     }
 
     function resetCursor() {
