@@ -12,7 +12,7 @@ export default function Navbar(props) {
 
       <div className="navbar-centered">
         {props.title.length > 0 &&
-          <a href={process.env.PUBLIC_URL + '/' + props.hash} title="View on Gist">
+          <a href={'https://gist.github.com/' + props.hash} title="View on Gist">
             <div className='title'>
               <p>{props.title}</p>
               <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png' alt="View on Gist"></img>

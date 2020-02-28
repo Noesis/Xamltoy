@@ -25,13 +25,13 @@ class CodeMirrorComponent extends React.PureComponent {
     return (
       <div id="xamlEditorContainer">
         <button
-          title="Run with ctrl/cmd + s or Alt + Enter"
+          title="Run with Ctrl/Cmd+S or Alt+Enter"
           type="button"
           id="run-button"
           className="runButton"
           onClick={this.runButtonPressed.bind(this)}
         >
-          RUN<img src="images/play.png" alt="RUN"></img>
+          RUN<img src="images/play.png" alt=">"></img>
         </button>
         <CodeMirror className="CodeMirror"
           value={this.props.value}
