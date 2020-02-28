@@ -24,9 +24,9 @@ export default function EditorWindow(props) {
                     <span id="resolution" className="left"></span>
                     <span id="frames" className="left"></span>
                     <span className="center">
-                        <img id='batches' src='images/brush.svg' alt="Batches" title="Batches"></img>
-                        <img id='overdraw' src='images/photo.svg' alt="Overdraw" title="Overdraw" ></img>
-                        <img id='ppaa' src='images/vibrate.svg' alt="PPAA" title="PPAA" className="button-active hide" ></img>
+                        <i id='batches' className='fas fa-paint-brush' alt="Batches" title="Batches"></i>
+                        <i id='overdraw' className='fas fa-images' alt="Overdraw" title="Overdraw"></i>
+                        <i id='ppaa'  className='fas fa-water button-active hide' alt="PPAA" title="PPAA"></i>
                     </span>
                     <span className="right">Based on NoesisGUI 3.0</span>
                 </footer>

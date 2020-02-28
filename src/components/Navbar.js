@@ -15,7 +15,7 @@ export default function Navbar(props) {
           <a href={process.env.PUBLIC_URL + '/' + props.hash} title="View on Gist">
             <div className='title'>
               <p>{props.title}</p>
-              <img className='title-link' src='https://www.noesisengine.com/xamltoy/images/link.png' alt="View on Gist"></img>
+              <i className='fas fa-external-link-alt title-link' alt="View on Gist"></i>
             </div>
           </a>
         }

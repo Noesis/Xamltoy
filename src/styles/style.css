@@ -57,10 +57,11 @@ h3{
   line-height: 2;
   margin: 10px;
 }
-.error img{
+.error i{
   height: 15px;
   margin-right: 5px;
   vertical-align: middle;
+  color: rgb(212, 6, 6);
 }
 .errorLine{
   background-color: #ecada2!important;
@@ -143,9 +144,9 @@ h3{
   z-index: 20;
   cursor: pointer;
 }
-.runButton img{
-  height: 12px;
-  margin-left: 4px;
+.runButton i{
+  font-size: 16px;
+  margin-left: 5px;
 }
 .codemirrorContainer{
   flex-grow: 1;
@@ -178,9 +179,10 @@ h3{
   align-items: center;
   display: flex;
 }
-.codePreviewNavbar img{
-  height: 12px;
+.codePreviewNavbar i{
+  height: 16px;
   margin-right: 15px;
+  color: #1c91cc;
 }
 .codePreviewCode{
   height: calc(100% - 38px);
@@ -300,6 +302,10 @@ footer img:hover{
 #rightFooter{
   background-color: #252525;
 }
+#rightFooter i{
+  font-size: 18px;
+  margin: 10px;
+}
 footer span{
   display: flex;
   height: 100%;
@@ -345,10 +351,9 @@ footer span{
   max-width: 20vw;
 }
 .title-link{
-  margin: 25px;
-  width: 15px;
-  height: 15px;
   margin: 12px;
+  font-size: 15px;
+  color: #1c91cc;
 }
 .left {float:left;}
 .right {float:right;}
@@ -463,7 +468,7 @@ footer span{
   display: block;
 }
 .hide {
-  display: none;
+  display: none!important;
 }
 @media screen and (max-width: 600px) {
 

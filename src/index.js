@@ -163,9 +163,9 @@ if (document.getElementById('editorSkeleton')) {
         if (lineNumber && window.codemirror.getLine(lineNumber-1)) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
         else errorText = log.substring(log.indexOf("]") + 1);
         let errorMessage = document.createTextNode(errorText);
-        let icon = document.createElement("img");
+        let icon = document.createElement("i");
         root.style.userSelect = 'auto';
-        icon.src = "images/cross.png";
+        icon.className = "fas fa-times-circle";
         node.appendChild(icon);
         node.appendChild(errorMessage);
         node.classList.add('error');

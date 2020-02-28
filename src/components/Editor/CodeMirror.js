@@ -31,7 +31,7 @@ class CodeMirrorComponent extends React.PureComponent {
           className="runButton"
           onClick={this.runButtonPressed.bind(this)}
         >
-          RUN<img src="images/play.png" alt=">"></img>
+          RUN<i class="fas fa-play"></i>
         </button>
         <CodeMirror className="CodeMirror"
           value={this.props.value}

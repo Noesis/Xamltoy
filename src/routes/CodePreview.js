@@ -35,7 +35,7 @@ class CodePreview extends React.Component {
                     <p>{this.state.title}</p>
                     <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash} title="Edit on xamltoy">
                         <p>RUN</p>
-                        <img src='../images/play-blue.png' alt="Edit on xamltoy"></img>
+                        <i class="fas fa-play" alt="Edit on xamltoy"></i>
                     </a>
                 </div>
                 <div className="codePreviewCode">
