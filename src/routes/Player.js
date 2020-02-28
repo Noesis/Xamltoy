@@ -59,7 +59,7 @@ class Player extends React.Component {
     }
 
     componentDidMount() {
-        let hash = this.props.match.params.hash;        
+        let hash = this.props.match.params.hash;
         if (!hash) {
             this.setState({
                 fetched: true,

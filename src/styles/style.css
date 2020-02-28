@@ -58,10 +58,20 @@ h3{
   margin: 10px;
 }
 .error i{
-  height: 15px;
+  height: 12px;
   margin-right: 5px;
+  margin-bottom: 3px;
   vertical-align: middle;
   color: rgb(212, 6, 6);
+}
+.errorIconBg{
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  margin-right: -12px;
+  border-radius: 10px;
+  background: white;
+  display: inline-block;
 }
 .errorLine{
   background-color: #ecada2!important;
@@ -144,9 +154,12 @@ h3{
   z-index: 20;
   cursor: pointer;
 }
+.runButton span{
+  vertical-align: middle;
+}
 .runButton i{
-  font-size: 16px;
-  margin-left: 5px;
+  font-size: 11px;
+  margin-left: 4px;
 }
 .codemirrorContainer{
   flex-grow: 1;
@@ -180,7 +193,8 @@ h3{
   display: flex;
 }
 .codePreviewNavbar i{
-  height: 16px;
+  height: 12px;
+  font-size: 11px;
   margin-right: 15px;
   color: #1c91cc;
 }
@@ -286,9 +300,6 @@ footer img{
   filter: invert(60%);
   margin: 0 10px 0 10px;
 }
-.button-active{
-  filter: invert(100%)!important;
-}
 footer img:hover{
   filter: invert(80%);
 }
@@ -305,6 +316,15 @@ footer img:hover{
 #rightFooter i{
   font-size: 18px;
   margin: 10px;
+}
+#rightFooter i:hover{
+  color: #fff;
+}
+#rightFooter .button-active{
+  color: #2fa6e2;
+}
+#rightFooter .button-active:hover{
+  color: #2fa6e2;
 }
 footer span{
   display: flex;
@@ -353,7 +373,7 @@ footer span{
 .title-link{
   margin: 12px;
   font-size: 15px;
-  color: #1c91cc;
+  color: #2fa6e2;
 }
 .left {float:left;}
 .right {float:right;}
