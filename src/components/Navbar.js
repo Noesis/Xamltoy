@@ -6,13 +6,13 @@ export default function Navbar(props) {
     <div className="navbar">
 
       <a className="navbar-left" href="https://www.noesisengine.com/">
-        <img className="logo" src='images/logo.svg' alt="logo" ></img>
+        <img className="logo" src='logo.svg' alt="logo" ></img>
         <p>xaml<span>toy</span></p>
       </a>
 
       <div className="navbar-centered">
         {props.title.length > 0 &&
-          <a href={process.env.PUBLIC_URL + '/' + props.hash} title="View on Gist">
+          <a href={'https://gist.github.com/' + props.hash} title="View on Gist">
             <div className='title'>
               <p>{props.title}</p>
               <i className='fas fa-external-link-alt title-link' alt="View on Gist"></i>
