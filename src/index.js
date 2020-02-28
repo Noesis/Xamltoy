@@ -4,7 +4,7 @@ import Router from './routes';
 import './styles/style.css';
 import * as serviceWorker from './serviceWorker';
 
-serviceWorker.register();
+serviceWorker.unregister();
 
 ReactDOM.render(<Router />, document.getElementById('root'));
 
@@ -156,7 +156,7 @@ if (document.getElementById('editorSkeleton')) {
     function generateErrorMessage(log, lineNumber) {
         let node = document.createElement("div");
         let errorText = "";
-        if (lineNumber && window.codemirror.getLine(lineNumber)) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
+        if (lineNumber && window.codemirror.getLine(lineNumber-1)) errorText = "Line " + lineNumber + log.substring(log.indexOf(")") + 1);
         else errorText = log.substring(log.indexOf("]") + 1);
         let errorMessage = document.createTextNode(errorText);
         let icon = document.createElement("img");
@@ -202,7 +202,7 @@ if (document.getElementById('editorSkeleton')) {
         var logs = Array.prototype.slice.call(arguments);
         logs.forEach(log => {
             if (log.includes("[NOESIS/E]")) {
-                let lineNumber = log.substring(log.indexOf(">(") + 2, log.indexOf(")"));
+                let lineNumber = log.substring(log.indexOf("(") + 1, log.indexOf(")"));
                 generateErrorMessage(log, lineNumber);
                 hightlightLine(lineNumber - 1);
             }

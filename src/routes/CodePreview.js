@@ -82,7 +82,6 @@ class CodePreview extends React.Component {
             })
             .catch((err) => {
                 console.log(err);
-                alert("Could not find Gist with given ID.")
                 window.history.pushState({}, "", "./"); // removes hash from url
                 this.setState({
                     xaml: default_xaml,
