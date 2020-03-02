@@ -147,6 +147,9 @@ let Schema = {
     },
     base: "Span"
   },
+  ItemsPresenter: {
+    base: "FrameworkElement"
+  },
   Panel: {
     type: "abstract",
     attrs: {
@@ -360,6 +363,86 @@ let Schema = {
       SelectionBrush: "Brush",
       SelectionOpacity: null
     },
+    base: "Control"
+  },
+  RangeBase: {
+    type: "abstract",
+    attrs: {
+      LargeChange: null,
+      Maximum: null,
+      Minimum: null,
+      SmallChange: null,
+      Value: null
+    },
+    base: "Control"
+  },
+  Slider: {
+    attrs: {
+      Delay: null,
+      Interval: null,
+      IsDirectionReversed: ["True", "False"],
+      IsMoveToPointEnabled: ["True", "False"],
+      IsSelectionRangeEnabled: ["True", "False"],
+      IsSnapToTickEnabled: ["True", "False"],
+      Orientation: ["Horizontal", "Vertical"],
+      SelectionEnd: null,
+      SelectionStart: null,
+      TickFrequency: null,
+      Placement: ["None", "TopLeft", "BottomRight", "Both"],
+      Ticks: null
+    },
+    base: "RangeBase"
+  },
+  ScrollBar: {
+    attrs: {
+      Orientation: ["Horizontal", "Vertical"],
+      ViewportSize: null
+    },
+    base: "RangeBase"
+  },
+  Track: {
+    attrs: {
+      DecreaseButton: "RepeatButton",
+      IncreaseButton: "RepeatButton",
+      IsDirectionReversed: ["True", "False"],
+      Maximum: null,
+      Minimum: null,
+      Orientation: ["Horizontal", "Vertical"],
+      Thumb: "Thumb",
+      Value: null,
+      ViewportSize: null
+    },
+    base: "FrameworkElement"
+  },
+  Thumb: {
+    attrs: {},
+    base: "Control"
+  },
+  ToolBarTray: {
+    attrs: {
+      Background: "Brush",
+      Orientation: ["Horizontal", "Vertical"]
+    },
+    base: "FrameworkElement"
+  },
+  TickBar: {
+    attrs: {
+      Fill: "Brush",
+      IsDirectionReversed: ["True", "False"],
+      IsSelectionRangeEnabled: ["True", "False"],
+      Maximum: null,
+      Minimum: null,
+      Placement: ["Left", "Top", "Right", "Bottom"],
+      ReservedSpace: null,
+      SelectionEnd: null,
+      SelectionStart: null,
+      TickFrequency: null,
+      Ticks: null
+    },
+    base: "FrameworkElement"
+  },
+  Separator: {
+    attrs: {},
     base: "Control"
   },
   Shape: {
