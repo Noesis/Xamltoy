@@ -37,6 +37,7 @@ if(document.getElementById('canvas')) {
 if (document.getElementById('editorSkeleton')) {
 
     let root = document.getElementById('root');
+    let runButton = document.getElementById('run-button');
     let verticalSplitter = document.getElementById('verticalSplitter');
     let editorSkeleton = document.getElementById('editorSkeleton');
     let errorLog = document.getElementById("errorLog");
@@ -54,6 +55,7 @@ if (document.getElementById('editorSkeleton')) {
     let batchesButton = document.getElementById('batches');
     let overdrawButton = document.getElementById('overdraw');
     let ppaaButton = document.getElementById('ppaa');
+    let collapseXamlButton = document.getElementById('collapseXaml');
 
     resizeEditor();
     resetCursor();
@@ -95,11 +97,33 @@ if (document.getElementById('editorSkeleton')) {
         updateViewFlags();
     }
 
+    collapseXamlButton.onclick = () => {
+        if (!collapseXamlButton.classList.contains('collapsed')) {
+            collapseXamlButton.classList.add('collapsed');
+            editorBoxLeft.style.height= '32px';
+            editorBoxRight.style.height= '100%';
+            window.dispatchEvent(new Event('resize'));
+            runButton.style.display = 'none';
+        }else{
+            collapseXamlButton.classList.remove('collapsed');
+            editorBoxLeft.style.height= '';
+            editorBoxRight.style.height= '50%';
+            window.dispatchEvent(new Event('resize'));
+            runButton.style.display = 'block';
+        } 
+    }
+
     window.addEventListener('resize', () => {
         leftWidth = Math.round(window.innerWidth * editorWidthRatio);
         rightWidth = window.innerWidth - leftWidth - 1;
         editorWidthRatio = Math.min(0.8, leftWidth / window.innerWidth);
         resizeEditor();
+        if(window.innerWidth > 600){
+            collapseXamlButton.classList.remove('collapsed');
+            editorBoxLeft.style.height= '';
+            editorBoxRight.style.height= '';
+            window.dispatchEvent(new Event('resize'));
+        }
     });
 
     document.addEventListener('mousedown', function (e) {

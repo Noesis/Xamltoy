@@ -510,6 +510,12 @@ footer span{
 .hide {
   display: none!important;
 }
+#collapseXaml{
+  display: none;
+}
+.collapsed{
+  transform: rotate(180deg);
+}
 @media screen and (max-width: 600px) {
 
   #editorSkeleton{
@@ -532,6 +538,9 @@ footer span{
   }
   .dropdown-content-mobile{
     width: 100%;
+  }
+  #collapseXaml{
+    display: block;
   }
 }
 @media screen and (max-width: 1000px) {

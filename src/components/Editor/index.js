@@ -26,6 +26,7 @@ export default function EditorWindow(props) {
                     <span className="center">
                         <i id='batches' className='fas fa-paint-brush' alt="Batches" title="Batches"></i>
                         <i id='overdraw' className='fas fa-images' alt="Overdraw" title="Overdraw"></i>
+                        <i id='collapseXaml' className='fas fa-caret-down' alt="Collapse XAML" title="Collapse XAML"></i>
                         <i id='ppaa'  className='fas fa-water button-active hide' alt="PPAA" title="PPAA"></i>
                     </span>
                     <span className="right">Based on NoesisGUI 3.0</span>
