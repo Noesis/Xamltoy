@@ -368,7 +368,7 @@ footer span{
 .title p{
   text-overflow: ellipsis;
   overflow: hidden;
-  max-width: 20vw;
+  max-width: 36vw;
 }
 .title-link{
   margin: 12px;
