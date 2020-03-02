@@ -44,7 +44,9 @@ if (document.getElementById('editorSkeleton')) {
     let editorBoxRight = document.getElementById('editorBoxRight');
     let canvas = document.getElementById("canvas");
     let sampleButton = document.getElementById('samples');
+    let hamburgerButton = document.getElementById('hamburger');
     let sampleDropdown = document.getElementById("dropdown");
+    let sampleDropdownMobile = document.getElementById("dropdown-mobile");
     var modal = document.getElementById("modal");
     var faqButton = document.getElementById("show-faq");
     var closeButton = document.getElementsByClassName("close")[0];
@@ -58,6 +60,10 @@ if (document.getElementById('editorSkeleton')) {
 
     sampleButton.onclick = () => {
         sampleDropdown.classList.toggle("show");
+    }
+
+    hamburgerButton.onclick = () => {
+        sampleDropdownMobile.classList.toggle("show");
     }
 
     batchesButton.onclick = () => {
@@ -231,6 +237,11 @@ if (document.getElementById('editorSkeleton')) {
         if (!event.target.matches('.dropbtn')) {
             if (sampleDropdown.classList.contains('show')) {
                 sampleDropdown.classList.remove('show');
+            }
+        }
+        if (!event.target.matches('.dropbtn-mobile')) {
+            if (sampleDropdownMobile.classList.contains('show')) {
+                sampleDropdownMobile.classList.remove('show');
             }
         }
     }

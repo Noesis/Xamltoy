@@ -484,6 +484,26 @@ footer span{
 .dropdown-content a:hover {
   background-color: #1c91cc;
 }
+.dropbtn-mobile {
+  display: none!important;
+  text-align: center;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 20px;  
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: bold;
+  color: white;
+  border: none;
+  outline: none;
+  background-color: inherit;
+  margin: 0;
+}
+.dropdown-content-mobile{
+  top: 48px;
+}
+.sample-mobile{
+  background-color: rgb(28, 125, 192);
+}
 .show {
   display: block;
 }
@@ -510,10 +530,16 @@ footer span{
     font-size: 15px;
     line-height: 35px;
   }
+  .dropdown-content-mobile{
+    width: 100%;
+  }
 }
 @media screen and (max-width: 1000px) {
-  .navbar-right{
+  .desktop{
     display: none;
+  }
+  .mobile{
+    display: block;
   }
   #rightFooter .center{
     position: relative;
@@ -525,20 +551,21 @@ footer span{
   #rightFooter .right{
     display: none!important;
   }
-  .navbar-right {
-    float: none;
-    display: none;
+  .title-link{
+    width: 15px;
+    height: 15px;
   }
   .navbar-centered a {
     height: 46px;
-    position: relative;
+    position: absolute;
     transform: none;
     float: right;
     top: auto;
     left: auto;
+    right: 40px;
+    padding-right: 0px;
   }
-  .title-link{
-    width: 15px;
-    height: 15px;
+  .dropbtn-mobile {
+    display: block!important;
   }
 }
