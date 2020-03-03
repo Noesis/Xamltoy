@@ -512,6 +512,7 @@ footer span{
 }
 #collapseXaml{
   display: none;
+  cursor: pointer;
 }
 .collapsed{
   transform: rotate(180deg);

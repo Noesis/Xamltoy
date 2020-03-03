@@ -8,7 +8,11 @@ require('./codemirror/noesis-hint');
 require('./codemirror/show-hint');
 require("codemirror/addon/hint/show-hint.css");
 require('codemirror/lib/codemirror.css');
+require("codemirror/addon/fold/foldgutter.css");
 require('codemirror/addon/edit/closetag.js');
+require('codemirror/addon/fold/foldcode.js');
+require('codemirror/addon/fold/foldgutter.js');
+require('codemirror/addon/fold/xml-fold.js');
 require('codemirror/mode/xml/xml.js');
 require('codemirror/src/modes.js');
 
@@ -43,7 +47,9 @@ class CodeMirrorComponent extends React.PureComponent {
             autoCloseTags: true,
             lineNumbers: true,
             tabSize: 2,
+            foldGutter: true,
             hintOptions: { schemaInfo: this.schema },
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
             extraKeys: {
               "'<'": (cm) => this.completeAfter(cm),
               "'/'": (cm) => this.completeIfAfterLt(cm),
