@@ -198,6 +198,10 @@ let Schema = {
     base: "FrameworkElement",
     children: ["UIElement"]
   },
+  AdornerDecorator: {
+    attrs: {},
+    base: "Decorator"
+  },
   BulletDecorator: {
     attrs: {
       Background: "Brush",
@@ -294,6 +298,23 @@ let Schema = {
       Title: null
     },
     base: "UserControl"
+  },
+  ToolTip: {
+    attrs: {
+      HasDropShadow: ["True", "False"],
+      HorizontalOffset: null,
+      IsOpen: ["True", "False"],
+      Placement: ["Absolute", "Relative", "Bottom", "Center", "Right", "AbsolutePoint", "RelativePoint", "Mouse", "MousePoint", "Left", "Top", "Custom"],
+      PlacementRectangle: null,
+      PlacementTarget: "UIElement",
+      StaysOpen: ["True", "False"],
+      VerticalOffset: null
+    },
+    base: "ContentControl"
+  },
+  Label: {
+    attrs: {},
+    base: "ContentControl"
   },
   ButtonBase: {
     type: "abstract",
@@ -444,6 +465,65 @@ let Schema = {
   Separator: {
     attrs: {},
     base: "Control"
+  },
+  ScrollViewer: {
+    attrs: {
+      CanContentScroll: ["True", "False"],
+      HorizontalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"],
+      VerticalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"],
+      IsDeferredScrollingEnabled: ["True", "False"],
+      PanningMode: ["Both", "HorizontalFirst", "HorizontalOnly", "None", "VerticalFirst", "VerticalOnly"],
+      PanningDeceleration: null,
+      PanningRatio: null
+    },
+    base: "ContentControl"
+  },
+  ItemsControl: {
+    attrs: {
+      AlternationCount: null,
+      AlternationIndex: null,
+      DisplayMemberPath: null,
+      ItemContainerStyle: "Style",
+      ItemsPanel: "ItemsPanelTemplate",
+      ItemsSource: null,
+      ItemTemplate: "DataTemplate",
+      ItemTemplateSelector: null
+    },
+    base: "Control"
+  },
+  Selector: {
+    attrs: {
+      IsSynchronizedWithCurrentItem: ["True", "False"],
+      SelectedIndex: null,
+      SelectedItem: null,
+      SelectedValue: null,
+      SelectedValuePath: null
+    },
+    base: "ItemsControl"
+  },
+  ListBox: {
+    attrs: {
+      SelectionMode: ["Single", "Multiple", "Extended"]
+    },
+    base: "Selector"
+  },
+  ListBoxItem: {
+    attrs: {
+      IsSelected: ["True", "False"]
+    },
+    base: "ContentControl"
+  },
+  ComboBoxItem: {
+    attrs: {},
+    base: "ListBoxItem"
+  },
+  ListViewItem: {
+    attrs: {},
+    base: "ListBoxItem"
+  },
+  StatusBarItem: {
+    attrs: {},
+    base: "ContentControl"
   },
   Shape: {
     type: "abstract",
@@ -755,6 +835,10 @@ let Schema = {
     attrs: {
       DataType: null
     },
+    base: "FrameworkTemplate"
+  },
+  ItemsPanelTemplate: {
+    attrs: {},
     base: "FrameworkTemplate"
   },
   Style: {
