@@ -260,6 +260,32 @@ li.CodeMirror-hint-active {
   background: #2FA6E230;
   color: #000;
 }
+.CodeMirror-guttermarker-subtle {
+    color: #DDD;
+}
+.CodeMirror-guttermarker-subtle:hover {
+  color: #666;
+}
+.CodeMirror-foldgutter-open:after {
+  content: "\25bc";
+  margin-left: 1px;
+}
+.CodeMirror-foldgutter-folded:after {
+  content: "\2bc8";
+  margin-left: -1px;
+}
+.CodeMirror-foldmarker {
+  color: transparent;
+  text-shadow: none;
+  line-height: .3;
+  cursor: pointer;
+}
+.CodeMirror-foldmarker:after {
+  content: "...";
+  color: #666;
+  font-weight: bold;
+  margin-left: -12px;
+}
 #editorSkeleton{
   display: flex;
   height: calc(100% - 48px);
