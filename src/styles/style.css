@@ -414,35 +414,61 @@ footer span{
 	left: 0;
   right: 0;
   margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  height: 50%;
-  width: 40%;
-  border-radius: 5px;
-  overflow: auto;
+  height: 60%;
+  width: 50%;
   min-width: 300px;
+  border-radius: 6px 6px 5px 5px;
 }
-.modal-content table{
-  width: 80%;
-  margin-left: 10%;
-  margin-top: 10px;
+.modal-content .header{
+  background: #e6e6e6;
+  padding: 2px 20px 5px 20px;
+  border-radius: 5px 5px 0 0;
 }
-.modal-content th, td{
-  border: 1px solid black;
-  padding: 5px;
-}
-.close {
-  color: #aaaaaa;
+.modal-content .close {
+  color: #555;
   float: right;
   margin: 0px;
   font-size: 28px;
   font-weight: bold;
+  line-height: 34px;
+  cursor: pointer;
 }
-.close:hover,
-.close:focus {
+.modal-content .close:hover,
+.modal-content .close:focus {
   color: #000;
   text-decoration: none;
-  cursor: pointer;
+}
+.modal-content .content{
+  padding: 5px 30px;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 40px);
+  width: 100%;
+}
+.modal-content h3{
+  font-family: 'Open Sans Condensed', sans-serif;
+  text-transform: uppercase;
+  margin-top: 15px;
+  color: #333;
+}
+.modal-content p{
+  margin-top: 12px;
+}
+.modal-content ul, ol{
+  margin-top: 12px;
+}
+.modal-content li{
+  margin-top: 8px;
+  margin-left: 25px;
+  font-size: 0.95em;
+}
+.modal-content a{
+  color: #124C7A;
+}
+.modal-content a:hover,
+.modal-content a:focus{
+  color: #2fa6e2;
 }
 .dropdown {
   float: left;
@@ -452,7 +478,7 @@ footer span{
   text-align: center;
   cursor: pointer;
   padding: 9px 16px;
-  font-size: 20px;  
+  font-size: 20px;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: bold;
   color: white;
@@ -517,33 +543,6 @@ footer span{
 .collapsed{
   transform: rotate(180deg);
 }
-@media screen and (max-width: 600px) {
-
-  #editorSkeleton{
-    flex-direction: column-reverse;
-  }
-  .editorBox{
-    height: 50%;
-    width: 100%!important;
-    max-width: 100%;
-  }
-  .verticalSplitter{
-    display: none;
-  }
-  .logo{
-    width: 22px;
-  }
-  .navbar p{
-    font-size: 15px;
-    line-height: 35px;
-  }
-  .dropdown-content-mobile{
-    width: 100%;
-  }
-  #collapseXaml{
-    display: block;
-  }
-}
 @media screen and (max-width: 1000px) {
   .desktop{
     display: none;
@@ -577,5 +576,58 @@ footer span{
   }
   .dropbtn-mobile {
     display: block!important;
+  }
+  .modal-content{
+    font-size: 0.9em;
+  }
+  .modal-content .header{
+    padding: 2px 16px 4px 18px;
+  }
+   .modal-content .close{
+    line-height: 32px;
+  }
+  .modal-content .content{
+    height: calc(100% - 36px);
+    padding: 2px 25px 5px 25px;
+  }
+}
+@media screen and (max-width: 600px) {
+
+  #editorSkeleton{
+    flex-direction: column-reverse;
+  }
+  .editorBox{
+    height: 50%;
+    width: 100%!important;
+    max-width: 100%;
+  }
+  .verticalSplitter{
+    display: none;
+  }
+  .logo{
+    width: 22px;
+  }
+  .navbar p{
+    font-size: 15px;
+    line-height: 35px;
+  }
+  .dropdown-content-mobile{
+    width: 100%;
+  }
+  #collapseXaml{
+    display: block;
+  }
+  .modal-content{
+    font-size: 0.8em;
+  }
+  .modal-content .close{
+    line-height: 28px;
+  }
+  .modal-content .header{
+    padding: 2px 12px 4px 16px;
+  }
+  .modal-content .content{
+    height: calc(100% - 32px);
+    padding: 0 20px 5px 20px;
   }
 }
