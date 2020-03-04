@@ -478,6 +478,26 @@ let Schema = {
     },
     base: "ContentControl"
   },
+  HeaderedContentControl: {
+    attrs: {
+      Header: "UIElement",
+      HeaderTemplate: "DataTemplate",
+      HeaderTemplateSelector: null
+    },
+    base: "ContentControl",
+    children: ["UIElement"]
+  },
+  GroupBox: {
+    attrs: {},
+    base: "HeaderedContentControl"
+  },
+  Expander: {
+    attrs: {
+      ExpandDirection: ["Down", "Up", "Left", "Right"],
+      IsExpanded: ["True", "False"]
+    },
+    base: "HeaderedContentControl"
+  },
   ItemsControl: {
     attrs: {
       AlternationCount: null,
@@ -513,17 +533,111 @@ let Schema = {
     },
     base: "ContentControl"
   },
+  ComboBox: {
+    attrs: {
+      IsDropDown: ["True", "False"],
+      IsEditable: ["True", "False"],
+      IsReadOnly: ["True", "False"],
+      MaxDropDownHeight: null,
+      StaysOpenOnEdit: ["True", "False"],
+      Text: null
+    },
+    base: "Selector"
+  },
   ComboBoxItem: {
     attrs: {},
     base: "ListBoxItem"
+  },
+  ListView: {
+    attrs: {
+      View: "ViewBase"
+    },
+    base: "ListBox"
   },
   ListViewItem: {
     attrs: {},
     base: "ListBoxItem"
   },
+  ViewBase: {
+    type: "abstract",
+    attrs: {}
+  },
+  GridView: {
+    attrs: {
+      AllowsColumnReorder: ["True", "False"],
+      ColumnHeaderContainerStyle: "Style",
+      ColumnHeaderContextMenu: "ContextMenu",
+      ColumnHeaderStringFormat: null,
+      ColumnHeaderTemplate: "DataTemplate",
+      ColumnHeaderTemplateSelector: null,
+      ColumnHeaderToolTip: "UIElement"
+    },
+    base: "ViewBase",
+    children: ["GridViewColumn"]
+  },
+  GridViewColumn: {
+    attrs: {
+      CellTemplate: "DataTemplate",
+      CellTemplateSelector: null,
+      DisplayMemberBinding: "BindingBase",
+      Header: "UIElement",
+      HeaderContainerStyle: "Style",
+      HeaderStringFormat: null,
+      HeaderTemplate: "DataTemplate",
+      HeaderTemplateSelector: null,
+      Width: null
+    }
+  },
+  GridViewColumnHeader: {
+    attrs: {},
+    base: "ButtonBase"
+  },
+  GridViewRowPresenterBase: {
+    type: "abstract",
+    attrs: {
+      Columns: "GridViewColumn"
+    },
+    base: "FrameworkElement"
+  },
+  GridViewRowPresenter: {
+    attrs: {
+      Content: "UIElement"
+    },
+    base: "GridViewRowPresenterBase"
+  },
+  GridViewHeaderRowPresenter: {
+    attrs: {
+      AllowsColumnReorder: ["True", "False"],
+      ColumnHeaderContainerStyle: "Style",
+      ColumnHeaderContextMenu: "ContextMenu",
+      ColumnHeaderStringFormat: null,
+      ColumnHeaderTemplate: "DataTemplate",
+      ColumnHeaderTemplateSelector: null,
+      ColumnHeaderToolTip: "UIElement"
+    },
+    base: "GridViewRowPresenterBase"
+  },
+  StatusBar: {
+    attrs: {},
+    base: "ItemsControl"
+  },
   StatusBarItem: {
     attrs: {},
     base: "ContentControl"
+  },
+  TabControl: {
+    attrs: {
+      ContentTemplate: "DataTemplate",
+      ContentTemplateSelector: null,
+      TabStripPlacement: ["Left", "Top", "Right", "Bottom"]
+    },
+    base: "Selector"
+  },
+  TabItem: {
+    attrs: {
+      IsSelected: ["True", "False"]
+    },
+    base: "HeaderedContentControl"
   },
   Shape: {
     type: "abstract",
@@ -693,6 +807,53 @@ let Schema = {
       CenterY: null
     },
     base: "Transform"
+  },
+  CompositeTransform: {
+    attrs: {
+      CenterX: null,
+      CenterY: null,
+      Rotation: null,
+      ScaleX: null,
+      ScaleY: null,
+      SkewX: null,
+      SkewY: null,
+      TranslateX: null,
+      TranslateY: null
+    },
+    base: "Transform"
+  },
+  MatrixTransform: {
+    attrs: {
+      Matrix: null
+    },
+    base: "Transform"
+  },
+  Transform3D: {
+    type: "abstract",
+    attrs: {}
+  },
+  CompositeTransform3D: {
+    attrs: {
+      CenterX: null,
+      CenterY: null,
+      CenterZ: null,
+      RotationX: null,
+      RotationY: null,
+      RotationZ: null,
+      ScaleX: null,
+      ScaleY: null,
+      ScaleZ: null,
+      TranslateX: null,
+      TranslateY: null,
+      TranslateZ: null
+    },
+    base: "Transform3D"
+  },
+  MatrixTransform3D: {
+    attrs: {
+      Matrix: null
+    },
+    base: "Transform3D"
   },
   Geometry: {
     attrs: {
