@@ -289,6 +289,37 @@ let Schema = {
     base: "Control",
     children: ["UIElement"]
   },
+  ItemsControl: {
+    attrs: {
+      AlternationCount: null,
+      AlternationIndex: null,
+      DisplayMemberPath: null,
+      ItemContainerStyle: "Style",
+      ItemsPanel: "ItemsPanelTemplate",
+      ItemsSource: null,
+      ItemTemplate: "DataTemplate",
+      ItemTemplateSelector: null
+    },
+    base: "Control"
+  },
+  HeaderedContentControl: {
+    attrs: {
+      Header: "UIElement",
+      HeaderTemplate: "DataTemplate",
+      HeaderTemplateSelector: null
+    },
+    base: "ContentControl",
+    children: ["UIElement"]
+  },
+  HeaderedItemsControl: {
+    attrs: {
+      Header: "UIElement",
+      HeaderStringFormat: null,
+      HeaderTemplate: "DataTemplate",
+      HeaderTemplateSelector: null
+    },
+    base: "ItemsControl"
+  },
   UserControl: {
     attrs: {},
     base: "ContentControl",
@@ -439,13 +470,6 @@ let Schema = {
     attrs: {},
     base: "Control"
   },
-  ToolBarTray: {
-    attrs: {
-      Background: "Brush",
-      Orientation: ["Horizontal", "Vertical"]
-    },
-    base: "FrameworkElement"
-  },
   TickBar: {
     attrs: {
       Fill: "Brush",
@@ -478,15 +502,6 @@ let Schema = {
     },
     base: "ContentControl"
   },
-  HeaderedContentControl: {
-    attrs: {
-      Header: "UIElement",
-      HeaderTemplate: "DataTemplate",
-      HeaderTemplateSelector: null
-    },
-    base: "ContentControl",
-    children: ["UIElement"]
-  },
   GroupBox: {
     attrs: {},
     base: "HeaderedContentControl"
@@ -498,18 +513,44 @@ let Schema = {
     },
     base: "HeaderedContentControl"
   },
-  ItemsControl: {
+  MenuBase: {
+    type: "abstract",
+    attrs: {},
+    base: "ItemsControl"
+  },
+  Menu: {
     attrs: {
-      AlternationCount: null,
-      AlternationIndex: null,
-      DisplayMemberPath: null,
-      ItemContainerStyle: "Style",
-      ItemsPanel: "ItemsPanelTemplate",
-      ItemsSource: null,
-      ItemTemplate: "DataTemplate",
-      ItemTemplateSelector: null
+      IsMainMenu: ["True", "False"],
+      Activated: ["True", "False"]
     },
-    base: "Control"
+    base: "MenuBase"
+  },
+  ContextMenu: {
+    attrs: {
+      HasDropShadow: ["True", "False"],
+      HorizontalOffset: null,
+      IsOpen: ["True", "False"],
+      Placement: ["Absolute", "Relative", "Bottom", "Center", "Right", "AbsolutePoint", "RelativePoint", "Mouse", "MousePoint", "Left", "Top", "Custom"],
+      PlacementRectangle: null,
+      PlacementTarget: "UIElement",
+      StaysOpen: ["True", "False"],
+      VerticalOffset: null
+    },
+    base: "MenuBase"
+  },
+  MenuItem: {
+    attrs: {
+      Command: null,
+      CommandParameter: null,
+      CommandTarget: "UIElement",
+      Icon: "UIElement",
+      InputGestureText: null,
+      IsCheckable: ["True", "False"],
+      IsChecked: ["True", "False"],
+      IsSubmenuOpen: ["True", "False"],
+      StaysOpenOnClick: ["True", "False"]
+    },
+    base: "HeaderedItemsControl"
   },
   Selector: {
     attrs: {
@@ -617,6 +658,20 @@ let Schema = {
     },
     base: "GridViewRowPresenterBase"
   },
+  ToolBar: {
+    attrs: {
+      BandIndex: null,
+      Band: null
+    },
+    base: "HeaderedItemsControl"
+  },
+  ToolBarTray: {
+    attrs: {
+      Background: "Brush",
+      Orientation: ["Horizontal", "Vertical"]
+    },
+    base: "FrameworkElement"
+  },
   StatusBar: {
     attrs: {},
     base: "ItemsControl"
@@ -638,6 +693,16 @@ let Schema = {
       IsSelected: ["True", "False"]
     },
     base: "HeaderedContentControl"
+  },
+  TreeView: {
+    base: "ItemsControl"
+  },
+  TreeViewItem: {
+    attrs: {
+      IsExpanded: ["True", "False"],
+      IsSelected: ["True", "False"]
+    },
+    base: "HeaderedItemsControl"
   },
   Shape: {
     type: "abstract",
@@ -1143,6 +1208,35 @@ let Schema = {
     attrs: {
       Property: null
     }
+  },
+  CommandBinding: {
+    attrs: {
+      Command: null
+    }
+  },
+  InputBinding: {
+    type: "abstract",
+    attrs: {
+      Command: null,
+      CommandParameter: null,
+      CommandTarget: "UIElement",
+      Gesture: "InputGesture"
+    }
+  },
+  KeyBinding: {
+    attrs: {
+      Key: null,
+      Modifiers: ["None", "Alt", "Control", "Shift", "Windows"]
+    },
+    base: "InputBinding"
+  },
+  InputGesture: {
+    type: "abstract",
+    attrs: {}
+  },
+  KeyGesture: {
+    attrs: {},
+    base: "InputGesture"
   },
   StaticResource: {
     type: "markup",
