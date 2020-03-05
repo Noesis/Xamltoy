@@ -116,7 +116,7 @@
       if (attributeTagMode) {
         let tagsForAtrr = getTagsForAttr(tags, inner);
         for(var i = 0; i< tagsForAtrr.length; i++) if (!prefix || matches(tagsForAtrr[i], prefix, matchInMiddle)) 
-          if (!tags[tagsForAtrr[i]].type || tags[tagsForAtrr[i]].type !== 'abstract') result.push("<" + tagsForAtrr[i]);
+          if ( (!tags[tagsForAtrr[i]].type || tags[tagsForAtrr[i]].type !== 'abstract') ) result.push("<" + tagsForAtrr[i]);
       }
       if (inner && curTag) {
         for (var attr in getAttrs(tags, curTag))  if (!prefix || matches(inner+"."+attr, prefix, matchInMiddle)) 
@@ -176,7 +176,7 @@
           replaceToken = true;
         }
         for (var attr in attrs) if (attrs.hasOwnProperty(attr) && (!prefix || matches(attr, prefix, matchInMiddle)))
-          result.push(attr.concat('=""'));
+          if(!line.includes(attr)) result.push(attr.concat('=""'));
       }
       result = result.sort();
     }
@@ -197,6 +197,8 @@
 
   function getTagsForAttr(tags, inner) {
     let tag = inner.split('.')[0];
+    // Check if tag is in schema
+    if(!tags[tag]) return [];
     let attr = inner.split('.')[1];
     let childList = [];
     let base = tags[tag].attrs[attr];
