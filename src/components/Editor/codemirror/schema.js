@@ -5,6 +5,10 @@ let Schema = {
     "Border"
   ],
   "!attrs": {
+    "xmlns:i": ["http://schemas.microsoft.com/expression/2010/interactivity"],
+    "xmlns:ei": ["http://schemas.microsoft.com/expression/2010/interactions"],
+    "xmlns:noesis": ["clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"],
+    "xmlns:sys": ["clr-namespace:System;assembly=mscorlib"],
     "x:Name": null,
     "x:Key": null
   },
@@ -24,6 +28,7 @@ let Schema = {
       Opacity: null,
       RenderTransformOrigin: null,
       RenderTransform: "Transform",
+      Transform3D: "noesis:Transform3D",
       Visibility: ["Collapsed", "Hidden", "Visible"]
     }
   },
@@ -91,6 +96,7 @@ let Schema = {
     children: ["Inline"]
   },
   TextElement: {
+    type: "abstract",
     attrs: {
       Background: "Brush",
       FontFamily: null,
@@ -101,10 +107,10 @@ let Schema = {
       Foreground: "Brush",
       Stroke: "Brush",
       StrokeThickness: null
-    },
-    base: "FrameworkElement"
+    }
   },
   Inline: {
+    type: "abstract",
     attrs: {},
     base: "TextElement"
   },
@@ -893,11 +899,11 @@ let Schema = {
     },
     base: "Transform"
   },
-  Transform3D: {
+  'noesis:Transform3D': {
     type: "abstract",
     attrs: {}
   },
-  CompositeTransform3D: {
+  'noesis:CompositeTransform3D': {
     attrs: {
       CenterX: null,
       CenterY: null,
@@ -912,13 +918,13 @@ let Schema = {
       TranslateY: null,
       TranslateZ: null
     },
-    base: "Transform3D"
+    base: "noesis:Transform3D"
   },
-  MatrixTransform3D: {
+  'noesis:MatrixTransform3D': {
     attrs: {
       Matrix: null
     },
-    base: "Transform3D"
+    base: "noesis:Transform3D"
   },
   Geometry: {
     attrs: {
@@ -1168,6 +1174,30 @@ let Schema = {
       Value: null
     }
   },
+  InputBinding: {
+    type: "abstract",
+    attrs: {
+      Command: null,
+      CommandParameter: null,
+      CommandTarget: "UIElement",
+      Gesture: "InputGesture"
+    }
+  },
+  KeyBinding: {
+    attrs: {
+      Key: null,
+      Modifiers: ["None", "Alt", "Control", "Shift", "Windows"]
+    },
+    base: "InputBinding"
+  },
+  InputGesture: {
+    type: "abstract",
+    attrs: {}
+  },
+  KeyGesture: {
+    attrs: {},
+    base: "InputGesture"
+  },
   BindingBase: {
     type: "abstract",
     attrs: {
@@ -1214,30 +1244,6 @@ let Schema = {
       Command: null
     }
   },
-  InputBinding: {
-    type: "abstract",
-    attrs: {
-      Command: null,
-      CommandParameter: null,
-      CommandTarget: "UIElement",
-      Gesture: "InputGesture"
-    }
-  },
-  KeyBinding: {
-    attrs: {
-      Key: null,
-      Modifiers: ["None", "Alt", "Control", "Shift", "Windows"]
-    },
-    base: "InputBinding"
-  },
-  InputGesture: {
-    type: "abstract",
-    attrs: {}
-  },
-  KeyGesture: {
-    attrs: {},
-    base: "InputGesture"
-  },
   StaticResource: {
     type: "markup",
     attrs: {
@@ -1266,6 +1272,232 @@ let Schema = {
   'x:Null': {
     type: "markup",
     attrs: {}
+  },
+  'i:Interaction': {
+    attrs: {
+      Behaviors: "i:Behavior",
+      Triggers: "i:TriggerBase"
+    }
+  },
+  'i:Behavior': {
+    type: "abstract",
+    attrs: {}
+  },
+  'ei:ConditionBehavior': {
+    attrs: {
+      Condition: "ei:ConditionalExpression"
+    },
+    base: "i:Behavior",
+    children: ["ei:ConditionalExpression"]
+  },
+  'ei:ConditionalExpression': {
+    attrs: {
+      ForwardChaining: ["And", "Or"],
+      Conditions: "ei:ComparisonCondition"
+    },
+    children: ["ei:ComparisonCondition"]
+  },
+  'ei:ComparisonCondition': {
+    attrs: {
+      LeftOperand: null,
+      Operator: ["Equal", "NotEqual", "LessThan", "LessThanOrEqual", "GreaterThan", "GreaterThanOrEqual"],
+      RightOperand: null
+    }
+  },
+  'ei:MouseDragElementBehavior': {
+    attrs: {
+      ConstrainToParentBounds: ["True", "False"],
+      X: null,
+      Y: null
+    },
+    base: "i:Behavior"
+  },
+  'ei:TranslateZoomRotateBehavior': {
+    attrs: {
+      ConstrainToParentBounds: ["True", "False"],
+      SupportedGestures: ["None", "TranslateX", "TranslateY", "Translate", "Rotate", "Scale", "All"],
+      MinimumScale: null,
+      MaximumScale: null,
+      RotationalFriction: null,
+      TranslateFriction: null,
+      WheelSensitivity: null
+    },
+    base: "i:Behavior"
+  },
+  'noesis:CollectionSortBehavior': {
+    attrs: {
+      Comparer: null,
+      ItemsSource: null
+    },
+    base: "i:Behavior"
+  },
+  'noesis:CollectionFilterBehavior': {
+    attrs: {
+      Predicate: null,
+      ItemsSource: null
+    },
+    base: "i:Behavior"
+  },
+  'i:TriggerBase': {
+    type: "abstract",
+    attrs: {
+      Actions: "i:TriggerAction"
+    }
+  },
+  'i:EventTriggerBase': {
+    type: "abstract",
+    attrs: {
+      SourceObject: null,
+      SourceName: null
+    },
+    base: "i:TriggerBase"
+  },
+  'i:EventTrigger': {
+    attrs: {
+      EventName: null
+    },
+    base: "i:EventTriggerBase"
+  },
+  'ei:TimerTrigger': {
+    attrs: {
+      MillisecondsPerTick: null,
+      TotalTicks: null
+    },
+    base: "i:EventTrigger"
+  },
+  'ei:KeyTrigger': {
+    attrs: {
+      ActiveOnFocus: ["True", "False"],
+      FiredOn: ["KeyDown", "KeyUp"],
+      Key: null,
+      Modifiers: ["None", "Alt", "Control", "Shift", "Windows"]
+    },
+    base: "i:TriggerBase"
+  },
+  'noesis:GamepadTrigger': {
+    attrs: {
+      ActiveOnFocus: ["True", "False"],
+      FiredOn: ["KeyDown", "KeyUp"],
+      Button: ["Left", "Up", "Right", "Down", "Accept", "Cancel", "Menu", "View", "PageUp", "PageDown", "PageLeft", "PageRight", "Context1", "Context2", "Context3", "Context4" ]
+    },
+    base: "i:TriggerBase"
+  },
+  'ei:PropertyChangedTrigger': {
+    attrs: {
+      Binding: null
+    },
+    base: "i:TriggerBase"
+  },
+  'ei:DataTrigger': {
+    attrs: {
+      Value: null,
+      Comparison: ["Equal", "NotEqual", "LessThan", "LessThanOrEqual", "GreaterThan", "GreaterThanOrEqual"],
+    },
+    base: "ei:PropertyChangedTrigger"
+  },
+  'ei:StoryboardTrigger': {
+    type: "abstract",
+    attrs: {
+      Storyboard: "Storyboard"
+    },
+    base: "i:TriggerBase"
+  },
+  'ei:StoryboardCompletedTrigger': {
+    attrs: {},
+    base: "ei:StoryboardTrigger"
+  },
+  'i:TriggerAction': {
+    type: "abstract",
+    attrs: {
+      IsEnabled: ["True", "False"]
+    }
+  },
+  'i:TargetedTriggerAction': {
+    type: "abstract",
+    attrs: {
+      TargetObject: null,
+      TargetName: null
+    },
+    base: "i:TriggerAction"
+  },
+  'i:InvokeCommandAction': {
+    attrs: {
+      CommandName: null,
+      Command: null,
+      CommandParameter: null
+    },
+    base: "i:TargetedTriggerAction"
+  },
+  'ei:ChangePropertyAction': {
+    attrs: {
+      PropertyName: null,
+      Value: null,
+      Duration: null,
+      Increment: ["True", "False"]
+    },
+    base: "i:TargetedTriggerAction"
+  },
+  'ei:GoToStateAction': {
+    attrs: {
+      StateName: null,
+      UseTransitions: ["True", "False"]
+    },
+    base: "i:TargetedTriggerAction"
+  },
+  'ei:RemoveElementAction': {
+    attrs: {},
+    base: "i:TargetedTriggerAction"
+  },
+  'ei:StoryboardAction': {
+    attrs: {
+      Storyboard: "Storyboard"
+    },
+    base: "i:TriggerAction"
+  },
+  'ei:ControlStoryboardAction': {
+    attrs: {
+      ControlStoryboardOption: ["Play", "Stop", "TogglePlayPause", "Pause", "Resume", "SkipToFill"]
+    },
+    base: "ei:StoryboardAction"
+  },
+  'ei:LaunchUriOrFileAction': {
+    attrs: {
+      Path: null
+    },
+    base: "i:TriggerAction"
+  },
+  'ei:PlaySoundAction': {
+    attrs: {
+      Source: null,
+      Volume: null
+    },
+    base: "i:TriggerAction"
+  },
+  'noesis:SetFocusAction': {
+    attrs: {},
+    base: "i:TargetedTriggerAction"
+  },
+  'noesis:SelectAction': {
+    attrs: {},
+    base: "i:TriggerAction"
+  },
+  'noesis:SelectAllAction': {
+    attrs: {},
+    base: "i:TriggerAction"
+  },
+  'noesis:StyleInteraction': {
+    attrs: {
+      Behaviors: "noesis:StyleBehaviorCollection",
+      Triggers: "noesis:StyleTriggerCollection"
+    }
+  },
+  'noesis:StyleBehaviorCollection': {
+    attrs: {},
+    children: ["i:Behavior"]
+  },
+  'noesis:StyleTriggerCollection': {
+    attrs: {},
+    children: ["i:TriggerBase"]
   }
 };
 
