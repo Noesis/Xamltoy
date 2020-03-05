@@ -51,6 +51,7 @@ class CodeMirrorComponent extends React.PureComponent {
             hintOptions: { schemaInfo: this.schema },
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
             extraKeys: {
+              "Ctrl-Space": (cm) => this.completeAfter(cm),
               "'<'": (cm) => this.completeAfter(cm),
               "'/'": (cm) => this.completeIfAfterLt(cm),
               "'='": (cm) => this.completeIfInTag(cm, '='),
