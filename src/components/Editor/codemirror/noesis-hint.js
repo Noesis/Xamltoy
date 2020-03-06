@@ -22,6 +22,7 @@
 
   function getHints(cm, options) {
     var tags = options && options.schemaInfo;
+    var attached = tags["!attached"];
     var quote = (options && options.quoteChar) || '"';
     var matchInMiddle = options && options.matchInMiddle;
     if (!tags) return;
@@ -68,7 +69,6 @@
       let markupTags = getMarkupTags(tags, inner);
       let prefix = token.string.replace(/.*{\s*/, '').replace(/\s/, '');
       if(prefix.includes(',')) prefix = prefix.slice(prefix.lastIndexOf(',')+2)
-      console.log(prefix)
       if(!prefix.includes(' ')){
         for (var i = 0; i < markupTags.length; i++) if (!prefix || matches(markupTags[i], prefix, matchInMiddle))
           if (!tags[markupTags[i]].type || tags[markupTags[i]].type !== 'abstract') result.push(markupTags[i]);
@@ -92,8 +92,16 @@
         let prefixEnd = Math.min(line.slice(cur.ch).indexOf('}'), line.slice(cur.ch).indexOf(',')) -1;
         prefix = line.slice(cur.ch, prefixEnd)
       } 
-      console.log(curMarkup)
       let attrs = getAttrs(tags, tags[curMarkup])
+      if(attached){
+        var set = attrs;
+        for (var tag in attached){
+          for (var attr in attached[tag]){
+            set[tag+"."+attr] = attached[tag][attr];
+          } 
+        } 
+        attrs = set;
+      }
       for (let attr in attrs) {
         result.push(attr);
       }
@@ -112,6 +120,14 @@
       var curTag = inner && tags[inner]
       var childList = inner ? curTag && getChildren(tags, curTag) : tags["!top"];
       var attributeTagMode = inner? inner.indexOf('.') > -1 : false;
+      //attached tags
+      if(attached){
+        for (var tag in attached){
+          for (var attr in attached[tag]){
+            if (!prefix || matches(tag+"."+attr, prefix, matchInMiddle)) result.push("<" + tag + "." + attr);
+          } 
+        } 
+      }
       //Look for attributes of current tag and include them in result
       if (attributeTagMode) {
         let tagsForAtrr = getTagsForAttr(tags, inner);
@@ -143,7 +159,17 @@
         for (var nm in attrs) if (attrs.hasOwnProperty(nm)) set[nm] = attrs[nm];
         attrs = set;
       }
+      if(attached){
+        var set = attrs;
+        for (var tag in attached) for (var attr in attached[tag]) set[tag+"."+attr] = attached[tag][attr];
+        attrs = set;
+      }
       if (token.type == "string" || token.string == "=") { // A value
+        if(attached){
+          var set = attrs;
+          for (var tag in attached) for (var attr in attached[tag]) set[tag+"."+attr] = attached[tag][attr];
+          attrs = set;
+        }
         var before = cm.getRange(Pos(cur.line, Math.max(0, cur.ch - 60)),
           Pos(cur.line, token.type == "string" ? token.start : token.end));
         var atName = before.match(/([^\s\u00a0=<>\"\']+)=$/), atValues;
@@ -168,15 +194,19 @@
           }
           replaceToken = true;
         }      
-        if(Array.isArray(atValues)) for (var i = 0; i < atValues.length; ++i) if (!prefix || matches(atValues[i], prefix, matchInMiddle))
-          result.push(quote + atValues[i] + quote);
+        if(Array.isArray(atValues)) for (var i = 0; i < atValues.length; ++i) {
+          if (!prefix || matches(atValues[i], prefix, matchInMiddle)){
+            result.push(quote + atValues[i] + quote); 
+          } 
+        }
       } else { // An attribute name
         if (token.type == "attribute") {
           prefix = token.string;
           replaceToken = true;
         }
-        for (var attr in attrs) if (attrs.hasOwnProperty(attr) && (!prefix || matches(attr, prefix, matchInMiddle)))
+        for (var attr in attrs) if (attrs.hasOwnProperty(attr) && (!prefix || matches(attr, prefix, matchInMiddle))){
           if(!line.includes(attr)) result.push(attr.concat('=""'));
+        }
       }
       result = result.sort();
     }
@@ -196,15 +226,14 @@
   }
 
   function getTagsForAttr(tags, inner) {
+    let childList = [];
     let tag = inner.split('.')[0];
     // Check if tag is in schema
     if(!tags[tag]) return [];
     let attr = inner.split('.')[1];
-    let childList = [];
-    let base = tags[tag].attrs[attr];
+    let base = tags[tag].attrs ? tags[tag].attrs[attr] : null;
     while (base && !Array.isArray(base)) {
       childList.push(base);
-      console.log(base)
       base = tags[base].base;
     }
     for (let tagName in tags) {
