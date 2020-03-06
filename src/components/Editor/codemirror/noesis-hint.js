@@ -93,15 +93,6 @@
         prefix = line.slice(cur.ch, prefixEnd)
       } 
       let attrs = getAttrs(tags, tags[curMarkup])
-      if(attached){
-        var set = attrs;
-        for (var tag in attached){
-          for (var attr in attached[tag]){
-            set[tag+"."+attr] = attached[tag][attr];
-          } 
-        } 
-        attrs = set;
-      }
       for (let attr in attrs) {
         result.push(attr);
       }
@@ -159,17 +150,17 @@
         for (var nm in attrs) if (attrs.hasOwnProperty(nm)) set[nm] = attrs[nm];
         attrs = set;
       }
-      if(attached){
-        var set = attrs;
-        for (var tag in attached) for (var attr in attached[tag]) set[tag+"."+attr] = attached[tag][attr];
+      if(attached && tags[tagInfo.name]){
+        var set = {};
+        for (var tag in attached){
+          for (var attr in attached[tag]){
+            set[tag+"."+attr] = attached[tag][attr];
+          } 
+        } 
+        console.log(attrs)
         attrs = set;
       }
       if (token.type == "string" || token.string == "=") { // A value
-        if(attached){
-          var set = attrs;
-          for (var tag in attached) for (var attr in attached[tag]) set[tag+"."+attr] = attached[tag][attr];
-          attrs = set;
-        }
         var before = cm.getRange(Pos(cur.line, Math.max(0, cur.ch - 60)),
           Pos(cur.line, token.type == "string" ? token.start : token.end));
         var atName = before.match(/([^\s\u00a0=<>\"\']+)=$/), atValues;
