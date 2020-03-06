@@ -13,7 +13,7 @@ let Schema = {
     "x:Key": null
   },
   "!attached": {
-    'noesis.Element': {
+    'noesis:Element': {
       Transform3D: "noesis:Transform3D",
       SupportsFocusEngagement: ["True", "False"],
       IsFocusEngagementEnabled: ["True", "False"],
@@ -34,10 +34,8 @@ let Schema = {
       Triggers: "noesis:StyleTriggerCollection"
     },
     'i:Interaction': {
-      attrs: {
-        Behaviors: "i:Behavior",
-        Triggers: "i:TriggerBase"
-      }
+      Behaviors: "i:Behavior",
+      Triggers: "i:TriggerBase"
     },
     TextElement: {
       Background: "Brush",
@@ -376,13 +374,16 @@ let Schema = {
       Padding: null,
       TabIndex: null,
       Template: "ControlTemplate",
-      VerticalContentAlignment: ["Top", "Center", "Bottom", "Stretch"]
+      VerticalContentAlignment: ["Top", "Center", "Bottom", "Stretch"],
+      IsFocusEngaged: ["True", "False"],
+      IsFocusEngagementEnabled: ["True", "False"]
     },
     base: "FrameworkElement"
   },
   ContentControl: {
     attrs: {
       Content: "UIElement",
+      ContentStringFormat: null,
       ContentTemplate: "DataTemplate",
       ContentTemplateSelector: null
     },
@@ -404,6 +405,7 @@ let Schema = {
   HeaderedContentControl: {
     attrs: {
       Header: "UIElement",
+      HeaderStringFormat: null,
       HeaderTemplate: "DataTemplate",
       HeaderTemplateSelector: null
     },
