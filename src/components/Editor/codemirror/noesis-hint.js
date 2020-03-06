@@ -142,22 +142,16 @@
       var attrs = curTag && getAttrs(tags, curTag);
       var globalAttrs = tags["!attrs"];
       if (!attrs && !globalAttrs) return;
-      if (!attrs) {
+      if (tags[tagInfo.name] && globalAttrs) { // Combine tag-local and global attributes
         attrs = globalAttrs;
-      } else if (globalAttrs) { // Combine tag-local and global attributes
-        var set = {};
-        for (var nm in globalAttrs) if (globalAttrs.hasOwnProperty(nm)) set[nm] = globalAttrs[nm];
-        for (var nm in attrs) if (attrs.hasOwnProperty(nm)) set[nm] = attrs[nm];
-        attrs = set;
       }
       if(attached && tags[tagInfo.name]){
-        var set = {};
+        var set = attrs;
         for (var tag in attached){
           for (var attr in attached[tag]){
             set[tag+"."+attr] = attached[tag][attr];
           } 
         } 
-        console.log(attrs)
         attrs = set;
       }
       if (token.type == "string" || token.string == "=") { // A value
