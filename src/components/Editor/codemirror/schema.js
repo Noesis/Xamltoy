@@ -12,6 +12,92 @@ let Schema = {
     "x:Name": null,
     "x:Key": null
   },
+  "!attached": {
+    'noesis.Element': {
+      Transform3D: "noesis:Transform3D",
+      SupportsFocusEngagement: ["True", "False"],
+      IsFocusEngagementEnabled: ["True", "False"],
+      IsFocusEngaged: ["True", "False"],
+      PPAAMode: ["Default", "Disabled"]
+    },
+    'noesis:Text': {
+      Stroke: "Brush",
+      StrokeThickness: null
+    },
+    'noesis:Path': {
+      TrimStart: null,
+      TrimEnd: null,
+      TrimOffset: null
+    },
+    'noesis:StyleInteraction': {
+      Behaviors: "noesis:StyleBehaviorCollection",
+      Triggers: "noesis:StyleTriggerCollection"
+    },
+    'i:Interaction': {
+      attrs: {
+        Behaviors: "i:Behavior",
+        Triggers: "i:TriggerBase"
+      }
+    },
+    TextElement: {
+      Background: "Brush",
+      FontFamily: null,
+      FontSize: null,
+      FontStretch: ["UltraCondensed", "ExtraCondensed", "Condensed", "SemiCondensed", "Normal", "Medium", "SemiExpanded", "Expanded", "ExtraExpanded", "UltraExpanded"],
+      FontStyle: ["Normal", "Oblique", "Italic"],
+      FontWeight: ["Thin", "ExtraLight", "UltraLight", "Light", "SemiLight", "Normal", "Regular", "Medium", "DemiBold", "SemiBold", "Bold", "ExtraBold", "UltraBold", "Black", "Heavy", "ExtraBlack", "UltraBlack"],
+      Foreground: "Brush",
+    },
+    Panel: {
+      ZIndex: null
+    },
+    Canvas: {
+      Bottom: null,
+      Left: null,
+      Right: null,
+      Top: null
+    },
+    DockPanel: {
+      Dock: ["Left", "Top", "Right", "Bottom"]
+    },
+    Grid: {
+      Column: null,
+      ColumnSpan: null,
+      IsSharedSizeScope: ["True", "False"],
+      Row: null,
+      RowSpan: null
+    },
+    VirtualizingPanel: {
+      CacheLength: null,
+      CacheLengthUnit: ["Pixel", "Item", "Page"],
+      IsContainerVirtualizable: ["True", "False"],
+      IsVirtualizing: ["True", "False"],
+      ScrollUnit: ["Pixel", "Item"],
+      VirtualizationMode: ["Standard", "Recycling"]
+    },
+    ScrollViewer: {
+      CanContentScroll: ["True", "False"],
+      HorizontalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"],
+      VerticalScrollBarVisibility: ["Disabled", "Auto", "Hidden", "Visible"],
+      IsDeferredScrollingEnabled: ["True", "False"],
+      PanningMode: ["Both", "HorizontalFirst", "HorizontalOnly", "None", "VerticalFirst", "VerticalOnly"],
+      PanningDeceleration: null,
+      PanningRatio: null
+    },
+    ItemsControl: {
+      AlternationIndex: null
+    },
+    Selector: {
+      IsSelected: ["True", "False"]
+    },
+    ToolBar: {
+      IsOverflowItem: ["True", "False"],
+      OverflowMode: ["AsNeeded", "Always", "Never"]
+    },
+    ToolBarTray: {
+      IsLocked: ["True", "False"]
+    }
+  },
   ResourceDictionary: {
     children: ["FrameworkTemplate", "Brush", "Transform", "Geometry", "UIElement"]
   },
@@ -84,8 +170,6 @@ let Schema = {
       LineHeight: null,
       LineStackingStrategy: ["BlockLineHeight","MaxHeight"],
       Padding: null,
-      Stroke: "Brush",
-      StrokeThickness: null,
       TextAlignment: ["Left", "Center", "Right", "Stretch"],
       TextDecorations: ["None", "Overline", "Baseline", "Underline", "Strikethrough"],
       Text: null,
@@ -104,9 +188,7 @@ let Schema = {
       FontStretch: ["UltraCondensed", "ExtraCondensed", "Condensed", "SemiCondensed", "Normal", "Medium", "SemiExpanded", "Expanded", "ExtraExpanded", "UltraExpanded"],
       FontStyle: ["Normal", "Oblique", "Italic"],
       FontWeight: ["Thin", "ExtraLight", "UltraLight", "Light", "SemiLight", "Normal", "Regular", "Medium", "DemiBold", "SemiBold", "Bold", "ExtraBold", "UltraBold", "Black", "Heavy", "ExtraBlack", "UltraBlack"],
-      Foreground: "Brush",
-      Stroke: "Brush",
-      StrokeThickness: null
+      Foreground: "Brush"
     }
   },
   Inline: {
@@ -160,6 +242,7 @@ let Schema = {
     type: "abstract",
     attrs: {
       Background: "Brush",
+      IsItemsHost: ["True", "False"],
       Children: "UIElement"
     },
     base: "FrameworkElement",
@@ -196,6 +279,17 @@ let Schema = {
   UniformGrid: {
     attrs: {},
     base: "Panel"
+  },
+  VirtualizingPanel: {
+    type: "abstract",
+    attrs: {},
+    base: "Panel"
+  },
+  VirtualizingStackPanel: {
+    attrs: {
+      Orientation: ["Horizontal", "Vertical"]
+    },
+    base: "VirtualizingPanel"
   },
   Decorator: {
     attrs: {
@@ -298,7 +392,6 @@ let Schema = {
   ItemsControl: {
     attrs: {
       AlternationCount: null,
-      AlternationIndex: null,
       DisplayMemberPath: null,
       ItemContainerStyle: "Style",
       ItemsPanel: "ItemsPanelTemplate",
@@ -667,7 +760,8 @@ let Schema = {
   ToolBar: {
     attrs: {
       BandIndex: null,
-      Band: null
+      Band: null,
+      IsOverflowOpen: ["True", "False"],
     },
     base: "HeaderedItemsControl"
   },
@@ -1273,12 +1367,6 @@ let Schema = {
     type: "markup",
     attrs: {}
   },
-  'i:Interaction': {
-    attrs: {
-      Behaviors: "i:Behavior",
-      Triggers: "i:TriggerBase"
-    }
-  },
   'i:Behavior': {
     type: "abstract",
     attrs: {}
@@ -1484,12 +1572,6 @@ let Schema = {
   'noesis:SelectAllAction': {
     attrs: {},
     base: "i:TriggerAction"
-  },
-  'noesis:StyleInteraction': {
-    attrs: {
-      Behaviors: "noesis:StyleBehaviorCollection",
-      Triggers: "noesis:StyleTriggerCollection"
-    }
   },
   'noesis:StyleBehaviorCollection': {
     attrs: {},
