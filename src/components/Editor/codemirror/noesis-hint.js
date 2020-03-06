@@ -120,8 +120,8 @@
       var curTag = inner && tags[inner]
       var childList = inner ? curTag && getChildren(tags, curTag) : tags["!top"];
       var attributeTagMode = inner? inner.indexOf('.') > -1 : false;
-      //attached tags
-      if(attached){
+      //attached properties
+      if(curTag) if(attached){
         for (var tag in attached){
           for (var attr in attached[tag]){
             if (!prefix || matches(tag+"."+attr, prefix, matchInMiddle)) result.push("<" + tag + "." + attr);
