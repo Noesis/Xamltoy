@@ -464,7 +464,7 @@
     hint: CodeMirror.hint.auto,
     completeSingle: true,
     alignWithWord: true,
-    closeCharacters: /[\s()\[\]{};:>,]/,
+    closeCharacters: /[\s()\[\]{};>,]/,
     closeOnUnfocus: true,
     completeOnSingleClick: true,
     container: null,

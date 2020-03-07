@@ -5,6 +5,8 @@ let Schema = {
     "Border"
   ],
   "!attrs": {
+    "xmlns": ["http://schemas.microsoft.com/winfx/2006/xaml/presentation"],
+    "xmlns:x": ["http://schemas.microsoft.com/winfx/2006/xaml"],
     "xmlns:i": ["http://schemas.microsoft.com/expression/2010/interactivity"],
     "xmlns:ei": ["http://schemas.microsoft.com/expression/2010/interactions"],
     "xmlns:noesis": ["clr-namespace:NoesisGUIExtensions;assembly=Noesis.GUI.Extensions"],
@@ -96,8 +98,17 @@ let Schema = {
       IsLocked: ["True", "False"]
     }
   },
+  '_Resource': {
+    type: "abstract",
+    attrs: {}
+  },
   ResourceDictionary: {
-    children: ["FrameworkTemplate", "Brush", "Transform", "Geometry", "UIElement"]
+    attrs: {
+      MergedDictionaries: "ResourceDictionary",
+      Source: null
+    },
+    base: "_Resource",
+    children: ["_Resource"]
   },
   UIElement: {
     attrs: {
@@ -112,7 +123,6 @@ let Schema = {
       Opacity: null,
       RenderTransformOrigin: null,
       RenderTransform: "Transform",
-      Transform3D: "noesis:Transform3D",
       Visibility: ["Collapsed", "Hidden", "Visible"]
     }
   },
@@ -150,7 +160,7 @@ let Schema = {
       UseLayoutRounding: ["True", "False"],
       VerticalAlignment: ["Top", "Bottom", "Center", "Stretch"],
       Width: null,
-      Resources: "ResourceDictionary",
+      Resources: "_Resource",
       Triggers: "TriggerBase"
     },
     base: "UIElement"
@@ -852,7 +862,8 @@ let Schema = {
       Opacity: null,
       RelativeTransform: "Transform",
       Transform: "Transform"
-    }
+    },
+    base: "_Resource"
   },
   SolidColorBrush: {
     attrs: {
@@ -935,7 +946,8 @@ let Schema = {
   },
   Transform: {
     type: "abstract",
-    attrs: {}
+    attrs: {},
+    base: "_Resource"
   },
   TransformGroup: {
     attrs: {
@@ -997,7 +1009,8 @@ let Schema = {
   },
   'noesis:Transform3D': {
     type: "abstract",
-    attrs: {}
+    attrs: {},
+    base: "_Resource"
   },
   'noesis:CompositeTransform3D': {
     attrs: {
@@ -1023,9 +1036,11 @@ let Schema = {
     base: "noesis:Transform3D"
   },
   Geometry: {
+    type: "abstract",
     attrs: {
       Transform: "Transform"
-    }
+    },
+    base: "_Resource"
   },
   GeometryGroup: {
     attrs: {
@@ -1151,6 +1166,7 @@ let Schema = {
       VisualTree: "FrameworkElement",
       Triggers: "TriggerBase"
     },
+    base: "_Resource",
     children: ["FrameworkElement"]
   },
   ControlTemplate: {
@@ -1175,6 +1191,7 @@ let Schema = {
       Setters: "Setter",
       Triggers: "TriggerBase"
     },
+    base: "_Resource",
     children: ["Setter"]
   },
   TriggerBase: {
