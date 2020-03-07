@@ -143,14 +143,12 @@
       var attrs = {};
       Object.assign(attrs, tags["!attrs"]);
       var tagAttrs = getAttrs(tags, curTag);
-      if (tagAttrs) {
-        Object.assign(attrs, tagAttrs);
-      }
+      if (tagAttrs) Object.assign(attrs, tagAttrs);
       if (attached) {
         for (var tag in attached){
           for (var attr in attached[tag]){
             attrs[tag + "." + attr] = attached[tag][attr];
-          } 
+          }
         }
       }
       if (token.type == "string" || token.string == "=") { // A value
