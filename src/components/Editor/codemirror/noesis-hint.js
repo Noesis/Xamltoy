@@ -58,8 +58,10 @@
       for (var i = 0; i < markupTags.length; i++) 
         for(attr in tags[markupTags[i]].attrs)
           if (attr === currAttr){
+            let hints = tags[markupTags[i]].attrs[attr] == null ? [] : tags[markupTags[i]].attrs[attr]
             return {
-              list: tags[markupTags[i]].attrs[attr] == null ? [] : tags[markupTags[i]].attrs[attr],
+              selectedHint: getBestMatch(cm, hints),
+              list: hints,
               from: Pos(cur.line, attrEnd +1),
               to: Pos(cur.line, token.end)
             };
@@ -73,6 +75,7 @@
         for (var i = 0; i < markupTags.length; i++) if (!prefix || matches(markupTags[i], prefix, matchInMiddle))
           if (!tags[markupTags[i]].type || tags[markupTags[i]].type !== 'abstract') result.push(markupTags[i]);
         return {
+          selectedHint: getBestMatch(cm, result),
           list: result,
           from: Pos(cur.line, cur.ch - prefix.length),
           to: Pos(cur.line, token.end)
@@ -97,6 +100,7 @@
         result.push(attr);
       }
       return {
+        selectedHint: getBestMatch(cm, result),
         list: result,
         from: cur,
         to: cur
@@ -193,6 +197,7 @@
       result = result.sort();
     }
     return {
+      selectedHint: getBestMatch(cm, result),
       list: result,
       from: replaceToken ? Pos(cur.line, tagStart == null ? token.start : tagStart) : cur,
       to: replaceToken ? Pos(cur.line, token.end) : cur
@@ -280,6 +285,17 @@
       }
     }
     return childList;
+  }
+
+  function getBestMatch(cm, hints) {
+    let current = cm.getTokenAt(cm.getCursor()).string.toLowerCase();
+    if(!current) return 0;
+    for (let i=0; i<hints.length; i++){
+      let hintValue = hints[i].toLowerCase().replace('<','');
+      console.log(hintValue + "---" + current + hints[i].toLowerCase().startsWith(current))
+      if(hintValue.startsWith(current)) return i;
+    }
+    return 0;
   }
 
   CodeMirror.registerHelper("hint", "xml", getHints);
