@@ -122,7 +122,6 @@ if (document.getElementById('editorSkeleton')) {
             collapseXamlButton.classList.remove('collapsed');
             editorBoxLeft.style.height= '';
             editorBoxRight.style.height= '';
-            window.dispatchEvent(new Event('resize'));
         }
     });
 
