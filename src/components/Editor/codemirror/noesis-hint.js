@@ -37,9 +37,7 @@
     var tag = /\btag\b/.test(token.type) && !/>$/.test(token.string);
     var tagName = tag && /^\w/.test(token.string), tagStart;
     var line = cm.getLine(cur.line);
-    var markupExtension = /{+.*/.test(token.string) && token.type === "string";
-    let markupAttr = (line.charAt(cur.ch - 2) !== ',' && line.charAt(cur.ch - 1) == ' ');
-    let markupAttrValue = line.charAt(cur.ch - 1) == '=';
+    var markupExtensionMode = /{+.*/.test(token.string) && token.type === "string";
     if (tagName) {
       var before = cm.getLine(cur.line).slice(Math.max(0, token.start - 2), token.start);
       var tagType = /<\/$/.test(before) ? "close" : /<$/.test(before) ? "open" : null;
@@ -50,61 +48,45 @@
       tagType = "close";
     }
     var tagInfo = inner.mode.xmlCurrentTag(inner.state)
-    if (markupExtension && markupAttrValue) { //Markup attr value
+    if(markupExtensionMode){ //MarkupExtension: {Tag Attribute=value}
       let markupTags = getMarkupTags(tags, inner);
-      let attrStart = line.substring(0, cur.ch).lastIndexOf(' ') + 1;
-      let attrEnd = line.substring(0, cur.ch).lastIndexOf('=');
-      let currAttr = line.slice(attrStart, attrEnd);
-      for (var i = 0; i < markupTags.length; i++) 
-        for(attr in tags[markupTags[i]].attrs)
-          if (attr === currAttr){
-            let hints = tags[markupTags[i]].attrs[attr] == null ? [] : tags[markupTags[i]].attrs[attr]
-            return {
-              selectedHint: getBestMatch(cm, hints),
-              list: hints,
-              from: Pos(cur.line, attrEnd +1),
-              to: Pos(cur.line, token.end)
-            };
+      let prefix = token.string.replace(/.*{\s*/, '');
+      if(prefix.includes(',')) prefix = prefix.slice(prefix.lastIndexOf(',')+2);
+      if(prefix.includes('=')){ // Markup attribute value
+        let curMarkup = prefix.split(' ')[0];
+        let curAttr = prefix.substring(curMarkup.length+1,prefix.indexOf('='));
+        let valuePrefix = prefix.split('=')[1];
+        let hintValues = tags[curMarkup].attrs[curAttr];
+        if(Array.isArray(hintValues)) for (var i = 0; i < hintValues.length; ++i) {
+          if (!valuePrefix || matches(hintValues[i], valuePrefix, matchInMiddle)){
+            result.push(hintValues[i]); 
           } 
-    }
-    if(markupExtension && !markupAttr){ //Markup Tag
-      let markupTags = getMarkupTags(tags, inner);
-      let prefix = token.string.replace(/.*{\s*/, '').replace(/\s/, '');
-      if(prefix.includes(',')) prefix = prefix.slice(prefix.lastIndexOf(',')+2)
-      if(!prefix.includes(' ')){
+        }
+        return {
+          list: result,
+          from: Pos(cur.line, cur.ch - valuePrefix.length),
+          to: Pos(cur.line, token.end)
+        };
+      }
+      if(prefix.includes(' ')){ // Markup attribute
+        let curMarkup = prefix.substring(0, prefix.lastIndexOf(' '));
+        if(prefix.includes(' ')) prefix = prefix.slice(prefix.lastIndexOf(' ')+1);
+        for (var attr in getAttrs(tags, tags[curMarkup]))  if (!prefix || matches(attr, prefix, matchInMiddle)) 
+          if (!tags[curMarkup].type || tags[curMarkup].type !== 'abstract') result.push(attr);
+        return {
+          list: result,
+          from: Pos(cur.line, cur.ch - prefix.length),
+          to: Pos(cur.line, token.end)
+        };
+      }else{// Markup Tag
         for (var i = 0; i < markupTags.length; i++) if (!prefix || matches(markupTags[i], prefix, matchInMiddle))
           if (!tags[markupTags[i]].type || tags[markupTags[i]].type !== 'abstract') result.push(markupTags[i]);
         return {
-          selectedHint: getBestMatch(cm, result),
           list: result,
           from: Pos(cur.line, cur.ch - prefix.length),
           to: Pos(cur.line, token.end)
         };
       }
-    }
-    if (markupExtension && markupAttr) { //Markup attr
-      let curMarkup = token.string;
-      if(curMarkup.includes(',')){
-        let start = curMarkup.slice(cur.ch).lastIndexOf(',');
-        curMarkup = curMarkup.slice(start);
-      }
-      curMarkup = token.string.replace(/.*{\s*/, '').replace(/\s/, '').replace(',', '').replace('=', '');
-      let prefixStart = line.substring(0, cur.ch).lastIndexOf(' ')+1;
-      let prefix = line.substring(prefixStart);
-      if (line.includes(',')){
-        let prefixEnd = Math.min(line.slice(cur.ch).indexOf('}'), line.slice(cur.ch).indexOf(',')) -1;
-        prefix = line.slice(cur.ch, prefixEnd)
-      } 
-      let attrs = getAttrs(tags, tags[curMarkup])
-      for (let attr in attrs) {
-        result.push(attr);
-      }
-      return {
-        selectedHint: getBestMatch(cm, result),
-        list: result,
-        from: cur,
-        to: cur
-      }; 
     }
     if (!tag && !tagInfo || tagType) {
       if (tagName)
