@@ -28,7 +28,7 @@ class Preview extends React.Component {
             {this.props.showLink &&
                 <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash} title="Edit on xamltoy">
                     <div className="link">
-                        <img src='../images/link.png' alt="Edit on xamltoy"></img>
+                        <i class="fas fa-external-link-alt" alt="Edit on xamltoy"></i>
                     </div>
                 </a>
             }
