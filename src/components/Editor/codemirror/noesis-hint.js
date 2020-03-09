@@ -292,7 +292,6 @@
     if(!current) return 0;
     for (let i=0; i<hints.length; i++){
       let hintValue = hints[i].toLowerCase().replace('<','');
-      console.log(hintValue + "---" + current + hints[i].toLowerCase().startsWith(current))
       if(hintValue.startsWith(current)) return i;
     }
     return 0;
