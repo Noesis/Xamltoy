@@ -1,3 +1,4 @@
+Header always edit Set-Cookie (.*) "$1; SameSite=None; Secure"
 <FilesMatch "\.(html)$">
 	<IfModule mod_expires.c>
 		ExpiresActive Off
