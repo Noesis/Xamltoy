@@ -139,20 +139,17 @@
     } else {
       // Attribute completion
       var curTag = tagInfo && tags[tagInfo.name];
-      var attrs = curTag && getAttrs(tags, curTag);
-      var globalAttrs = tags["!attrs"];
-      if (!attrs && !globalAttrs) return;
-      if (tags[tagInfo.name] && globalAttrs) { // Combine tag-local and global attributes
-        attrs = globalAttrs;
-      }
-      if(attached && tags[tagInfo.name]){
-        var set = attrs;
+      if (!curTag) return; // only for tag nodes
+      var attrs = {};
+      Object.assign(attrs, tags["!attrs"]);
+      var tagAttrs = getAttrs(tags, curTag);
+      if (tagAttrs) Object.assign(attrs, tagAttrs);
+      if (attached) {
         for (var tag in attached){
           for (var attr in attached[tag]){
-            set[tag+"."+attr] = attached[tag][attr];
-          } 
-        } 
-        attrs = set;
+            attrs[tag + "." + attr] = attached[tag][attr];
+          }
+        }
       }
       if (token.type == "string" || token.string == "=") { // A value
         var before = cm.getRange(Pos(cur.line, Math.max(0, cur.ch - 60)),
@@ -190,7 +187,7 @@
           replaceToken = true;
         }
         for (var attr in attrs) if (attrs.hasOwnProperty(attr) && (!prefix || matches(attr, prefix, matchInMiddle))){
-          if(!line.includes(attr)) result.push(attr.concat('=""'));
+          if (!line.includes(" " + attr + "=")) result.push(attr.concat('=""'));
         }
       }
       result = result.sort();
@@ -211,25 +208,31 @@
   }
 
   function getTagsForAttr(tags, inner) {
-    let childList = [];
-    let tag = inner.split('.')[0];
-    // Check if tag is in schema
-    if(!tags[tag]) return [];
-    let attr = inner.split('.')[1];
-    let base = tags[tag].attrs ? tags[tag].attrs[attr] : null;
-    while (base && !Array.isArray(base)) {
-      childList.push(base);
-      base = tags[base].base;
-    }
-    for (let tagName in tags) {
-      let currentBase = tags[tagName].base;
-      while (currentBase) {
-        if (childList.includes(currentBase)) {
-          if (!childList.includes(tagName)) childList.push(tagName);
-          break;
-        } else {
-          if (!currentBase) break;
-          currentBase = currentBase.base;
+    let tagName, attrName;
+    let innerArray = inner.split('.');
+    tagName = innerArray[0], attrName = innerArray[1];
+    // get tag attrs
+    let attrs = {};
+    let tag = tags[tagName];
+    if (tag && tag.attrs) Object.assign(attrs, tag.attrs);
+    // append attached attrs
+    let attached = tags["!attached"][tagName];
+    if (attached) Object.assign(attrs, attached);
+    // get attr type
+    let type = attrs[attrName];
+    // array type will show the list of available options
+    if (!type || Array.isArray(type)) return [];
+    // find tags that inherit from attr type
+    let childList = [type];
+    for (let t in tags) {
+      if (t !== type) {
+        let base = tags[t].base;
+        while (base) {
+          if (childList.includes(base)) {
+            childList.push(t);
+            break;
+          }
+          base = tags[base].base;
         }
       }
     }
