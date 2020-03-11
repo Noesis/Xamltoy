@@ -35,7 +35,7 @@ class CodePreview extends React.Component {
                     <p>{this.state.title}</p>
                     <a target="_parent" href={process.env.PUBLIC_URL + '/' + this.state.hash} title="Edit on xamltoy">
                         <p>RUN</p>
-                        <i class="fas fa-play" alt="Edit on xamltoy"></i>
+                        <i className="fas fa-play" alt="Edit on xamltoy"></i>
                     </a>
                 </div>
                 <div className="codePreviewCode">
@@ -55,6 +55,7 @@ class CodePreview extends React.Component {
     }
 
     componentDidMount() {
+        document.getElementById('canvas').style.display = 'none';
         let hash = this.props.match.params.hash;
         if (!hash) {
             this.setState({

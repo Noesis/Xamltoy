@@ -18,7 +18,6 @@ export default function EditorWindow(props) {
             </div>
             <div className="splitter verticalSplitter" id="verticalSplitter"></div>
             <div className="editorBox" id="editorBoxRight">
-                <canvas id="canvas" tabIndex="-1"></canvas>
                 <div className="errorLog" id="errorLog"></div>
                 <footer id="rightFooter">
                     <span id="resolution" className="left"></span>

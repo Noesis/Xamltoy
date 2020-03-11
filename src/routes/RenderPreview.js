@@ -32,13 +32,6 @@ class Preview extends React.Component {
                     </div>
                 </a>
             }
-            <canvas
-                id="canvas"
-                className="fullscreen-canvas"
-                tabIndex="-1"
-                height={window.innerHeight}
-                width={window.innerWidth}
-            ></canvas>
         </React.Fragment>
         )
     }
@@ -53,6 +46,9 @@ class Preview extends React.Component {
         } else {
             this.fetchData(hash)
         }
+        document.getElementById('root').append(document.getElementById('canvas'));
+        document.getElementById('canvas').style.height = '100%';
+        document.getElementById('canvas').style.width = '100%';
         document.addEventListener("Noesis Ready", this.runCode);
     }
 

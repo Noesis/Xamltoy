@@ -71,6 +71,7 @@ class Player extends React.Component {
         }
         document.addEventListener("keydown", this.handleKeyDown); // Handle keyboard shortcuts
         document.addEventListener("Noesis Ready", this.runCode);
+        document.getElementById('editorBoxRight').prepend(document.getElementById('canvas'))
     }
 
     runCode() {

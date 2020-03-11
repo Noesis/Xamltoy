@@ -9,6 +9,12 @@
   <meta property="og:url" content="https://www.noesisengine.com/xamltoy/" />
   <meta property="og:description" content="Edit and render XAML in real time" />
   <meta property="og:image" content="https://media.licdn.com/dms/image/C4D0BAQHMOwXdjtB9aw/company-logo_200_200/0?e=2159024400&v=beta&t=2CpjeaMsfpoRKsO43dlnRnCUyJT62pGRqEJvSGyes3o" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Open+Sans+Condensed:700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <canvas id="canvas" tabIndex="-1"></canvas>
+  <div id="root"></div>
   <script type="text/javascript">
     let updateFrameCounter = (fps) => {
       if(document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
@@ -17,9 +23,8 @@
       if(document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
     }
     Module = {
-        canvas: (function () {
-            let canvas = document.createElement('canvas');
-            canvas.setAttribute("id", "canvas");
+      canvas: (function () {
+            let canvas = document.getElementById('canvas');
             canvas.addEventListener("webglcontextlost", 
             function (e) { 
                 alert('WebGL context lost. You will need to reload the page.'); 
@@ -33,12 +38,8 @@
         })
     }
   </script>
-  <script src="%PUBLIC_URL%/assets/Gui.XamlToy.js" async></script>
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Open+Sans+Condensed:700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div id="root"></div>
+  <script src="%PUBLIC_URL%/assets/Gui.XamlToy.js"></script>
 </body>
+
 <script src="https://kit.fontawesome.com/521a300ab2.js" crossorigin="anonymous"></script>
 </html>
