@@ -2,9 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './routes';
 import './styles/style.css';
-import * as serviceWorker from './serviceWorker';
-
-serviceWorker.unregister();
 
 ReactDOM.render(<Router />, document.getElementById('root'));
 
@@ -13,26 +10,6 @@ let leftWidth = window.innerWidth / 2;
 let rightWidth = window.innerWidth - leftWidth - 1;
 let editorWidthRatio = leftWidth / window.innerWidth;
 window.errorMarks = [];
-
-if(document.getElementById('canvas')) {
-    const script = document.createElement("script");
-    script.src = process.env.PUBLIC_URL + "/assets/Gui.XamlToy.js";
-    document.body.appendChild(script);
-    window.Module = {
-        canvas: (function () {
-            let canvas = document.getElementById('canvas');
-            canvas.addEventListener("webglcontextlost", 
-            function (e) { 
-                alert('WebGL context lost. You will need to reload the page.'); 
-                e.preventDefault(); 
-            }, false);
-            return canvas;
-        })(),
-        postRun: (function () {
-            document.dispatchEvent(new CustomEvent("Noesis Ready"));
-        })
-    }
-}
 
 if (document.getElementById('editorSkeleton')) {
 
@@ -182,8 +159,10 @@ if (document.getElementById('editorSkeleton')) {
     }
 
     function resizeCanvas() {
-        canvas.width = editorBoxRight.clientWidth;
-        canvas.height = editorBoxRight.clientHeight - 32;
+        if(canvas){
+            canvas.width = editorBoxRight.clientWidth;
+            canvas.height = editorBoxRight.clientHeight - 32;
+        }
     }
 
     function generateErrorMessage(log, lineNumber) {

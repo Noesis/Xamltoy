@@ -9,20 +9,36 @@
   <meta property="og:url" content="https://www.noesisengine.com/xamltoy/" />
   <meta property="og:description" content="Edit and render XAML in real time" />
   <meta property="og:image" content="https://media.licdn.com/dms/image/C4D0BAQHMOwXdjtB9aw/company-logo_200_200/0?e=2159024400&v=beta&t=2CpjeaMsfpoRKsO43dlnRnCUyJT62pGRqEJvSGyes3o" />
+  <script type="text/javascript">
+    let updateFrameCounter = (fps) => {
+      if(document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
+    }
+    let updateResolution = (width, height) => {
+      if(document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
+    }
+    Module = {
+        canvas: (function () {
+            let canvas = document.createElement('canvas');
+            canvas.setAttribute("id", "canvas");
+            canvas.addEventListener("webglcontextlost", 
+            function (e) { 
+                alert('WebGL context lost. You will need to reload the page.'); 
+                e.preventDefault(); 
+            }, false);
+            window.canvas = canvas;
+            return canvas;
+        })(),
+        postRun: (function () {
+            document.dispatchEvent(new CustomEvent("Noesis Ready"));
+        })
+    }
+  </script>
+  <script src="%PUBLIC_URL%/assets/Gui.XamlToy.js" async></script>
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Open+Sans+Condensed:700&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <div id="root"></div>
 </body>
 <script src="https://kit.fontawesome.com/521a300ab2.js" crossorigin="anonymous"></script>
-<script async type="text/javascript">
-  let updateFrameCounter = (fps) => {
-    if(document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
-  }
-  let updateResolution = (width, height) => {
-    if(document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
-  }
-</script>
 </html>
