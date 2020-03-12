@@ -80,7 +80,6 @@ class Player extends React.Component {
     }
 
     fetchData() {     
-        console.log(window.response.files)
         let resources = {};     
         Object.keys(window.response.files).forEach(fileName =>{
             if(fileName !== "Main.xaml"){
