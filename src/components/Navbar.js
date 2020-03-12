@@ -33,6 +33,10 @@ export default function Navbar(props) {
               <a href={process.env.PUBLIC_URL + "/44229263f9a6c22624d1f7e993f34bf4"}>Login</a>
               <a href={process.env.PUBLIC_URL + "/61c071a0b3a34ff82dfb0e2b96e30f94"}>Quest Log</a>
               <a href={process.env.PUBLIC_URL + "/29a81720a5a5daa66725429966240a60"}>Localization</a>
+              <a href={process.env.PUBLIC_URL + "/ea9e784e9f6ce5787f2b8c8b8666da25"}>Text</a>
+              <a href={process.env.PUBLIC_URL + "/012449ce12e6c2ad5cfa09020add4791"}>Shadow</a>
+              <a href={process.env.PUBLIC_URL + "/e4c6986363164dabcb6e0ea8d8d96265"}>Lottie</a>
+              <a href={process.env.PUBLIC_URL + "/8ab948fb3b5a3edaaee5bb6cd7017a8b"}>3D</a>
             </div>
           </div>
         </div>
@@ -46,6 +50,10 @@ export default function Navbar(props) {
             <a href={process.env.PUBLIC_URL + "/44229263f9a6c22624d1f7e993f34bf4"} className='sample-mobile'>Login</a>
             <a href={process.env.PUBLIC_URL + "/61c071a0b3a34ff82dfb0e2b96e30f94"} className='sample-mobile'>Quest Log</a>
             <a href={process.env.PUBLIC_URL + "/29a81720a5a5daa66725429966240a60"} className='sample-mobile'>Localization</a>
+            <a href={process.env.PUBLIC_URL + "/ea9e784e9f6ce5787f2b8c8b8666da25"} className='sample-mobile'>Text</a>
+            <a href={process.env.PUBLIC_URL + "/012449ce12e6c2ad5cfa09020add4791"} className='sample-mobile'>Shadow</a>
+            <a href={process.env.PUBLIC_URL + "/e4c6986363164dabcb6e0ea8d8d96265"} className='sample-mobile'>Lottie</a>
+            <a href={process.env.PUBLIC_URL + "/8ab948fb3b5a3edaaee5bb6cd7017a8b"} className='sample-mobile'>3D</a>
           </div>
         </div>
       </div>

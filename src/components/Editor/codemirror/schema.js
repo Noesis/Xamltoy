@@ -2,7 +2,7 @@ let Schema = {
   "!top": [
     "Canvas", "StackPanel", "WrapPanel", "DockPanel", "Grid", "UniformGrid",
     "Control", "ContentControl", "UserControl", "Page", "HeaderedContentControl",
-    "Border"
+    "Border", "Viewbox"
   ],
   "!attrs": {
     "xmlns": ["http://schemas.microsoft.com/winfx/2006/xaml/presentation"],
@@ -178,7 +178,7 @@ let Schema = {
       LineHeight: null,
       LineStackingStrategy: ["BlockLineHeight","MaxHeight"],
       Padding: null,
-      TextAlignment: ["Left", "Center", "Right", "Stretch"],
+      TextAlignment: ["Left", "Right", "Center", "Justify"],
       TextDecorations: ["None", "Overline", "Baseline", "Underline", "Strikethrough"],
       Text: null,
       TextTrimming: ["None", "CharacterEllipsis", "WordEllipsis"],
@@ -410,7 +410,8 @@ let Schema = {
       ItemTemplate: "DataTemplate",
       ItemTemplateSelector: null
     },
-    base: "Control"
+    base: "Control",
+    children: ["UIElement"]
   },
   HeaderedContentControl: {
     attrs: {
@@ -1183,7 +1184,8 @@ let Schema = {
   },
   ItemsPanelTemplate: {
     attrs: {},
-    base: "FrameworkTemplate"
+    base: "FrameworkTemplate",
+    children: ["Panel"]
   },
   Style: {
     attrs: {
@@ -1238,9 +1240,11 @@ let Schema = {
   },
   EventTrigger: {
     attrs: {
+      RoutedEvent: null,
       Actions: "TriggerAction"
     },
-    base: "TriggerBase"
+    base: "TriggerBase",
+    children: ["TriggerAction"]
   },
   TriggerAction: {
     type: "abstract",
@@ -1350,6 +1354,14 @@ let Schema = {
     type: "markup",
     attrs: {
       Property: null
+    }
+  },
+  RelativeSource: {
+    type: "markup",
+    attrs: {
+      Mode: ["PreviousData", "TemplatedParent", "Self", "FindAncestor"],
+      AncestorType: null,
+      AncestorLevel: null
     }
   },
   CommandBinding: {
