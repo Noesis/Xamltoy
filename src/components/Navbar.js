@@ -6,7 +6,7 @@ export default function Navbar(props) {
     <div className="navbar">
 
       <a className="navbar-left" href="https://www.noesisengine.com/">
-        <img className="logo" src='logo.svg' alt="logo" ></img>
+        <img className="logo" src='https://cdn.staticaly.com/gh/Noesis/Noesis.github.io/1c36aaf/NoesisGUI/Web/images/noesis-gui-logo.svg' alt="NoesisGUI" ></img>
         <p>xaml<span>toy</span></p>
       </a>
 
