@@ -45,6 +45,11 @@ class Player extends React.Component {
         );
     }
 
+    componentWillMount(){
+        if(!window.response) document.addEventListener("Gist fetched", this.fetchData.bind(this));
+        else this.fetchData();
+    }
+
     componentDidMount() {
         let hash = this.props.match.params.hash;
         if (!hash) {
@@ -54,7 +59,6 @@ class Player extends React.Component {
             })
         }
         document.addEventListener("keydown", this.handleKeyDown); // Handle keyboard shortcuts
-        document.addEventListener("Gist fetched", this.fetchData.bind(this));
         document.addEventListener("Noesis Ready", this.runCode);
         document.getElementById('editorBoxRight').prepend(document.getElementById('canvas'))
     }
@@ -81,6 +85,7 @@ class Player extends React.Component {
 
     fetchData() {     
         let resources = {};     
+        if(!window.response) return;
         Object.keys(window.response.files).forEach(fileName =>{
             if(fileName !== "Main.xaml"){
                 let byteChars = (atob(window.response.files[fileName].content));
