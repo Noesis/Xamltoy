@@ -15,13 +15,10 @@ XamlToy was created to easily share XAML snippets. It is being used in release n
 
 Xamltoy uses GitHub [gists](https://gist.github.com/) to publicly share your creations.
 
-The gist must contain a file named *Main.xaml*. It can also contain extra resources like images, fonts, dictionaries. Those extra resources are refereced as being as the same directory than *Main.xaml*. For example:
+The gist must contain a file named *Main.xaml*. It can also contain extra resources like images, fonts and dictionaries. Those extra resources are referenced as being as the same directory than *Main.xaml*. For example:
 
 ```
-<Grid
-  TextElement.FontFamily="./#Aero Matics"
-  TextElement.FontSize="24"
-  Background="#FF124C7A">
+<Button FontFamily="./#Aero Matics" FontSize="24" Background="#FF124C7A" Content="Button"/>
 ```
 
 To share a xaml with others you should do the following:
