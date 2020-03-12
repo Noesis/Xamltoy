@@ -1,13 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import axios from 'axios';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 
 require('codemirror/lib/codemirror.css');
 require('codemirror/mode/xml/xml.js');
 require('codemirror/src/modes.js');
 
-const server_addr = "https://api.github.com/gists/"
 const default_xaml =
     `<Grid
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -39,16 +37,16 @@ class CodePreview extends React.Component {
                     </a>
                 </div>
                 <div className="codePreviewCode">
-                  <CodeMirror className="CodeMirror"
-                      value={this.state.xaml}
-                      onBeforeChange={editor => { window.codemirror = editor }}
-                      editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
-                      options={{
-                          mode: 'xml',
-                          lineNumbers: false,
-                          tabSize: 2,
-                      }}
-                  />
+                    <CodeMirror className="CodeMirror"
+                        value={this.state.xaml}
+                        onBeforeChange={editor => { window.codemirror = editor }}
+                        editorDidMount={editor => { this.CodemirrorInstance = editor; window.codemirror = editor; }}
+                        options={{
+                            mode: 'xml',
+                            lineNumbers: false,
+                            tabSize: 2,
+                        }}
+                    />
                 </div>
             </React.Fragment>
         )
@@ -62,34 +60,22 @@ class CodePreview extends React.Component {
                 fetched: true,
                 xaml: default_xaml
             })
-        } else {
-            this.fetchData(hash)
         }
+        document.addEventListener("Gist fetched", this.fetchData.bind(this));
     }
 
     onBeforeChange(editor, data, value) {
         window.codemirror = editor;
     }
 
-    fetchData(hash) {
-        axios.get(server_addr + hash)
-            .then((response) => {
-                this.setState({
-                    xaml: response.data.files["Main.xaml"].content,
-                    hash: hash,
-                    title: response.data.description,
-                    fetched: true
-                })
-            })
-            .catch((err) => {
-                console.log(err);
-                window.history.pushState({}, "", "./"); // removes hash from url
-                this.setState({
-                    xaml: default_xaml,
-                    hash: hash,
-                    fetched: true
-                })
-            })
+    fetchData() {     
+        this.setState({
+            xaml: decodeURIComponent(escape(window.atob( window.response.files["Main.xaml"].content ))),
+            fetched: true,
+            gistUrl: "https://gist.github.com/" + window.response.owner.login + '/' +  window.response.id,
+            title: window.response.description,
+            hash: window.response.id,
+        })
     }
 
 }

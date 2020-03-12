@@ -26,9 +26,6 @@ if (document.getElementById('editorSkeleton')) {
     let sampleDropdown = document.getElementById("dropdown");
     let sampleDropdownMobile = document.getElementById("dropdown-mobile");
     var modal = document.getElementById("modal");
-    var faqButton = document.getElementById("show-faq");
-    var closeButton = document.getElementsByClassName("close")[0];
-
     let batchesButton = document.getElementById('batches');
     let overdrawButton = document.getElementById('overdraw');
     let ppaaButton = document.getElementById('ppaa');
@@ -222,14 +219,6 @@ if (document.getElementById('editorSkeleton')) {
                 hightlightLine(lineNumber - 1);
             }
         });
-    }
-
-    faqButton.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    closeButton.onclick = function () {
-        modal.style.display = "none";
     }
 
     window.onclick = function (event) {

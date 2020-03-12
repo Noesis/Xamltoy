@@ -1,26 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Editor from '../components/Editor';
-import Faq from '../components/Faq';
 import { withRouter } from 'react-router';
 
-import axios from 'axios';
-
-const server_addr = "https://api.github.com/gists/"
 const default_xaml =
 `<Grid
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   
 </Grid>`
-const default_context = 
-`{
-    message: "Welcome to NoesisGUI XAMLTOY!",
-    tips: [
-        "you can bind two-way to the Data Context"
-        "you can click ctrl+s to run the code"
-    ]
-}`
 
 class Player extends React.Component {
 
@@ -29,10 +17,10 @@ class Player extends React.Component {
         this.updateData = this.updateData.bind(this)
         this.runCode = this.runCode.bind(this)
         this.state = {
+            fetched: false,
             xaml: "Loading...",
             resources: {},
-            fetched: false,
-            hash: "",
+            hash: this.props.match.params.hash,
             gistUrl: "https://gist.github.com/",
             title: ""
         }
@@ -53,7 +41,6 @@ class Player extends React.Component {
                     context={this.state.context}
                     hash={this.state.hash}
                 />
-                <Faq/>
             </React.Fragment>
         );
     }
@@ -63,13 +50,11 @@ class Player extends React.Component {
         if (!hash) {
             this.setState({
                 fetched: true,
-                xaml: default_xaml,
-                context: default_context
+                xaml: default_xaml
             })
-        } else {
-            this.fetchData(hash)
         }
         document.addEventListener("keydown", this.handleKeyDown); // Handle keyboard shortcuts
+        document.addEventListener("Gist fetched", this.fetchData.bind(this));
         document.addEventListener("Noesis Ready", this.runCode);
         document.getElementById('editorBoxRight').prepend(document.getElementById('canvas'))
     }
@@ -94,41 +79,27 @@ class Player extends React.Component {
         });
     }
 
-    fetchData(hash) {
-        axios.get(server_addr + hash,{
-            headers:{ accept: 'application/vnd.github.VERSION.base64'}   
+    fetchData() {     
+        console.log(window.response.files)
+        let resources = {};     
+        Object.keys(window.response.files).forEach(fileName =>{
+            if(fileName !== "Main.xaml"){
+                let byteChars = (atob(window.response.files[fileName].content));
+                let byteNumbers = new Array(byteChars.length);
+                for (let i = 0; i < byteChars.length; i++) {
+                    byteNumbers[i] = byteChars.charCodeAt(i);
+                }
+                let byteArray = new Uint8Array(byteNumbers);
+                resources[fileName] = byteArray;
+            } 
         })
-        .then((response) => {
-            let resources = {};
-            Object.keys(response.data.files).forEach(fileName =>{
-                if(fileName !== "Main.xaml"){
-                    let byteChars = (atob(response.data.files[fileName].content));
-                    let byteNumbers = new Array(byteChars.length);
-                    for (let i = 0; i < byteChars.length; i++) {
-                        byteNumbers[i] = byteChars.charCodeAt(i);
-                    }
-                    let byteArray = new Uint8Array(byteNumbers);
-                    resources[fileName] = byteArray;
-                } 
-            });            
-            this.setState({
-                xaml: decodeURIComponent(escape(window.atob( response.data.files["Main.xaml"].content ))),
-                resources: resources,
-                gistUrl: "https://gist.github.com/" + response.data.owner.login + '/' + hash,
-                title: response.data.description,
-                hash: hash,
-                fetched: true
-            })
-        })
-        .catch((err) => {
-            console.log(err);
-            window.history.pushState({}, "", "./"); // removes hash from url
-            this.setState({
-                xaml: default_xaml,
-                context: default_context,
-                hash: hash,
-                fetched: true
-            })
+        this.setState({
+            xaml: decodeURIComponent(escape(window.atob( window.response.files["Main.xaml"].content ))),
+            fetched: true,
+            resources: resources,
+            gistUrl: "https://gist.github.com/" + window.response.owner.login + '/' +  window.response.id,
+            title: window.response.description,
+            hash: window.response.id,
         })
     }
 

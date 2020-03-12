@@ -12,7 +12,7 @@ export default function EditorWindow(props) {
                     runCode={props.runCode} 
                 />
                 <footer id="leftFooter">
-                    <span className="left" id='show-faq'>Help</span>
+                    <a href="https://github.com/Noesis/Xamltoy#sharing-guide"><span className="left" id='show-faq'>Help</span></a>
                     <a href="https://www.noesisengine.com/forums/index.php"><span className="left">Send feedback</span></a>
                 </footer>
             </div>
