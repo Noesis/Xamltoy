@@ -1,10 +1,10 @@
 let updateFrameCounter = (fps) => {
-    if (document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
-  }
-  let updateResolution = (width, height) => {
-    if (document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
-  }
-  Module = {
+  if (document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
+}
+let updateResolution = (width, height) => {
+  if (document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
+}
+Module = {
     canvas: (function () {
       let canvas = document.getElementById('canvas');
       canvas.addEventListener("webglcontextlost",
