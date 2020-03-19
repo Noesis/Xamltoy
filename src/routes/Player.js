@@ -95,16 +95,28 @@ class Player extends React.Component {
                 }
                 let byteArray = new Uint8Array(byteNumbers);
                 resources[fileName] = byteArray;
-            } 
+            }
         })
-        this.setState({
-            xaml: decodeURIComponent(escape(window.atob( window.response.files["Main.xaml"].content ))),
-            fetched: true,
-            resources: resources,
-            gistUrl: "https://gist.github.com/" + window.response.owner.login + '/' +  window.response.id,
-            title: window.response.description,
-            hash: window.response.id,
-        })
+        let mainFile = window.response.files["Main.xaml"];
+        if (mainFile) {
+            this.setState({
+                xaml: decodeURIComponent(escape(window.atob( mainFile.content ))),
+                fetched: true,
+                resources: resources,
+                gistUrl: "https://gist.github.com/" + window.response.owner.login + '/' +  window.response.id,
+                title: window.response.description,
+                hash: window.response.id,
+            })
+        } else {
+            this.setState({
+                xaml: "ERROR: Main.xaml not found in Gist.",
+                fetched: false,
+                resources: {},
+                gistUrl: "https://gist.github.com/" + window.response.owner.login + '/' +  window.response.id,
+                title: window.response.description,
+                hash: window.response.id,
+          })
+        }
     }
 
     clearErrors(){
