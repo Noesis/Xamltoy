@@ -1,40 +1,39 @@
 {
   "name": "xamltoy",
-  "version": "1.0.1",
-  "private": true,
-  "homepage": "https://www.noesisengine.com/xamltoy/",
-  "dependencies": {
-    "axios": "^0.19.1",
-    "codemirror": "^5.50.2",
-    "react": "^16.12.0",
-    "react-codemirror2": "^6.0.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "predeploy": "react-scripts build && cp build/index.html build/404.html",
-    "deploy": "gh-pages -d build",
-    "eject": "react-scripts eject"
+    "start": "node server.js",
+    "build": "gulp",
+    "deploy": "gulp deploy"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noesis/Xamltoy.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noesis/Xamltoy/issues"
   },
+  "homepage": "https://github.com/Noesis/Xamltoy#readme",
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "del": "^2.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-deploy-ftp": "^1.0.1",
+    "gulp-hash-filename": "^3.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-inject": "^5.0.5",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-replace": "^0.4.4",
+    "gulp-revmanifest": "^1.1.0",
+    "gulp-terser": "^1.2.0",
+    "gulp-util": "^3.0.8",
+    "vinyl-ftp": "^0.6.1"
   }
 }

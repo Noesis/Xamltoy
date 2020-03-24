@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>xamltoy</title>
+  <meta property="og:title" content="XamlToy" />
+  <meta property="og:url" content="https://www.noesisengine.com/xamltoy/" />
+  <meta property="og:description" content="Edit and render XAML in real time" />
+  <meta property="og:image"content="https://media.licdn.com/dms/image/C4D0BAQHMOwXdjtB9aw/company-logo_200_200/0?e=2159024400&v=beta&t=2CpjeaMsfpoRKsO43dlnRnCUyJT62pGRqEJvSGyes3o" />
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/lib/codemirror/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <!-- endinject -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700&display=swap"
+    rel="stylesheet">
+  <link rel="shortcut icon" href="https://cdn.staticaly.com/favicons/noesisengine.com">
+</head>
+
+<body>
+  <div class="codePreviewNavbar">
+    <p id="title"></p>
+    <a target="_parent" href="" id="link" title="Edit on xamltoy">
+      <p>RUN</p>
+      <i class="fas fa-play" alt="Edit on xamltoy"></i>
+    </a>
+  </div>
+  <div class="codePreviewCode">
+    <textarea id='editor' class="CodeMirror" style="display: none;"></textarea>
+  </div>
+  
+  <!-- inject:codemirror -->
+  <script src="/lib/codemirror/codemirror.js"></script>
+  <!-- endinject -->
+  <script>
+    let defaultXaml = '<Grid\n\txmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"\n\txmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">\n\n</Grid>'
+    editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+      mode: 'xml',
+      lineNumbers: false,
+      tabSize: 2,
+      readOnly: true
+    });
+    editor.save();
+    let hash = window.location.pathname.split('/').pop();
+    let xaml = "Loading..."
+    if (hash) {
+      fetch('https://api.github.com/gists/' + hash)
+        .then(response => { return response.json() })
+        .then(response => {
+          let mainXaml = response.files["Main.xaml"];
+          if(mainXaml){
+            editor.setValue(mainXaml.content);
+            document.getElementById('title').innerHTML = response.description;
+            document.getElementById('link').setAttribute('href', "https://www.noesisengine.com/xamltoy/" + hash);
+          }else{
+            console.warn("Gist does not contain Main.xaml.");
+            loadDefault();
+          }
+        })
+        .catch((err) => {
+          console.warn("Could not fetch data from Gist. Please check the Gist id.");
+          loadDefault();
+        })
+    } else{
+      loadDefault();
+    } 
+    function loadDefault(){
+      editor.setValue(defaultXaml);
+      document.getElementById('link').setAttribute('href', "https://www.noesisengine.com/xamltoy/");
+      window.history.pushState({}, document.title, "/xamltoy/code/" + "");
+      xaml = defaultXaml;
+    }
+  </script>
+  <script src="https://kit.fontawesome.com/521a300ab2.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

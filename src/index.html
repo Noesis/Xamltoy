@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>xamltoy</title>
+  <meta property="og:title" content="XamlToy" />
+  <meta property="og:url" content="https://www.noesisengine.com/xamltoy/" />
+  <meta property="og:description" content="Edit and render XAML in real time" />
+  <meta property="og:image"content="https://media.licdn.com/dms/image/C4D0BAQHMOwXdjtB9aw/company-logo_200_200/0?e=2159024400&v=beta&t=2CpjeaMsfpoRKsO43dlnRnCUyJT62pGRqEJvSGyes3o" />
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/lib/codemirror/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <!-- endinject -->
+  <script>
+    let gistFetched = false;
+    let resources = {};
+    let hash = window.location.pathname.split('/').pop();
+    let xaml = "Loading..."
+    let defaultXaml = '<Grid\n\txmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"\n\txmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">\n\n</Grid>'
+    if (hash) {
+      fetch('https://api.github.com/gists/' + hash,
+        {
+          headers: { accept: 'application/vnd.github.VERSION.base64' }
+        })
+        .then(response => { return response.json() })
+        .then(response => {
+          let mainXaml = response.files["Main.xaml"];
+          if(mainXaml){
+            Object.keys(response.files).forEach(fileName => {
+              if (fileName !== "Main.xaml") {
+                let byteChars = (atob(response.files[fileName].content));
+                let byteNumbers = new Array(byteChars.length);
+                for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+                let byteArray = new Uint8Array(byteNumbers);
+                resources[fileName] = byteArray;
+              }
+            });
+            xaml = decodeURIComponent(escape(window.atob(mainXaml.content)));
+            document.getElementById('xaml-link').href = 'https://gist.github.com/' + hash;
+            document.getElementById('xaml-link').style = '';
+            document.getElementById('xaml-title').innerHTML = response.description;
+            gistFetched = true;
+          }else{
+            console.warn("Gist does not contain Main.xaml.");
+            loadDefault();
+          }
+        })
+        .catch((err) => {
+          console.warn("Could not fetch data from Gist. Please check the Gist id.");
+          loadDefault();
+        })
+    } else {
+      loadDefault();
+    } 
+    function loadDefault(){
+      window.history.pushState({}, document.title, "/xamltoy/" + "");
+      xaml = defaultXaml;
+      gistFetched = true;
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700&display=swap"
+    rel="stylesheet">
+  <link rel="shortcut icon" href="https://cdn.staticaly.com/favicons/noesisengine.com">
+</head>
+
+<body>
+  <div class="navbar">
+
+    <a class="navbar-left" href="https://www.noesisengine.com/">
+      <img class="logo" src='https://cdn.staticaly.com/gh/Noesis/Noesis.github.io/1a07685/NoesisGUI/Web/images/logo.svg'
+        alt="NoesisGUI"></img>
+      <p>xaml<span>toy</span></p>
+    </a>
+
+    <div class="navbar-centered">
+      <a title='View on Gist' id="xaml-link" style="display: none;">
+        <div class='title'>
+          <p id="xaml-title"></p>
+          <i class='fas fa-external-link-alt title-link' alt='View on Gist'></i>
+        </div>
+      </a>
+    </div>
+
+    <div class="navbar-right">
+      <div class='desktop'>
+        <a href="/xamltoy/">New</a>
+        <a href="">Reset</a>
+        <div class="dropdown">
+          <button class="dropbtn" id="samples">SAMPLES</button>
+          <div class="dropdown-content" id="dropdown">
+            <a href="./2e4fb7d5143b4505992b33fec34d0592">Hello World</a>
+            <a href="./7899ac1bd7ba837db023409bc0f43c3f">Buttons</a>
+            <a href="./44229263f9a6c22624d1f7e993f34bf4">Login</a>
+            <a href="./61c071a0b3a34ff82dfb0e2b96e30f94">Quest Log</a>
+            <a href="./29a81720a5a5daa66725429966240a60">Localization</a>
+            <a href="./ea9e784e9f6ce5787f2b8c8b8666da25">Text</a>
+            <a href="./012449ce12e6c2ad5cfa09020add4791">Shadow</a>
+            <a href="./e4c6986363164dabcb6e0ea8d8d96265">Lottie</a>
+            <a href="./8ab948fb3b5a3edaaee5bb6cd7017a8b">3D</a>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class='fas fa-bars dropbtn-mobile' id='hamburger'></button>
+        <div class="dropdown-content dropdown-content-mobile" id="dropdown-mobile">
+          <a href="/">New</a>
+          <a href="/">Reset</a>
+          <a href="./2e4fb7d5143b4505992b33fec34d0592" class='sample-mobile'>Hello World</a>
+          <a href="./7899ac1bd7ba837db023409bc0f43c3f" class='sample-mobile'>Buttons</a>
+          <a href="./44229263f9a6c22624d1f7e993f34bf4" class='sample-mobile'>Login</a>
+          <a href="./61c071a0b3a34ff82dfb0e2b96e30f94" class='sample-mobile'>Quest Log</a>
+          <a href="./29a81720a5a5daa66725429966240a60" class='sample-mobile'>Localization</a>
+          <a href="./ea9e784e9f6ce5787f2b8c8b8666da25" class='sample-mobile'>Text</a>
+          <a href="./012449ce12e6c2ad5cfa09020add4791" class='sample-mobile'>Shadow</a>
+          <a href="./e4c6986363164dabcb6e0ea8d8d96265" class='sample-mobile'>Lottie</a>
+          <a href="./8ab948fb3b5a3edaaee5bb6cd7017a8b" class='sample-mobile'>3D</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div id="editorSkeleton">
+    <div class="editorBox" id="editorBoxLeft">
+      <div id="xamlEditorContainer">
+        <button title="Run with ctrl/cmd + s or Alt + Enter" type="button" id="run-button" class="runButton">
+          <span>RUN</span><i class="fas fa-play"></i>
+        </button>
+        <textarea id='editor' class="CodeMirror" style="display: none;"></textarea>
+      </div>
+      <footer id="leftFooter">
+        <a href="https://github.com/Noesis/Xamltoy#sharing-guide"><span class="left" id='show-faq'>Help</span></a>
+        <a href="https://www.noesisengine.com/forums/index.php"><span class="left">Send feedback</span></a>
+      </footer>
+    </div>
+    <div class="splitter verticalSplitter" id="verticalSplitter"></div>
+    <div class="editorBox" id="editorBoxRight">
+      <canvas id="canvas" tabIndex="-1"></canvas>
+      <div class="errorLog" id="errorLog"></div>
+      <footer id="rightFooter">
+        <span id="resolution" class="left"></span>
+        <span id="frames" class="left"></span>
+        <span class="center">
+          <i id='batches' class='fas fa-paint-brush' alt="Batches" title="Batches"></i>
+          <i id='overdraw' class='fas fa-images' alt="Overdraw" title="Overdraw"></i>
+          <i id='collapseXaml' class='fas fa-caret-down' alt="Collapse XAML" title="Collapse XAML"></i>
+          <i id='ppaa' class='fas fa-water button-active hide' alt="PPAA" title="PPAA"></i>
+        </span>
+        <span class="right">Based on NoesisGUI 3.0</span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    let noesisReady = false;
+    Module = {
+      canvas: (function () {
+        var canvas = document.getElementById('canvas');
+        canvas.addEventListener("webglcontextlost",
+          function (e) {
+            alert('WebGL context lost. You will need to reload the page.');
+            e.preventDefault();
+          }, false);
+        return canvas;
+      })(),
+      postRun: (function () {
+        noesisReady = true;
+      })
+    }
+    let updateFrameCounter = (fps) => {
+      if (document.getElementById('frames')) document.getElementById('frames').innerHTML = fps.toFixed(1) + ' fps';
+    }
+    let updateResolution = (width, height) => {
+      if (document.getElementById('resolution')) document.getElementById('resolution').innerHTML = width + ' x ' + height;
+    }
+  </script>
+  <!-- inject:xamltoy -->
+  <script src="/lib/XamlToy/Gui.XamlToy.js"></script>
+  <!-- endinject -->
+  <!-- inject:js -->
+  <script src="/lib/codemirror/codemirror.js"></script>
+  <script src="/js/codemirror-addons/schema.js"></script>
+  <script src="/js/codemirror-addons/show-hint.js"></script>
+  <script src="/js/codemirror-addons/noesis-hint.js"></script>
+  <script src="/js/editor.js"></script>
+  <script src="/js/index.js"></script>
+  <!-- endinject -->
+  <script src="https://kit.fontawesome.com/521a300ab2.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

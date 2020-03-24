@@ -56,7 +56,7 @@
         let curMarkup = prefix.split(' ')[0];
         let curAttr = prefix.substring(curMarkup.length+1,prefix.indexOf('='));
         let valuePrefix = prefix.split('=')[1];
-        let hintValues = tags[curMarkup].attrs[curAttr];
+        let hintValues = tags[curMarkup].attrs[curAttr]; //TODO: get attr from tag if not an array
         if(Array.isArray(hintValues)) for (var i = 0; i < hintValues.length; ++i) {
           if (!valuePrefix || matches(hintValues[i], valuePrefix, matchInMiddle)){
             result.push(hintValues[i]); 

@@ -23,4 +23,5 @@ RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 RewriteRule ^ - [L]
 
 # Fallback all other routes to index.html
-RewriteRule ^ /xamltoy/index.html [L]
+RewriteRule ^code /xamltoy-test/code.html [L]
+RewriteRule ^ /xamltoy-test/index.html [L]

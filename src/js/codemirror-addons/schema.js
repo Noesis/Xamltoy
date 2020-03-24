@@ -1613,5 +1613,3 @@ let Schema = {
     children: ["i:TriggerBase"]
   }
 };
-
-export default Schema

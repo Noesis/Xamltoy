@@ -7,7 +7,7 @@ html {
   height: 100%;
   overflow: hidden;
 }
-#root{
+body{
   height: 100vh;
 }
 body {
@@ -135,6 +135,10 @@ h3{
   flex-direction: column;
   justify-content: space-between;
 }
+#editorBoxLeft{
+  background-color:#F3F3F3;
+  width: 50%;
+}
 .runButton{
   position: absolute;
   top: 10px;
@@ -185,6 +189,7 @@ h3{
   color: #384349;
 }
 .codePreviewNavbar a p{
+  user-select: none;
   color: #1c91cc;
   margin-right: 4px;
 }
@@ -201,7 +206,7 @@ h3{
 .codePreviewCode{
   height: calc(100% - 38px);
 }
-.codePreviewCode .react-codemirror2.CodeMirror {
+.codePreviewCode .CodeMirror {
   padding-left: 12px;
 }
 .CodeMirror{

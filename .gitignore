@@ -1,6 +1,5 @@
-node_modules/
 .DS_Store
-build
+node_modules
+dist
+rev-manifest.json
 .env
-.github/
-public/assets/
