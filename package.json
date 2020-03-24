@@ -35,5 +35,9 @@
     "gulp-terser": "^1.2.0",
     "gulp-util": "^3.0.8",
     "vinyl-ftp": "^0.6.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "lodash.template": "^4.5.0"
   }
 }
