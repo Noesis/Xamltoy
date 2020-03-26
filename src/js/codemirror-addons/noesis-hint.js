@@ -64,6 +64,7 @@
         }
         result = result.sort();
         return {
+          selectedHint: getBestMarkupMatch(valuePrefix, result),
           list: result,
           from: Pos(cur.line, cur.ch - valuePrefix.length),
           to: Pos(cur.line, token.end)
@@ -76,6 +77,7 @@
           if (!tags[curMarkup].type || tags[curMarkup].type !== 'abstract') result.push(attr);
         result = result.sort();
         return {
+          selectedHint: getBestMarkupMatch(prefix, result),
           list: result,
           from: Pos(cur.line, cur.ch - prefix.length),
           to: Pos(cur.line, token.end)
@@ -84,6 +86,7 @@
         for (var i = 0; i < markupTags.length; i++) if (!prefix || matches(markupTags[i], prefix, matchInMiddle))
           if (!tags[markupTags[i]].type || tags[markupTags[i]].type !== 'abstract') result.push(markupTags[i]);
         return {
+          selectedHint: getBestMarkupMatch(prefix, result),
           list: result,
           from: Pos(cur.line, cur.ch - prefix.length),
           to: Pos(cur.line, token.end)
@@ -295,10 +298,23 @@
 
   function getBestMatch(cm, hints) {
     let current = cm.getTokenAt(cm.getCursor()).string.toLowerCase();
+    console.log(hints)
+    console.log(current)
     if(!current) return 0;
     for (let i=0; i<hints.length; i++){
       let hintValue = hints[i].toLowerCase().replace('<','');
       if(hintValue.startsWith(current)) return i;
+    }
+    return 0;
+  }
+
+  function getBestMarkupMatch(prefix, hints) {
+    console.log(hints)
+    console.log(prefix)
+    if(!prefix) return 0;
+    for (let i=0; i<hints.length; i++){
+      let hintValue = hints[i].toLowerCase();
+      if(hintValue.startsWith(prefix)) return i;
     }
     return 0;
   }
