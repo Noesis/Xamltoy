@@ -56,12 +56,13 @@
         let curMarkup = prefix.split(' ')[0];
         let curAttr = prefix.substring(curMarkup.length+1,prefix.indexOf('='));
         let valuePrefix = prefix.split('=')[1];
-        let hintValues = tags[curMarkup].attrs[curAttr]; //TODO: get attr from tag if not an array
+        let hintValues = getMarkupValue(tags, curMarkup, curAttr);
         if(Array.isArray(hintValues)) for (var i = 0; i < hintValues.length; ++i) {
           if (!valuePrefix || matches(hintValues[i], valuePrefix, matchInMiddle)){
             result.push(hintValues[i]); 
           } 
         }
+        result = result.sort();
         return {
           list: result,
           from: Pos(cur.line, cur.ch - valuePrefix.length),
@@ -73,6 +74,7 @@
         if(prefix.includes(' ')) prefix = prefix.slice(prefix.lastIndexOf(' ')+1);
         for (var attr in getAttrs(tags, tags[curMarkup]))  if (!prefix || matches(attr, prefix, matchInMiddle)) 
           if (!tags[curMarkup].type || tags[curMarkup].type !== 'abstract') result.push(attr);
+        result = result.sort();
         return {
           list: result,
           from: Pos(cur.line, cur.ch - prefix.length),
@@ -236,6 +238,28 @@
       });
     }
     return attrs;
+  }
+
+  function getMarkupValue(tags, markupAttr, curAttr) {
+    if(!markupAttr || !curAttr) return;
+    let currentMarkup = tags[markupAttr];
+    if(!currentMarkup.attrs) return;
+    if(Array.isArray(currentMarkup.attrs[curAttr])) return currentMarkup.attrs[curAttr];
+    let valueList = [];
+    let parent = tags[currentMarkup.attrs[curAttr]];
+    if (parent) {
+      let parentAttr = getAttrs(tags, parent);
+      Object.keys(parentAttr).forEach(function eachKey(key) {
+        if(parentAttr[key]){
+          if(Array.isArray(parentAttr[key])){
+            Object.keys(parentAttr[key]).forEach(function eachKey(value){
+              valueList.push(parentAttr[key][value])
+            })
+          }else valueList.push(parentAttr[key]);
+        }
+      });
+    }
+    return valueList;
   }
 
   function getChildren(tags, curTag) {
