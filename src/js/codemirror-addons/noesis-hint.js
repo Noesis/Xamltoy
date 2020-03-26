@@ -51,7 +51,21 @@
     if(markupExtensionMode){ //MarkupExtension: {Tag Attribute=value}
       let markupTags = getMarkupTags(tags, inner);
       let prefix = token.string.replace(/.*{\s*/, '');
-      if(prefix.includes(',')) prefix = prefix.slice(prefix.lastIndexOf(',')+2);
+      if(prefix.includes(',')){ // Markup attribute separated by commas
+        let curMarkup = prefix.substring(prefix.lastIndexOf('{'));
+        let curMarkupTag = curMarkup.substring(0,curMarkup.indexOf(' '));
+        prefix = prefix.slice(prefix.lastIndexOf(',')+2);
+        if(prefix.includes(' ')) prefix = prefix.slice(prefix.lastIndexOf(' ')+1);
+        for (var attr in getAttrs(tags, tags[curMarkupTag]))  if (!prefix || matches(attr, prefix, matchInMiddle)) 
+          if ( (!tags[curMarkupTag].type || tags[curMarkupTag].type !== 'abstract') && !curMarkup.includes(attr)) result.push(attr);
+        result = result.sort();
+        return {
+          selectedHint: getBestMatch(prefix, result),
+          list: result,
+          from: Pos(cur.line, cur.ch - prefix.length),
+          to: Pos(cur.line, token.end)
+        };
+      } 
       if(prefix.includes('=')){ // Markup attribute value
         let curMarkup = prefix.split(' ')[0];
         let curAttr = prefix.substring(curMarkup.length+1,prefix.indexOf('='));

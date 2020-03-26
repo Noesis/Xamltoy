@@ -154,6 +154,7 @@ editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
         "'='": (cm) => this.completeIfInTag(cm, '='),
         "'{'": (cm) => this.completeIfInTag(cm, '{'),
         "' '": (cm) => this.completeIfInTag(cm, ' '),
+        "','": (cm) => this.completeIfInTag(cm, ','),
         Tab: (cm) => {
             if (cm.somethingSelected()) {
                 cm.indentSelection("add");
