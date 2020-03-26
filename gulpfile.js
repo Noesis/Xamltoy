@@ -14,7 +14,7 @@ const ftp = require( 'vinyl-ftp' );
 
 require('dotenv').config();
 
-let base = "xamltoy-test"
+let base = "xamltoy"
 
 gulp.task('styles', function styles(){
   return gulp.src(
