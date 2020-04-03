@@ -96,6 +96,14 @@ let Schema = {
     },
     ToolBarTray: {
       IsLocked: ["True", "False"]
+    },
+    Storyboard: {
+      Target: null,
+      TargetName: null,
+      TargetProperty: null,
+    },
+    VisualStateManager: {
+      VisualStateGroups: "VisualStateGroup"
     }
   },
   '_Resource': {
@@ -1159,6 +1167,510 @@ let Schema = {
       Points: null
     },
     base: "PathSegment"
+  },
+  Timeline: {
+    type: "abstract",
+    attrs: {
+      AccelerationRatio: null,
+      AutoReverse: ["True", "False"],
+      BeginTime: null,
+      DecelerationRatio: null,
+      Duration: null,
+      FillBehavior: ["HoldEnd", "Stop"],
+      Name: null,
+      RepeatBehavior: ["Forever", "1x", "2x", "3x"],
+      SpeedRatio: null
+    },
+    base: "_Resource"
+  },
+  TimelineGroup: {
+    type: "abstract",
+    attrs: {
+      Children: "Timeline"
+    },
+    base: "Timeline",
+    children: ["Timeline"]
+  },
+  ParallelTimeline: {
+    attrs: {
+      SlipBehavior: ["Grow", "Slip"]
+    },
+    base: "TimelineGroup"
+  },
+  Storyboard: {
+    attrs: {},
+    base: "ParallelTimeline"
+  },
+  AnimationTimeline: {
+    type: "abstract",
+    attrs: {
+      IsAdditive: ["True", "False"],
+      IsCumulative: ["True", "False"]
+    },
+    base: "Timeline"
+  },
+  AnimationBase: {
+    type: "abstract",
+    attrs: {
+      EasingFunction: "EasingFunctionBase",
+      From: null,
+      To: null,
+      By: null
+    },
+    base: "AnimationTimeline"
+  },
+  ColorAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  DoubleAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  Int16Animation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  Int32Animation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  PointAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  RectAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  SizeAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  ThicknessAnimation: {
+    attrs: {},
+    base: "AnimationBase"
+  },
+  BooleanAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "BooleanKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["BooleanKeyFrame"]
+  },
+  ColorAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "ColorKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["ColorKeyFrame"]
+  },
+  DoubleAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "DoubleKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["DoubleKeyFrame"]
+  },
+  Int16AnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "Int16KeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["Int16KeyFrame"]
+  },
+  Int32AnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "Int32KeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["Int32KeyFrame"]
+  },
+  MatrixAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "MatrixKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["MatrixKeyFrame"]
+  },
+  ObjectAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "ObjectKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["ObjectKeyFrame"]
+  },
+  PointAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "PointKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["PointKeyFrame"]
+  },
+  RectAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "RectKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["RectKeyFrame"]
+  },
+  SizeAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "SizeKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["SizeKeyFrame"]
+  },
+  StringAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "StringKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["StringKeyFrame"]
+  },
+  ThicknessAnimationUsingKeyFrames: {
+    attrs: {
+      KeyFrames: "ThicknessKeyFrame"
+    },
+    base: "AnimationTimeline",
+    children: ["ThicknessKeyFrame"]
+  },
+  KeyFrameBase: {
+    type: "abstract",
+    attrs: {
+      KeyTime: null,
+      Value: null
+     }
+  },
+  BooleanKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  ColorKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  DoubleKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  Int16KeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  Int32KeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  MatrixKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  ObjectKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  PointKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  RectKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  SizeKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  StringKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  ThicknessKeyFrame: {
+    type: "abstract",
+    attrs: {},
+    base: "KeyFrameBase"
+  },
+  DiscreteBooleanKeyFrame: {
+    attrs: {},
+    base: "BooleanKeyFrame"
+  },
+  DiscreteColorKeyFrame: {
+    attrs: {},
+    base: "ColorKeyFrame"
+  },
+  DiscreteDoubleKeyFrame: {
+    attrs: {},
+    base: "DoubleKeyFrame"
+  },
+  DiscreteInt16KeyFrame: {
+    attrs: {},
+    base: "Int16KeyFrame"
+  },
+  DiscreteInt32KeyFrame: {
+    attrs: {},
+    base: "Int32KeyFrame"
+  },
+  DiscreteMatrixKeyFrame: {
+    attrs: {},
+    base: "MatrixKeyFrame"
+  },
+  DiscreteObjectKeyFrame: {
+    attrs: {},
+    base: "ObjectKeyFrame"
+  },
+  DiscretePointKeyFrame: {
+    attrs: {},
+    base: "PointKeyFrame"
+  },
+  DiscreteRectKeyFrame: {
+    attrs: {},
+    base: "RectKeyFrame"
+  },
+  DiscreteSizeKeyFrame: {
+    attrs: {},
+    base: "SizeKeyFrame"
+  },
+  DiscreteStringKeyFrame: {
+    attrs: {},
+    base: "StringKeyFrame"
+  },
+  DiscreteThicknessKeyFrame: {
+    attrs: {},
+    base: "ThicknessKeyFrame"
+  },
+  LinearColorKeyFrame: {
+    attrs: {},
+    base: "ColorKeyFrame"
+  },
+  LinearDoubleKeyFrame: {
+    attrs: {},
+    base: "DoubleKeyFrame"
+  },
+  LinearInt16KeyFrame: {
+    attrs: {},
+    base: "Int16KeyFrame"
+  },
+  LinearInt32KeyFrame: {
+    attrs: {},
+    base: "Int32KeyFrame"
+  },
+  LinearPointKeyFrame: {
+    attrs: {},
+    base: "PointKeyFrame"
+  },
+  LinearRectKeyFrame: {
+    attrs: {},
+    base: "RectKeyFrame"
+  },
+  LinearSizeKeyFrame: {
+    attrs: {},
+    base: "SizeKeyFrame"
+  },
+  LinearThicknessKeyFrame: {
+    attrs: {},
+    base: "ThicknessKeyFrame"
+  },
+  EasingColorKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "ColorKeyFrame"
+  },
+  EasingDoubleKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "DoubleKeyFrame"
+  },
+  EasingInt16KeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "Int16KeyFrame"
+  },
+  EasingInt32KeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "Int32KeyFrame"
+  },
+  EasingPointKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "PointKeyFrame"
+  },
+  EasingRectKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "RectKeyFrame"
+  },
+  EasingSizeKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "SizeKeyFrame"
+  },
+  EasingThicknessKeyFrame: {
+    attrs: {
+      EasingFunction: "EasingFunctionBase"
+    },
+    base: "ThicknessKeyFrame"
+  },
+  SplineColorKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "ColorKeyFrame"
+  },
+  SplineDoubleKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "DoubleKeyFrame"
+  },
+  SplineInt16KeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "Int16KeyFrame"
+  },
+  SplineInt32KeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "Int32KeyFrame"
+  },
+  SplinePointKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "PointKeyFrame"
+  },
+  SplineRectKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "RectKeyFrame"
+  },
+  SplineSizeKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "SizeKeyFrame"
+  },
+  SplineThicknessKeyFrame: {
+    attrs: {
+      KeySpline: "KeySpline"
+    },
+    base: "ThicknessKeyFrame"
+  },
+  KeySpline: {
+    attrs: {
+      ControlPoint1: null,
+      ControlPoint2: null
+    }
+  },
+  EasingFunctionBase: {
+    type: "abstract",
+    attrs: {
+      EasingMode: ["EaseOut", "EaseIn", "EaseInOut"]
+    }
+  },
+  BackEase: {
+    attrs: {
+      Amplitude: null
+    },
+    base: "EasingFunctionBase"
+  },
+  BounceEase: {
+    attrs: {
+      Bounces: null,
+      Bounciness: null
+    },
+    base: "EasingFunctionBase"
+  },
+  CircleEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  CubicEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  ElasticEase: {
+    attrs: {
+      Oscillations: null,
+      Springness: null
+    },
+    base: "EasingFunctionBase"
+  },
+  ExponentialEase: {
+    attrs: {
+      Exponent: null
+    },
+    base: "EasingFunctionBase"
+  },
+  PowerEase: {
+    attrs: {
+      Power: null
+    },
+    base: "EasingFunctionBase"
+  },
+  QuadraticEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  QuarticEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  QuadraticEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  QuinticEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  SineEase: {
+    attrs: {},
+    base: "EasingFunctionBase"
+  },
+  VisualStateGroup: {
+    attrs: {
+      States: "VisualState",
+      Transitions: "VisualTransition"
+    },
+    children: ["VisualState"]
+  },
+  VisualState: {
+    attrs: {
+      Name: null,
+      Storyboard: "Storyboard"
+    },
+    children: ["Storyboard"]
+  },
+  VisualTransition: {
+    attrs: {
+      From: null,
+      To: null,
+      GeneratedDuration: null,
+      GeneratedEasingFunction: "EasingFunctionBase"
+    }
   },
   FrameworkTemplate: {
     type: "abstract",
