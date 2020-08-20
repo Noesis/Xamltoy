@@ -17,7 +17,17 @@ Header always edit Set-Cookie (.*) "$1; SameSite=None; Secure"
 AddType application/wasm wasm
 AddType text/css css
 AddType application/javascript js
+
 RewriteEngine On
+
+# non www -> www
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# http -> https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 RewriteRule ^ - [L]
