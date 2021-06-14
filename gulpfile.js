@@ -52,7 +52,7 @@ gulp.task('pages', function pages() {
       {starttag: '<!-- inject:css -->', ignorePath: '/dist/', addPrefix: base}))
     .pipe(inject(gulp.src('./dist/js/all-*.js',{read: false}),
       {starttag: '<!-- inject:js -->', ignorePath: '/dist/', addPrefix: base}))
-    .pipe(inject(gulp.src('./dist/lib/XamlToy/Gui.XamlToy.js',{read: false}),
+    .pipe(inject(gulp.src('./dist/lib/XamlToy/Gui.XamlToy.js?v=9',{read: false}),
       {starttag: '<!-- inject:xamltoy -->', ignorePath: '/dist/', addPrefix: base}))
     .pipe(inject(gulp.src('./dist/lib/codemirror/codemirror.js',{read: false}),
       {starttag: '<!-- inject:codemirror -->', ignorePath: '/dist/', addPrefix: base}))
