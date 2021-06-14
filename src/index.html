@@ -25,7 +25,7 @@
     let resources = {};
     let hash = window.location.pathname.split('/').pop();
     let xaml = "Loading..."
-    let defaultXaml = '<Grid\n\txmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"\n\txmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">\n\n</Grid>'
+    let defaultXaml = '<Grid\n  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"\n  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">\n  \n</Grid>'
     if (hash) {
       fetch('https://api.github.com/gists/' + hash,
         {
@@ -35,6 +35,18 @@
         .then(response => {
           let mainXaml = response.files["Main.xaml"];
           if(mainXaml){
+
+            let title = response.description + " (XamlToy) | NoesisGUI";
+            let desc = "XamlToy: " + response.description;
+            let url = "https://www.noesisengine.com/xamltoy/" + hash;
+
+            document.querySelector('title').innerHTML = title;
+            document.querySelector('link[rel="canonical"').setAttribute("href", url);
+            document.querySelector('meta[name="description"]').setAttribute("content", desc);
+            document.querySelector('meta[property="og:title"]').setAttribute("content", title);
+            document.querySelector('meta[property="og:url"]').setAttribute("content", url);
+            document.querySelector('meta[property="og:description"]').setAttribute("content", desc);
+
             Object.keys(response.files).forEach(fileName => {
               if (fileName !== "Main.xaml") {
                 let byteChars = (atob(response.files[fileName].content));
@@ -183,7 +195,7 @@
             <i class='fas fa-caret-down'></i>
           </a>
         </span>
-        <span class="right">Based on NoesisGUI 3.0</span>
+        <span class="right">Based on NoesisGUI 3.1</span>
       </footer>
     </div>
   </div>
@@ -212,7 +224,7 @@
     }
   </script>
   <!-- inject:xamltoy -->
-  <script src="/lib/XamlToy/Gui.XamlToy.js?v=6"></script>
+  <script src="/lib/XamlToy/Gui.XamlToy.js?v=7"></script>
   <!-- endinject -->
   <!-- inject:js -->
   <script src="/lib/codemirror/codemirror.js"></script>
