@@ -2,11 +2,9 @@ let errorMarks = [], editor = null, xamlReady = false;
 
 document.getElementById('run-button').onclick = () => { runCode() }
 
-runCode();
-
 function runCode() {
     clearErrors();
-    if (noesisReady && gistFetched) {
+    if (noesisReady && gistFetched && editor) {
         if(!xamlReady){
             xamlReady = true;
             editor.setValue(xaml);
@@ -166,3 +164,5 @@ editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
     }
 });
 editor.save();
+
+runCode();
