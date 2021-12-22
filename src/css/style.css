@@ -177,31 +177,36 @@ h3{
   height: 38px;
   background-color: #e4e4e4;
   display: flex;
-  justify-content: space-between;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: bold;
   font-size: 16px;
 }
-.codePreviewNavbar p{
+.codePreviewNavbar a{
+  background-color: #c9d0d6;
+  border-radius: 2px;
+  margin: 8px;
   align-items: center;
-  line-height: 38px;
-  margin-left: 15px;
-  color: #384349;
+  display: flex;
+}
+.codePreviewNavbar a:hover{
+  background-color: #c8d7e3;
 }
 .codePreviewNavbar a p{
   user-select: none;
   color: #1c91cc;
   margin-right: 4px;
-}
-.codePreviewNavbar a{
-  align-items: center;
-  display: flex;
+  margin-left: 8px;
 }
 .codePreviewNavbar i{
   height: 12px;
   font-size: 11px;
-  margin-right: 15px;
+  margin-right: 8px;
   color: #1c91cc;
+}
+.codePreviewNavbar p{
+  align-items: center;
+  line-height: 38px;
+  color: #384349;
 }
 .codePreviewCode{
   height: calc(100% - 38px);
