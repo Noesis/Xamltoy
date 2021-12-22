@@ -619,6 +619,17 @@ let Schema = {
     attrs: {},
     base: "Control"
   },
+  GridSplitter: {
+    attrs: {
+      DragIncrement: null,
+      KeyboardIncrement: null,
+      PreviewStyle: "Style",
+      ResizeBehavior: ["BasedOnAlignment", "CurrentAndNext", "PreviousAndCurrent", "PreviousAndNext"],
+      ResizeDirection: ["Auto", "Columns", "Rows"],
+      ShowsPreview: ["True", "False"]
+    },
+    base: "Thumb"
+  },
   TickBar: {
     attrs: {
       Fill: "Brush",
