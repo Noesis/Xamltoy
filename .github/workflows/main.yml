@@ -30,5 +30,6 @@ jobs:
     - run: npm run deploy --if-present
       env:
         FTP_HOST: ${{ secrets.ftp_host }}
+        FTP_REMOTE: ${{ secrets.ftp_remote }}
         FTP_USER: ${{ secrets.ftp_user }}
         FTP_PASSWORD: ${{ secrets.ftp_passwd }}
