@@ -80,8 +80,9 @@ gulp.task('deploy', function deploy() {
     secure:   false,
 		log:      gutil.log
 	} );
+  var remoteLocation = process.env.FTP_REMOTE;
   return gulp.src( 'dist/**', { base: './dist', buffer: false, allowEmpty:true })
-  .pipe( conn.dest( '/' ) );
+  .pipe( conn.dest( remoteLocation ) );
 });
 
 gulp.task('default', 
