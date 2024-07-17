@@ -58,7 +58,9 @@
 
             Object.keys(response.files).forEach(fileName => {
               if (fileName !== "Main.xaml") {
-                let byteChars = (atob(response.files[fileName].content));
+                let file = response.files[fileName];
+                let isTruncated = file.truncated;
+                let byteChars = isTruncated ? fetch(file.raw_url) : (atob(response.files[fileName].content));
                 let byteNumbers = new Array(byteChars.length);
                 for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
                 let byteArray = new Uint8Array(byteNumbers);
