@@ -56,15 +56,30 @@
             document.querySelector('meta[property="og:url"]').setAttribute("content", url);
             document.querySelector('meta[property="og:description"]').setAttribute("content", desc);
 
+			let pendingLoads = [];
             Object.keys(response.files).forEach(fileName => {
               if (fileName !== "Main.xaml") {
-                let byteChars = (atob(response.files[fileName].content));
-                let byteNumbers = new Array(byteChars.length);
-                for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
-                let byteArray = new Uint8Array(byteNumbers);
-                resources[fileName] = byteArray;
+                let file = response.files[fileName];
+                if(file.truncated === false){
+                  let byteChars = (atob(file.content));
+                  let byteNumbers = new Array(byteChars.length);
+                  for (let i = 0; i < byteChars.length; i++) byteNumbers[i] = byteChars.charCodeAt(i);
+                  let byteArray = new Uint8Array(byteNumbers);
+                  resources[fileName] = byteArray;  
+                }
+                else
+                {
+                  pendingLoads.push(
+                  	fetch(file.raw_url).then(async imageFetch => {
+                    let content = new Uint8Array( await imageFetch.arrayBuffer());
+                    resources[fileName] = content;
+                  }));
+                }            
               }
             });
+            
+            await Promise.all(pendingLoads);
+
             xaml = decodeURIComponent(escape(window.atob(mainXaml.content)));
             document.getElementById('xaml-link').href = 'https://gist.github.com/' + hash;
             document.getElementById('xaml-link').style = '';
